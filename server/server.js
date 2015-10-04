@@ -1,9 +1,9 @@
 var express = require('express');
 var app = express();
+var restGet = require('./get');
 
-app.get('/', function (req, res) {
-    res.send('Hello World!');
-});
+console.log(restGet);
+app.get('/:id', restGet.people);
 
 var port = process.env.PORT || 3000;
 var server = app.listen(port, function () {
