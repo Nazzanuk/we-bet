@@ -14,8 +14,6 @@ var res = {
     }
 };
 
-var mongo;
-
 restGet.people({params:{id:"me"}}, res);
 assert.equal(response, "me!");
 assert.equal(called, true);
@@ -28,3 +26,4 @@ assert.equal(called, true);
 
 //restGet.createGame({params:{id:1,gameName:"bet"}}, res);
 //assert.deepEqual(response, {createBy:"Aram",gameName:"bet"});
+
