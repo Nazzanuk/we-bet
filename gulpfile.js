@@ -1,22 +1,12 @@
 var gulp = require('gulp'),
-    //sass = require('gulp-sass'),
-    //autoprefixer = require('gulp-autoprefixer'),
-    //concat = require('gulp-concat'),
     rename = require('gulp-rename'),
     del = require('del'),
-    //karma = require('gulp-karma'),
-    //istanbul = require('istanbul'),
-    //ejs = require("gulp-ejs"),
-    //jf = require('jsonfile'),
-    //gutil = require('gulp-util'),
-    //plumber = require('gulp-plumber'),
-    //webserver = require('gulp-webserver'),
     mocha = require('gulp-mocha'),
     traceur = require('gulp-traceur');
 
 gulp.task("default", function () {
     gulp.start([
-        'clean'
+        'test'
     ]);
 });
 
@@ -38,6 +28,6 @@ gulp.task('test', ['es6'], function () {
         .pipe(mocha());
 }, ['clean']);
 
-gulp.task('clean', ['test'], function () {
-    return del('gen');
-});
+//gulp.task('clean', ['test'], function () {
+//    return del('gen');
+//});
