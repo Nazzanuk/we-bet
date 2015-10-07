@@ -1,3 +1,4 @@
 node_modules
 .idea
 gen
+/src/client/bower-components

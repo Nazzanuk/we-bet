@@ -2,43 +2,67 @@ var gulp = require('gulp'),
     rename = require('gulp-rename'),
     del = require('del'),
     mocha = require('gulp-mocha'),
-    //traceur = require('gulp-traceur'),
+//traceur = require('gulp-traceur'),
+    concat = require("gulp-concat"),
     babel = require("gulp-babel"),
     sourcemaps = require("gulp-sourcemaps");
 
 gulp.task("default", function () {
     gulp.start([
-        'test'
+        'test',
+        'gen-client-js',
+        'gen-client-lib-js',
+        'gen-client-lib-css'
     ]);
 });
 
 gulp.task('dev', ['default'], function () {
     gulp.watch([
-        'test/**/*',
-        'server-es6/**/*'
+        'src/**/*'
     ], ['default']);
 });
 
-gulp.task('es6-server', function () {
-    return gulp.src('server-es6/**/*.es6')
+gulp.task('server-es6', ['test-es6'], function () {
+    return gulp.src(['src/server/**/*.es6'])
         .pipe(babel())
         .pipe(rename({extname: ".js"}))
-        .pipe(gulp.dest("server"));
+        .pipe(gulp.dest("release/server"));
 });
 
-gulp.task('es6-test', ['es6-server'], function () {
-    return gulp.src('test/**/*.es6')
+gulp.task('test-es6', function () {
+    return gulp.src(['src/test/**/*.es6'])
         .pipe(babel())
         .pipe(rename({extname: ".js"}))
-        .pipe(sourcemaps.write("."))
-        .pipe(gulp.dest("gen"));
+        .pipe(gulp.dest("release/test"));
 });
 
-gulp.task('test', ['es6-test'], function () {
-    return gulp.src('gen/**/*.js', {read: false})
+gulp.task('gen-client-js', function () {
+    return gulp.src(['src/client/app.es6', 'src/client/components/**/*.es6'])
+        .pipe(concat('app.js'))
+        .pipe(babel())
+        .pipe(gulp.dest("release/client/public"));
+});
+
+gulp.task('gen-client-lib-js', function () {
+    return gulp.src([
+        'src/client/bower-components/jquery/dist/jquery.min.js',
+        'src/client/bower-components/angular/angular.min.js',
+        'src/client/bower-components/angular-ui-router/release/angular-ui-router.min.js',
+        'src/client/bower-components/lodash/lodash.min.js'
+    ])
+        .pipe(concat('lib.js'))
+        .pipe(gulp.dest("release/client/public"));
+});
+
+gulp.task('gen-client-lib-css', function () {
+    return gulp.src([
+        'src/client/bower-components/bootstrap/dist/css/bootstrap.min.css'
+    ])
+        .pipe(concat('lib.css'))
+        .pipe(gulp.dest("release/client/public"));
+});
+
+gulp.task('test', ['server-es6'], function () {
+    return gulp.src('release/test/**/*.js', {read: false})
         .pipe(mocha());
-}, ['clean']);
-
-//gulp.task('clean', ['test'], function () {
-//    return del('gen');
-//});
+});
