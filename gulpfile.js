@@ -12,7 +12,7 @@ gulp.task("default", function () {
     ]);
 });
 
-gulp.task('auto-test', ['default'], function () {
+gulp.task('dev', ['default'], function () {
     gulp.watch([
         'test/**/*',
         'server-es6/**/*'
