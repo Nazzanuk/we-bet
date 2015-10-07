@@ -2,7 +2,9 @@ var gulp = require('gulp'),
     rename = require('gulp-rename'),
     del = require('del'),
     mocha = require('gulp-mocha'),
-    traceur = require('gulp-traceur');
+    //traceur = require('gulp-traceur'),
+    babel = require("gulp-babel"),
+    sourcemaps = require("gulp-sourcemaps");
 
 gulp.task("default", function () {
     gulp.start([
@@ -12,18 +14,27 @@ gulp.task("default", function () {
 
 gulp.task('auto-test', ['default'], function () {
     gulp.watch([
-        'test/**/*'
+        'test/**/*',
+        'server-es6/**/*'
     ], ['default']);
 });
 
-gulp.task('es6', function () {
-    return gulp.src('test/**/*.es6')
-        .pipe(traceur())
+gulp.task('es6-server', function () {
+    return gulp.src('server-es6/**/*.es6')
+        .pipe(babel())
         .pipe(rename({extname: ".js"}))
-        .pipe(gulp.dest("./gen"));
+        .pipe(gulp.dest("server"));
 });
 
-gulp.task('test', ['es6'], function () {
+gulp.task('es6-test', ['es6-server'], function () {
+    return gulp.src('test/**/*.es6')
+        .pipe(babel())
+        .pipe(rename({extname: ".js"}))
+        .pipe(sourcemaps.write("."))
+        .pipe(gulp.dest("gen"));
+});
+
+gulp.task('test', ['es6-test'], function () {
     return gulp.src('gen/**/*.js', {read: false})
         .pipe(mocha());
 }, ['clean']);

@@ -5,23 +5,35 @@ var assert = require("assert"),
     should = chai.should();
 
 //get js file we are testing
-var restGet = require('../server/get');
+var Get = require('../server/routes/get');
 
 //internal testing functions
-var called, response;
-var res = {
-    send: (msg) => {
-        response = msg;
-        called = true;
+class Res {
+    send(msg) {
+        this.response = msg;
+        this.called = true;
     }
-};
+}
 
 //tests
-describe('get', () => {
-    describe('/get/me', () => {
-        restGet.people({params: {id: "me"}}, res);
+describe('GET', () => {
 
-        it('should respomd with me!', () => response.should.equal("me!"));
-        it('should show function has been called', () => called.should.equal(true));
+    var res;
+    before(() => res = new Res());
+
+    describe('/ (index)', () => {
+        beforeEach(() => Get.index({}, res));
+
+        it('should respond with Hello', () => res.response.should.equal("Hello"));
+        it('should show function has been called', () => res.called.should.equal(true));
+    });
+
+    describe('/users', () => {
+        beforeEach(() => Get.users({params: {id: "123"}}, res));
+
+        describe('/users:123', () => {
+            it(`should respond with: "Returns user with id 123!"`, () => res.response.should.equal("Returns user with id 123!"));
+            it('should show function has been called', () => res.called.should.equal(true));
+        });
     });
 });
