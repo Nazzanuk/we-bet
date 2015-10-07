@@ -1,6 +1,7 @@
-app.controller('HomeCtrl', function (RestAPI, $scope, $element, $timeout, $stateParams) {
+app.controller('HomeCtrl',  () => {
 
-    var init = function () {
+    var init = () => {
+
     };
 
     init();

@@ -1,0 +1,17 @@
+$body: #333;
+$primary: #497422;
+
+html {
+  overflow-x: hidden;
+  height: 100vh;
+}
+
+body {
+  max-height: 100vh;
+  overflow: hidden;
+  color: $body;
+  font-family: "Raleway", sans-serif;
+  font-size: 15px;
+  font-weight: 200;
+  line-height: 2.2;
+}

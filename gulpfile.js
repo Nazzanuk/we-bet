@@ -2,15 +2,18 @@ var gulp = require('gulp'),
     rename = require('gulp-rename'),
     del = require('del'),
     mocha = require('gulp-mocha'),
-//traceur = require('gulp-traceur'),
     concat = require("gulp-concat"),
     babel = require("gulp-babel"),
+    order = require("gulp-order"),
+    sass = require("gulp-sass"),
     sourcemaps = require("gulp-sourcemaps");
 
 gulp.task("default", function () {
     gulp.start([
         'test',
+        'gen-client-html',
         'gen-client-js',
+        'gen-client-css',
         'gen-client-lib-js',
         'gen-client-lib-css'
     ]);
@@ -36,10 +39,26 @@ gulp.task('test-es6', function () {
         .pipe(gulp.dest("release/test"));
 });
 
+gulp.task("gen-client-html", function () {
+    return gulp.src([
+        "src/client/components/head/head.html",
+        "src/client/**/!(footer)*.html",
+        "src/client/components/footer/footer.html"
+    ])
+        .pipe(concat("index.html"))
+        .pipe(gulp.dest('release/client'));
+});
+
 gulp.task('gen-client-js', function () {
     return gulp.src(['src/client/app.es6', 'src/client/components/**/*.es6'])
         .pipe(concat('app.js'))
         .pipe(babel())
+        .pipe(gulp.dest("release/client/public"));
+});
+
+gulp.task('gen-client-css', function () {
+    return gulp.src(['src/client/app.scss'])
+        .pipe(sass())
         .pipe(gulp.dest("release/client/public"));
 });
 

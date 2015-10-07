@@ -23,9 +23,6 @@ app.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
         }
     };
 
-    //$locationProvider.html5Mode(true)
-    //    .hashPrefix('!');
-
     // For any unmatched url, redirect to /state1
     $urlRouterProvider.otherwise("/home");
 
@@ -38,21 +35,11 @@ app.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
         params: {
             section: null
         }
-    }).state('blog', {
-        url: "/explore",
-        templateUrl: "blog.html",
-        controller: "BlogCtrl",
-        resolve: resolve
-    }).state('single', {
-        url: "/explore/:id/:slug",
-        templateUrl: "single.html",
-        controller: "SingleCtrl",
-        resolve: resolve
     });
 
-    $locationProvider.html5Mode(true);
+    //$locationProvider.html5Mode(true);
 });
-app.controller('HomeCtrl', function (RestAPI, $scope, $element, $timeout, $stateParams) {
+app.controller('HomeCtrl', function () {
 
     var init = function init() {};
 

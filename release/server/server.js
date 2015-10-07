@@ -6,7 +6,7 @@ var routes = require('./routes/routes');
 //server setup
 var app = express();
 var port = process.env.PORT || 3000;
-app.use(express['static']('../release'));
+app.use(express['static']('../client'));
 
 var server = app.listen(port, function () {
     var host = server.address().address;
