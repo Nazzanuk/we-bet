@@ -5,7 +5,7 @@ var assert = require("assert"),
     should = chai.should();
 
 //get js file we are testing
-var Get = require('./../server/routes/get');
+var Get = require(process.cwd() + '/release/server/routes/get');
 
 //internal testing functions
 class Res {

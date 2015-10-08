@@ -3,6 +3,9 @@
 var express = require('express');
 var routes = require('./routes/routes');
 
+console.log(process.env.NODE_PATH)
+console.log(process.cwd())
+
 //server setup
 var app = express();
 var port = process.env.PORT || 3000;

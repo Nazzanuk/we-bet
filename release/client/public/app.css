@@ -13,35 +13,40 @@ body {
 
 .butn {
   background: none;
-  border: 3px solid #ddd;
+  border: 2px solid #207fd6;
   border-radius: 50px;
-  line-height: 34px;
+  line-height: 36px;
   height: 40px;
   padding: 0 20px;
   display: inline-block;
-  font-weight: 600;
+  font-weight: 400;
   text-align: center;
   margin-bottom: 30px;
-  color: #ccc;
-  outline: none; }
+  color: #207fd6;
+  outline: none;
+  transition: .3s; }
+  .butn:hover {
+    border: 2px solid #207fd6;
+    background: #207fd6;
+    color: #ffffff; }
   .butn.block {
     display: block; }
   .butn.primary {
-    border: 3px solid #4b85d6;
-    background: #4b85d6;
+    border: 3px solid #207fd6;
+    background: #207fd6;
     color: #ffffff; }
 
 .input {
   background: none;
   border: none;
-  border-bottom: 3px solid #ddd;
+  border-bottom: 2px solid #ddd;
   border-radius: 0px;
   line-height: 40px;
   height: 40px;
   padding: 0 20px;
   color: #333;
   display: inline-block;
-  font-weight: 500;
+  font-weight: 400;
   text-align: center;
   margin-bottom: 30px;
   outline: none; }
@@ -55,19 +60,25 @@ body {
   position: relative;
   background: white; }
   [template=login] .login-container .login-top {
-    background: #4b85d6;
+    background: #207fd6;
     height: 40vh;
-    position: relative; }
+    position: relative;
+    overflow: hidden; }
     [template=login] .login-container .login-top .top {
       height: 10vh; }
+    [template=login] .login-container .login-top .vert {
+      position: absolute;
+      width: 300%;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.05); }
     [template=login] .login-container .login-top .top-1 {
-      background: rgba(255, 255, 255, 0.1); }
-    [template=login] .login-container .login-top .top-2 {
       background: rgba(255, 255, 255, 0.15); }
+    [template=login] .login-container .login-top .top-2 {
+      background: rgba(255, 255, 255, 0.1); }
     [template=login] .login-container .login-top .top-3 {
-      background: rgba(255, 255, 255, 0.2); }
+      background: rgba(255, 255, 255, 0.05); }
     [template=login] .login-container .login-top .top-4 {
-      background: rgba(255, 255, 255, 0.25); }
+      background: rgba(255, 255, 255, 0); }
     [template=login] .login-container .login-top .top-title {
       position: absolute;
       top: 50%;
@@ -75,8 +86,9 @@ body {
       width: 100%;
       text-align: center;
       line-height: 50px;
-      font-size: 40px;
-      color: #ffffff; }
+      font-size: 50px;
+      color: #ffffff;
+      font-weight: 200; }
   [template=login] .login-container .login-bottom {
     height: 60vh;
     padding: 30px 0; }
