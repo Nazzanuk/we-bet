@@ -1,12 +1,12 @@
 app.config(($stateProvider, $urlRouterProvider, $locationProvider) => {
 
-    var resolve = {
-        timeout ($timeout) {
-            $('[part]').addClass('inactive');
-            $('.loading-logo').addClass('active');
-            return $timeout(800);
-        }
-    };
+    //var resolve = {
+    //    timeout ($timeout) {
+    //        $('[part]').addClass('inactive');
+    //        $('.loading-logo').addClass('active');
+    //        return $timeout(800);
+    //    }
+    //};
 
     // For any unmatched url, redirect to /state1
     $urlRouterProvider.otherwise("/home");
@@ -17,9 +17,8 @@ app.config(($stateProvider, $urlRouterProvider, $locationProvider) => {
             url: "/home",
             templateUrl: "home.html",
             controller: "HomeCtrl",
-            resolve: resolve,
+            //resolve: resolve,
             params:  {
-                section: null
             }
         });
 

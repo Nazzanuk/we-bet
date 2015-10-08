@@ -1,4 +1,4 @@
-app.controller('HomeCtrl',  () => {
+app.controller('HomeCtrl', () => {
 
     var init = () => {
 
