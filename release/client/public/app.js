@@ -15,13 +15,13 @@ app.directive('ngEnter', function () {
 });
 app.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
 
-    var resolve = {
-        timeout: function timeout($timeout) {
-            $('[part]').addClass('inactive');
-            $('.loading-logo').addClass('active');
-            return $timeout(800);
-        }
-    };
+    //var resolve = {
+    //    timeout ($timeout) {
+    //        $('[part]').addClass('inactive');
+    //        $('.loading-logo').addClass('active');
+    //        return $timeout(800);
+    //    }
+    //};
 
     // For any unmatched url, redirect to /state1
     $urlRouterProvider.otherwise("/home");
@@ -31,14 +31,26 @@ app.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
         url: "/home",
         templateUrl: "home.html",
         controller: "HomeCtrl",
-        resolve: resolve,
-        params: {
-            section: null
-        }
+        //resolve: resolve,
+        params: {}
     });
 
     //$locationProvider.html5Mode(true);
 });
+app.directive('login', function ($sce, $timeout) {
+    return {
+        templateUrl: 'login.html',
+        scope: {},
+        link: function link(scope, element, attrs) {
+            console.log('login');
+
+            var init = function init() {};
+
+            init();
+        }
+    };
+});
+
 app.controller('HomeCtrl', function () {
 
     var init = function init() {};
