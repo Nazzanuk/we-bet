@@ -11,24 +11,24 @@
       height: 40vh;
       position: relative;
 
-      .top-1 {
+      .top {
         height: 10vh;
+      }
+
+      .top-1 {
         background: rgba(255,255,255,0.1);
       }
 
       .top-2 {
-        height: 10vh;
-        background: rgba(255,255,255,0.2);
+        background: rgba(255,255,255,0.15);
       }
 
       .top-3 {
-        height: 10vh;
-        background: rgba(255,255,255,0.3);
+        background: rgba(255,255,255,0.2);
       }
 
       .top-4 {
-        height: 10vh;
-        background: rgba(255,255,255,0.4);
+        background: rgba(255,255,255,0.25);
       }
 
       .top-title {
