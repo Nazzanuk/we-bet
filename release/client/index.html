@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" class="no-scroll">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+
+    <base href="/">
+
+    <title>We Bet</title>
+    <meta name="description" content="<%= ogDescription %>" />
+
+    <!--<meta property="og:title" content="<%= ogTitle %>" />-->
+    <!--<meta property="og:site_name" content="<%= ogSiteName %>"/>-->
+    <!--<meta property="og:url" content="<%= ogUrl %>" />-->
+    <!--<meta property="og:description" content="<%= ogDescription %>" />-->
+    <!--<meta property="og:image" content="<%= ogImage %>" />-->
+    <!--<meta property="og:type" content="<%= ogType %>"/>-->
+
+    <!--<meta name="twitter:card" content="summary_large_image">-->
+    <!--<meta name="twitter:site" content="@StoryNatives">-->
+    <!--<meta name="twitter:title" content="<%= ogTitle %>">-->
+    <!--<meta name="twitter:description" content="<%= ogDescription %>">-->
+
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"/>
+    <link href='http://fonts.googleapis.com/css?family=Raleway:400,900,800,700,600,500,300,200,100&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+
+    <link rel="stylesheet" href="/public/lib.css"/>
+    <link rel="stylesheet" href="/public/app.css"/>
+</head>
+<body data-ng-app="app">
+
+<div ui-view></div>
+
+<script type="text/ng-template" id="login.html">
+    <div template="login">
+        <div class="login-container">
+            <div class="login-top">
+                <div class="top-title">We Bet</div>
+                <div class="top top-1"></div>
+                <div class="top top-2"></div>
+                <div class="top top-3"></div>
+                <div class="top top-4"></div>
+            </div>
+            <div class="login-bottom">
+                <!--<div class="container">-->
+                <div class="login-thin">
+                    <input class="input" type="text" placeholder="Email">
+                    <input class="input" type="password" placeholder="Password">
+                    <div class="butn block">Sign In</div>
+                    <div class="butn block primary">Register</div>
+                </div>
+
+                <!--</div>-->
+            </div>
+        </div>
+    </div>
+</script>
+<script type="text/ng-template" id="home.html">
+    <login></login>
+</script>
+<div data-template="footer">
+    <div class="footer">
+    </div>
+</div>
+
+<script src="/public/lib.js"></script>
+<script src="/public/app.js"></script>
+</body>
+</html>
