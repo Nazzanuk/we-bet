@@ -1,5 +1,5 @@
 $body: #333;
-$primary: #207fd6;
+$primary: #006f9a;
 
 html {
   overflow-x: hidden;
@@ -30,20 +30,22 @@ body {
   color: $primary;
   outline: none;
   transition: .3s;
+  cursor: pointer;
 
-  &:hover {
-    border: 2px solid $primary;
-    background: $primary;
-    color: #ffffff;
-  }
 
   &.block {
     display: block;
   }
 
   &.primary {
-    border: 3px solid $primary;
+    border: 2px solid $primary;
     background: $primary;
+    color: #ffffff;
+  }
+
+  &:hover {
+    border: 2px solid lighten($primary, 10%);
+    background: lighten($primary, 10%);
     color: #ffffff;
   }
 }

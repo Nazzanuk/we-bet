@@ -5,7 +5,6 @@ var assert = require("assert"),
     should = chai.should();
 
 //get js file we are testing
-var Get = require(process.cwd() + '/release/server/routes/get');
 
 //internal testing functions
 class Res {
@@ -17,19 +16,20 @@ class Res {
 
 //tests
 describe('GET', () => {
+    var GET = require(process.cwd() + '/release/server/routes/get'),
+        res;
 
-    var res;
-    before(() => res = new Res());
+    beforeEach(() => res = new Res());
 
     describe('/ (index)', () => {
-        beforeEach(() => Get.index({}, res));
+        beforeEach(() => GET.index({}, res));
 
         it('should respond with Hello', () => res.response.should.equal("Hello"));
         it('should show function has been called', () => res.called.should.equal(true));
     });
 
     describe('/users', () => {
-        beforeEach(() => Get.users({params: {id: "123"}}, res));
+        beforeEach(() => GET.users({params: {id: "123"}}, res));
 
         describe('/users:123', () => {
             it(`should respond with: "Returns user with id 123!"`, () => res.response.should.equal("Returns user with id 123!"));

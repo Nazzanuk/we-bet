@@ -1,14 +1,20 @@
 'use strict';
 
+//npm dependencies
 var express = require('express');
-var routes = require('./routes/routes');
+var cors = require('cors');
+var bodyParser = require('body-parser');
 
-console.log(process.env.NODE_PATH);
-console.log(process.cwd());
+//local dependencies
+var routes = require('./routes/routes');
 
 //server setup
 var app = express();
 var port = process.env.PORT || 3000;
+
+app.use(cors());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 app.use(express['static']('../client'));
 
 var server = app.listen(port, function () {
@@ -18,3 +24,5 @@ var server = app.listen(port, function () {
 
 //app init
 routes.init(app);
+
+module.exports = server;

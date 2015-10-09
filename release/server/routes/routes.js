@@ -1,10 +1,12 @@
 'use strict';
 
-var Get = require('./get');
+var GET = require('./get');
+var POST = require('./post');
 
 module.exports = {
     init: function init(app) {
-        app.get('/api/', Get.index);
-        app.get('/api/users/:id', Get.users);
+        app.get('/api/', GET.index);
+        app.get('/api/users/:id', GET.users);
+        app.post('/api/login/', POST.login);
     }
 };

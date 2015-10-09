@@ -13,7 +13,7 @@ body {
 
 .butn {
   background: none;
-  border: 2px solid #207fd6;
+  border: 2px solid #006f9a;
   border-radius: 50px;
   line-height: 36px;
   height: 40px;
@@ -22,18 +22,19 @@ body {
   font-weight: 400;
   text-align: center;
   margin-bottom: 30px;
-  color: #207fd6;
+  color: #006f9a;
   outline: none;
-  transition: .3s; }
-  .butn:hover {
-    border: 2px solid #207fd6;
-    background: #207fd6;
-    color: #ffffff; }
+  transition: .3s;
+  cursor: pointer; }
   .butn.block {
     display: block; }
   .butn.primary {
-    border: 3px solid #207fd6;
-    background: #207fd6;
+    border: 2px solid #006f9a;
+    background: #006f9a;
+    color: #ffffff; }
+  .butn:hover {
+    border: 2px solid #0094cd;
+    background: #0094cd;
     color: #ffffff; }
 
 .input {
@@ -60,7 +61,7 @@ body {
   position: relative;
   background: white; }
   [template=login] .login-container .login-top {
-    background: #207fd6;
+    background: #006f9a;
     height: 40vh;
     position: relative;
     overflow: hidden; }

@@ -9,7 +9,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "body-parser": "^1.14.1",
     "chai": "^3.3.0",
+    "cors": "^2.7.1",
     "del": "^2.0.2",
     "express": "^4.13.3",
     "gulp": "^3.9.0",
@@ -22,6 +24,7 @@
     "gulp-sourcemaps": "^1.6.0",
     "jasmine": "^2.3.2",
     "mocha": "^2.3.3",
-    "rewire": "^2.3.4"
+    "rewire": "^2.3.4",
+    "supertest": "^1.1.0"
   }
 }
