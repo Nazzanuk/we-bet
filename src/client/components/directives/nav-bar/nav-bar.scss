@@ -1,0 +1,28 @@
+[template=nav-bar] {
+  .bar {
+    height: 50px;
+    display : flex;
+    flex-direction: row;
+
+    .bar-item {
+      background: $primary;
+      flex: 1 1 auto;
+      height: 50px;
+      line-height: 47px;
+      border-bottom: 3px solid $primary;
+      color: #ffffff;
+      text-align: center;
+      font-weight: bold;
+      cursor: pointer;
+      transition: .3s;
+
+      &:hover {
+        border-bottom: 3px solid lighten($primary, 10%);
+      }
+
+      &.active {
+        border-bottom: 3px solid white;
+      }
+    }
+  }
+}

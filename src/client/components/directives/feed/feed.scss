@@ -1,0 +1,42 @@
+[template=feed] {
+  .item {
+//    height: 100px;
+    padding: 15px;
+
+    position: relative;
+    border-bottom: 1px solid #eee;
+
+    .score {
+      position: absolute;
+      top: 15px;
+      left: 15px;
+      height: 30px;
+      line-height: 30px;
+      width: 30px;
+      border-radius: 100px;
+      text-align: center;
+      color: #ffffff;
+      background: $green;
+      font-size: 10px;
+      font-weight: bold;
+    }
+
+    .title {
+      margin-left: 45px;
+      margin-bottom: 5px;
+      font-weight: bold;
+      line-height: 20px;
+      color: black;
+//      margin: 5px 0 5px 45px;
+
+    }
+
+    .description {
+      overflow: hidden;
+      font-size: 13px;
+      margin-left: 45px;
+      line-height: 20px;
+      height: 60px;
+    }
+  }
+}

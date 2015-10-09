@@ -71,6 +71,32 @@ app.factory('API', function ($rootScope, $http) {
 });
 'use strict';
 
+app.factory('State', function ($rootScope, $http) {
+
+    var state = {};
+
+    return {
+        login: login
+    };
+});
+'use strict';
+
+app.directive('feed', function ($timeout, API, $state) {
+    return {
+        templateUrl: 'feed.html',
+        scope: {},
+
+        link: function link(scope, element, attrs) {
+
+            var init = function init() {};
+
+            init();
+        }
+    };
+});
+
+'use strict';
+
 app.directive('login', function ($timeout, API, $state) {
     return {
         templateUrl: 'login.html',
@@ -89,6 +115,22 @@ app.directive('login', function ($timeout, API, $state) {
             init();
 
             scope.login = login;
+        }
+    };
+});
+
+'use strict';
+
+app.directive('navBar', function ($timeout, API, $state) {
+    return {
+        templateUrl: 'nav-bar.html',
+        scope: {},
+
+        link: function link(scope, element, attrs) {
+
+            var init = function init() {};
+
+            init();
         }
     };
 });
