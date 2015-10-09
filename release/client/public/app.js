@@ -54,6 +54,64 @@ app.controller('ScreenCtrl', function ($element, $timeout) {
 
 'use strict';
 
+app.factory('Alert', function ($timeout) {
+
+    var active = false,
+        message = false,
+        colour = "primary",
+        timeout;
+
+    var showMessage = function showMessage(msg) {
+        showError(msg);
+        colour = "primary";
+    };
+
+    var showError = function showError(msg) {
+        colour = "red";
+        setActive(true);
+        message = msg;
+        $timeout.cancel(timeout);
+        timeout = $timeout(function () {
+            return setActive(false);
+        }, 2000);
+    };
+
+    var getColour = function getColour() {
+        return colour;
+    };
+
+    var getMessage = function getMessage() {
+        return message;
+    };
+
+    var getActive = function getActive() {
+        return active;
+    };
+
+    var setActive = function setActive(flag) {
+        active = flag;
+    };
+
+    var switchActive = function switchActive() {
+        active = !active;
+    };
+
+    var init = function init() {};
+
+    init();
+
+    return {
+        showMessage: showMessage,
+        showError: showError,
+        getMessage: getMessage,
+        getColour: getColour,
+        getActive: getActive,
+        setActive: setActive,
+        switchActive: switchActive
+    };
+});
+'use strict';
+
 app.factory('API', function ($rootScope, $http) {
 
     var API_URL = "/api/";
@@ -81,6 +139,28 @@ app.factory('State', function ($rootScope, $http) {
 });
 'use strict';
 
+app.directive('alert', function (Alert) {
+    return {
+        templateUrl: 'alert.html',
+        scope: {},
+
+        link: function link(scope, element, attrs) {
+
+            var init = function init() {};
+
+            init();
+
+            scope.getColour = Alert.getColour;
+            scope.getMessage = Alert.getMessage;
+            scope.getActive = Alert.getActive;
+            scope.setActive = Alert.setActive;
+            scope.switchActive = Alert.switchActive;
+        }
+    };
+});
+
+'use strict';
+
 app.directive('feed', function ($timeout, API, $state) {
     return {
         templateUrl: 'feed.html',
@@ -97,7 +177,7 @@ app.directive('feed', function ($timeout, API, $state) {
 
 'use strict';
 
-app.directive('login', function ($timeout, API, $state) {
+app.directive('login', function ($timeout, API, $state, Alert) {
     return {
         templateUrl: 'login.html',
         scope: {},
@@ -106,7 +186,12 @@ app.directive('login', function ($timeout, API, $state) {
 
             var login = function login(username, password) {
                 API.login({ username: username, password: password }).then(function (response) {
-                    if (response) $state.go('home');
+                    if (response) {
+                        $state.go('home');
+                        Alert.showMessage("Welcome!");
+                    } else {
+                        Alert.showError("Username and password didn't match");
+                    }
                 });
             };
 

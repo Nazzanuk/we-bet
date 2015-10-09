@@ -1,0 +1,5 @@
+<script type="text/ng-template" id="alert.html">
+    <div template="alert">
+        <div class="alert-message {{getColour()}}" ng-class="{active:getActive()}" ng-click="setActive(false)" ng-bind="getMessage()"></div>
+    </div>
+</script>

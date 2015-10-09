@@ -1,9 +1,9 @@
 html {
-  overflow-x: hidden;
+  overflow: hidden;
   height: 100vh; }
 
 body {
-  max-height: 100vh;
+  height: 100vh;
   overflow: hidden;
   color: #555;
   font-family: "Raleway", sans-serif;
@@ -62,6 +62,29 @@ body {
   .input.block {
     display: block;
     width: 100%; }
+
+[template=alert] .alert-message {
+  padding: 15px;
+  color: #ffffff;
+  background: #b63c3c;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  font-weight: bold;
+  text-align: center;
+  line-height: 20px;
+  transition: .3s;
+  opacity: 0;
+  transform: translateY(80px);
+  cursor: pointer; }
+  [template=alert] .alert-message.red {
+    background: #b63c3c; }
+  [template=alert] .alert-message.primary {
+    background: #3784ae; }
+  [template=alert] .alert-message.active {
+    transform: translateY(0);
+    opacity: 1; }
 
 [template=feed] .item {
   padding: 15px;

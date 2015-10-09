@@ -58,8 +58,8 @@ gulp.task('gen-client-js', function () {
 
 gulp.task('gen-client-css', function () {
     return gulp.src([
-        'src/client/global.scss',
-        "src/client/**/*.scss"
+        'src/client/components/global/global.scss',
+        "src/client/components/**/*.scss"
     ])
         .pipe(concat('app.scss'))
         .pipe(sass())

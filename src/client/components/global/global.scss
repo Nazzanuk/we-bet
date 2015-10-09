@@ -8,12 +8,12 @@ $purple: #704ab6;
 $primary: #3784ae;
 
 html {
-  overflow-x: hidden;
+  overflow: hidden;
   height: 100vh;
 }
 
 body {
-  max-height: 100vh;
+  height: 100vh;
   overflow: hidden;
   color: $body;
   font-family: "Raleway", sans-serif;

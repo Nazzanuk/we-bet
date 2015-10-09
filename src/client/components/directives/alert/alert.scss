@@ -1,0 +1,31 @@
+[template=alert] {
+  .alert-message {
+    padding: 15px;
+    color: #ffffff;
+    background: $red;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    font-weight: bold;
+    text-align: center;
+    line-height: 20px;
+    transition: .3s;
+    opacity: 0;
+    transform: translateY(80px);
+    cursor: pointer;
+
+    &.red {
+      background: $red;
+    }
+
+    &.primary {
+      background: $primary;
+    }
+
+    &.active {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+}
