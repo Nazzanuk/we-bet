@@ -16,6 +16,18 @@ body {
   line-height: 2.2;
 }
 
+[screen] {
+  opacity: 0;
+  transform: translateX(-50px);
+  transition: .3s;
+
+  &.active {
+    opacity: 1;
+    transform: translateX(0);
+
+  }
+}
+
 .butn {
   background: none;
   border: 2px solid $primary;
@@ -70,3 +82,4 @@ body {
     width: 100%;
   }
 }
+

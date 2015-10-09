@@ -15,28 +15,43 @@ app.directive('ngEnter', function () {
 });
 app.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
 
-    //var resolve = {
-    //    timeout ($timeout) {
-    //        $('[part]').addClass('inactive');
-    //        $('.loading-logo').addClass('active');
-    //        return $timeout(800);
-    //    }
-    //};
+    var resolve = {
+        timeout: function timeout($timeout) {
+            $('[screen]').removeClass('active');
+            //$('.loading-logo').addClass('active');
+            return $timeout(300);
+        }
+    };
 
-    // For any unmatched url, redirect to /state1
-    $urlRouterProvider.otherwise("/home");
+    // For any unmatched url, redirect to /
+    $urlRouterProvider.otherwise("/");
 
     // Now set up the states
-    $stateProvider.state('home', {
+    $stateProvider.state('splash', {
+        url: "/",
+        templateUrl: "splash-screen.html",
+        controller: "ScreenCtrl",
+        resolve: resolve
+    }).state('home', {
         url: "/home",
-        templateUrl: "home.html",
-        controller: "HomeCtrl",
-        //resolve: resolve,
-        params: {}
+        templateUrl: "home-screen.html",
+        controller: "ScreenCtrl",
+        resolve: resolve
     });
 
     //$locationProvider.html5Mode(true);
 });
+app.controller('ScreenCtrl', function ($element, $timeout) {
+
+    var init = function init() {
+        $timeout(function () {
+            return $element.find('[screen]').addClass('active');
+        }, 50);
+    };
+
+    init();
+});
+
 'use strict';
 
 app.factory('API', function ($rootScope, $http) {
@@ -56,7 +71,7 @@ app.factory('API', function ($rootScope, $http) {
 });
 'use strict';
 
-app.directive('login', function ($sce, API) {
+app.directive('login', function ($timeout, API, $state) {
     return {
         templateUrl: 'login.html',
         scope: {},
@@ -65,7 +80,7 @@ app.directive('login', function ($sce, API) {
 
             var login = function login(username, password) {
                 API.login({ username: username, password: password }).then(function (response) {
-                    return console.log(response.data);
+                    if (response) $state.go('home');
                 });
             };
 
@@ -76,11 +91,4 @@ app.directive('login', function ($sce, API) {
             scope.login = login;
         }
     };
-});
-
-app.controller('HomeCtrl', function () {
-
-    var init = function init() {};
-
-    init();
 });

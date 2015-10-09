@@ -9,8 +9,6 @@ module.exports = {
     },
 
     users: function users(req, res) {
-        //var id = req.params.id;
-
         res.send({
             id: req.params.id,
             username: "nathan"
@@ -18,7 +16,6 @@ module.exports = {
     },
 
     login: function login(req, res) {
-
         var username = req.query.username;
         var password = req.query.password;
 

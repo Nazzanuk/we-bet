@@ -1,6 +1,6 @@
 'use strict';
 
-app.directive('login', ($sce, API) => {
+app.directive('login', ($timeout, API, $state) => {
     return {
         templateUrl: 'login.html',
         scope: {},
@@ -8,11 +8,12 @@ app.directive('login', ($sce, API) => {
         link(scope, element, attrs) {
 
             var login = (username, password) => {
-                API.login({username: username, password: password}).then(response => console.log(response.data))
+                API.login({username: username, password: password}).then(response => {
+                    if (response) $state.go('home')
+                });
             };
 
             var init = () => {
-
             };
 
             init();
