@@ -37,16 +37,43 @@ app.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
 
     //$locationProvider.html5Mode(true);
 });
-app.directive('login', function ($sce, $timeout) {
+'use strict';
+
+app.factory('API', function ($rootScope, $http) {
+
+    var API_URL = "/api/";
+
+    var login = function login(object) {
+        return $http.get(API_URL + "login/", { params: object }).then(function (response) {
+            console.log(response.data);
+            return response.data;
+        });
+    };
+
+    return {
+        login: login
+    };
+});
+'use strict';
+
+app.directive('login', function ($sce, API) {
     return {
         templateUrl: 'login.html',
         scope: {},
+
         link: function link(scope, element, attrs) {
-            console.log('login');
+
+            var login = function login(username, password) {
+                API.login({ username: username, password: password }).then(function (response) {
+                    return console.log(response.data);
+                });
+            };
 
             var init = function init() {};
 
             init();
+
+            scope.login = login;
         }
     };
 });

@@ -17,23 +17,7 @@ describe('POST', () => {
     var POST = require(process.cwd() + '/release/server/routes/post'),
         res;
 
-    before(() => res = new Res());
+    beforeEach(() => res = new Res());
 
-    describe('/login', () => {
-        before(() => POST.login({body: {username: "nathan", password: "nathan"}}, res));
 
-        describe('/users:123', () => {
-            it(`should respond with: "Returns user with id 123!"`, () => res.response.should.equal(true));
-            it('should show function has been called', () => res.called.should.equal(true));
-        });
-    });
-
-    describe('/login', () => {
-        before(() => POST.login({body: {username: "nathan", password: "billy"}}, res));
-
-        describe('/users:123', () => {
-            it(`should respond with: "Returns user with id 123!"`, () => res.response.should.equal(false));
-            it('should show function has been called', () => res.called.should.equal(true));
-        });
-    });
 });

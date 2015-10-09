@@ -3,25 +3,18 @@
         <div class="login-container">
             <div class="login-top">
                 <div class="top-title">We Bet</div>
-                <!--<div class="vert"></div>-->
-                <!--<div class="vert" style="left:25%"></div>-->
-                <!--<div class="vert" style="left:50%"></div>-->
-                <!--<div class="vert" style="left:75%"></div>-->
                 <div class="top top-1"></div>
                 <div class="top top-2"></div>
                 <div class="top top-3"></div>
                 <div class="top top-4"></div>
             </div>
             <div class="login-bottom">
-                <!--<div class="container">-->
                 <div class="login-thin">
-                    <input class="input" type="text" placeholder="Email">
-                    <input class="input" type="password" placeholder="Password">
-                    <div class="butn block">Sign In</div>
+                    <input class="input block" type="text" placeholder="Email" ng-model="username">
+                    <input class="input block" type="password" placeholder="Password" ng-model="password">
+                    <div class="butn block" ng-click="login(username, password)">Sign In</div>
                     <div class="butn block primary">Register</div>
                 </div>
-
-                <!--</div>-->
             </div>
         </div>
     </div>

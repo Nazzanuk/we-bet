@@ -7,6 +7,9 @@ module.exports = {
     init: function init(app) {
         app.get('/api/', GET.index);
         app.get('/api/users/:id', GET.users);
-        app.post('/api/login/', POST.login);
+        app.get('/api/login/', GET.login);
+        //app.get('*', (req, res) => {
+        //    res.send("zz")
+        //});
     }
 };

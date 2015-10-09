@@ -4,8 +4,6 @@ var assert = require("assert"),
     expect = chai.expect,
     should = chai.should();
 
-//get js file we are testing
-
 //internal testing functions
 class Res {
     send(msg) {
@@ -32,7 +30,17 @@ describe('GET', () => {
         beforeEach(() => GET.users({params: {id: "123"}}, res));
 
         describe('/users:123', () => {
-            it(`should respond with: "Returns user with id 123!"`, () => res.response.should.equal("Returns user with id 123!"));
+            it(`should respond with: "Returns user with id 123"`, () => res.response.should.have.property('id',  '123'));
+            it(`should respond with: "Returns username"`, () => res.response.should.have.property('username'));
+            it('should show function has been called', () => res.called.should.equal(true));
+        });
+    });
+
+    describe('/login?username=nathan&password=nathan', () => {
+        beforeEach(() => GET.login({query: {username: "nathan", password: "nathan"}}, res));
+
+        describe('/users:123', () => {
+            it(`should respond with: "true"`, () => res.response.should.equal(true));
             it('should show function has been called', () => res.called.should.equal(true));
         });
     });
