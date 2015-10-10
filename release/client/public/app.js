@@ -228,22 +228,6 @@ app.directive('alert', function (Alert) {
 
 'use strict';
 
-app.directive('groupHero', function ($timeout, API, $state, State) {
-    return {
-        templateUrl: 'group-hero.html',
-        scope: {},
-
-        link: function link(scope, element, attrs) {
-
-            var init = function init() {};
-
-            init();
-        }
-    };
-});
-
-'use strict';
-
 app.directive('feed', function ($timeout, API, $state, State) {
     return {
         templateUrl: 'feed.html',
@@ -272,9 +256,9 @@ app.directive('feed', function ($timeout, API, $state, State) {
 
 'use strict';
 
-app.directive('groupNavBar', function ($timeout, API, $state, State) {
+app.directive('groupHero', function ($timeout, API, $state, State) {
     return {
-        templateUrl: 'group-nav-bar.html',
+        templateUrl: 'group-hero.html',
         scope: {},
 
         link: function link(scope, element, attrs) {
@@ -282,7 +266,35 @@ app.directive('groupNavBar', function ($timeout, API, $state, State) {
             var init = function init() {};
 
             init();
+        }
+    };
+});
 
+'use strict';
+
+app.directive('groupNavBar', function ($timeout, API, $state, State) {
+    return {
+        templateUrl: 'group-nav-bar.html',
+        scope: {},
+
+        link: function link(scope, element, attrs) {
+
+            var screen = 0;
+
+            var setScreen = function setScreen(index) {
+                screen = index;
+            };
+
+            var getScreen = function getScreen() {
+                return screen;
+            };
+
+            var init = function init() {};
+
+            init();
+
+            scope.setScreen = setScreen;
+            scope.getScreen = getScreen;
             scope.isCurrentGroupNav = State.isCurrentGroupNav;
             scope.getCurrentGroupNav = State.getCurrentGroupNav;
             scope.setCurrentGroupNav = State.setCurrentGroupNav;
