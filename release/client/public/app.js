@@ -1,6 +1,8 @@
 'use strict';
 
-var app = angular.module('app', ['ui.router']);
+var app = angular.module('app', ['ui.router']).run(function () {
+    FastClick.attach(document.body);
+});;
 
 app.directive('ngEnter', function () {
     return function (scope, element, attrs) {

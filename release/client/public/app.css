@@ -1,10 +1,10 @@
 html {
-  overflow: hidden;
-  height: 100vh; }
+  height: 100%;
+  overflow: hidden; }
 
 body {
   background: #2b72ae;
-  height: 100vh;
+  max-height: 100vh;
   overflow: hidden;
   color: #444;
   font-family: "Raleway", sans-serif;
@@ -17,7 +17,8 @@ body {
   transform: translateX(-50px);
   transition: .3s;
   overflow: hidden;
-  height: 100vh; }
+  height: 100vh;
+  max-height: 100vh; }
   [screen].active {
     opacity: 1;
     transform: translateX(0); }
@@ -130,7 +131,7 @@ body {
       overflow: hidden;
       height: 80px; }
     [template=feed] .item .image {
-      height: 100px;
+      height: 150px;
       background: #eee;
       margin: -15px -16px 15px;
       background-size: cover;

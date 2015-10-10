@@ -71,7 +71,9 @@ gulp.task('gen-client-lib-js', function () {
         'src/client/bower-components/jquery/dist/jquery.min.js',
         'src/client/bower-components/angular/angular.min.js',
         'src/client/bower-components/angular-ui-router/release/angular-ui-router.min.js',
-        'src/client/bower-components/lodash/lodash.min.js'
+        'src/client/bower-components/lodash/lodash.min.js',
+        'src/client/bower-components/fastclick/lib/fastclick.js',
+        'src/client/bower-components/inobounce/inobounce.js'
     ])
         .pipe(concat('lib.js'))
         .pipe(gulp.dest("release/client/public"));

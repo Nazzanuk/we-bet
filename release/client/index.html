@@ -128,6 +128,368 @@
     </div>
 
 </script>
+<!doctype html>
+<html>
+<head>
+	<title>iNoBounce Example - Full</title>
+
+	<!-- Ensure correct presentation on iOS -->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+
+	<!-- iOCSS for styling -->
+	<link rel="stylesheet" href="http://lazd.github.io/iOCSS/css/io.css">
+
+	<!-- iNoBounce to prevent bouncing -->
+	<script src="../inobounce.js"></script>
+
+	<script>
+		// Allow toggling of iNoBounce with the toggle button
+		window.addEventListener('load', function() {
+			var enabled = true;
+			var toggle = document.getElementById('iNoBounceToggle');
+			toggle.addEventListener('click', function() {
+				if (enabled) {
+					iNoBounce.disable();
+					toggle.classList.add('default');
+					toggle.innerHTML = 'Enable';
+				}
+				else {
+					iNoBounce.enable();
+					toggle.classList.remove('default');
+					toggle.innerHTML = 'Disable';
+				}
+				enabled = !enabled;
+			}, false);
+		}, false);
+	</script>
+</head>
+
+<body class="iOCSS">
+
+	<header class="header">
+		<h1>iNoBounce</h1>
+		
+		<div>
+			<button id="iNoBounceToggle" class="button">Disable</button>
+		</div>
+	</header>
+
+	<ul class="list scrollable">
+		<li>List Item 1</li>
+		<li>List Item 2</li>
+		<li>List Item 3</li>
+		<li>List Item 4</li>
+		<li>List Item 5</li>
+		<li>List Item 6</li>
+		<li>List Item 7</li>
+		<li>List Item 8</li>
+		<li>List Item 9</li>
+		<li>List Item 10</li>
+		<li>List Item 11</li>
+		<li>List Item 12</li>
+		<li>List Item 13</li>
+		<li>List Item 14</li>
+		<li>List Item 15</li>
+		<li>List Item 16</li>
+		<li>List Item 17</li>
+		<li>List Item 18</li>
+		<li>List Item 19</li>
+		<li>List Item 20</li>
+		<li>List Item 20</li>
+		<li>List Item 21</li>
+		<li>List Item 22</li>
+		<li>List Item 23</li>
+		<li>List Item 24</li>
+		<li>List Item 25</li>
+		<li>List Item 26</li>
+		<li>List Item 27</li>
+		<li>List Item 28</li>
+		<li>List Item 29</li>
+		<li>List Item 20</li>
+		<li>List Item 30</li>
+		<li>List Item 31</li>
+		<li>List Item 32</li>
+		<li>List Item 33</li>
+		<li>List Item 34</li>
+		<li>List Item 35</li>
+		<li>List Item 36</li>
+		<li>List Item 37</li>
+		<li>List Item 38</li>
+		<li>List Item 39</li>
+		<li>List Item 40</li>
+	</ul>
+
+</body>
+</html>
+
+<script src="../inobounce.js"></script>
+
+<style>
+    div {
+        height: 150px;
+        border: 1px solid gray;
+        overflow: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+</style>
+
+<div>
+	<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse tempus volutpat tortor ut accumsan. Suspendisse congue est eu ornare hendrerit. Suspendisse a eros at quam scelerisque rutrum non in turpis. In vel lacus at mi suscipit varius at imperdiet ipsum. Sed non lectus nec nibh gravida gravida. In vel fringilla dolor. Ut elit nisi, gravida nec porttitor vel, egestas viverra magna. Morbi sagittis elementum velit nec elementum. Donec ultrices ultricies vulputate. Suspendisse potenti. Vestibulum ornare nisl eget ligula fringilla, a sagittis massa fermentum.</p>
+
+	<p>Maecenas tincidunt ante quam, ac tincidunt felis eleifend sed. Aliquam non ornare quam. In hac habitasse platea dictumst. Nulla facilisi. Cras condimentum lorem lectus, vulputate ornare urna sodales ornare. Sed dapibus fermentum velit. Etiam vitae hendrerit nulla, eget adipiscing tortor. Proin dolor massa, volutpat in bibendum sed, dapibus sit amet nisi. Maecenas quis enim eget quam eleifend convallis. Maecenas aliquet dolor in arcu pellentesque, id consequat arcu facilisis. In hac habitasse platea dictumst. Etiam a sollicitudin eros, quis semper ipsum. Nam adipiscing dui id euismod feugiat. Morbi posuere tellus ut odio convallis egestas. Nunc erat tellus, placerat id orci ut, semper sodales lectus.</p>
+
+	<p>Sed faucibus sed augue et posuere. Praesent vel pellentesque quam, vel blandit justo. Donec eu velit vitae elit blandit malesuada. Ut dignissim metus nec urna ullamcorper aliquam. Phasellus nec dolor lacus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Curabitur tempor nec erat et eleifend.</p>
+
+	<p>Pellentesque vitae aliquam nibh. Praesent vel varius dui. Donec convallis congue sapien, id imperdiet nibh aliquet ac. Duis id ipsum vitae libero venenatis tristique ac eget tellus. Maecenas id egestas velit. Fusce tincidunt consectetur varius. Duis pulvinar ligula in ornare gravida. Integer tristique molestie enim quis malesuada. Duis id metus malesuada dui sagittis fermentum. Cras vulputate hendrerit nunc laoreet adipiscing.</p>
+
+	<p>Maecenas sapien ante, fringilla eu ligula non, tristique egestas sapien. Fusce vestibulum scelerisque magna, quis laoreet turpis vestibulum id. Morbi nec erat ligula. Proin bibendum, nisl dignissim bibendum hendrerit, risus nisl posuere enim, eu pretium augue tortor et nibh. Praesent et massa vel massa hendrerit mollis vitae et metus. Morbi a tristique velit. Sed sed eleifend est. Duis ut nulla sed nibh viverra blandit quis vitae orci. Donec risus eros, fermentum eget tellus pharetra, placerat molestie enim. Maecenas vitae massa eros. Nulla blandit mauris ut tristique sagittis. Nam venenatis lacus vitae risus ultricies, ac mattis lorem iaculis. Nulla molestie, justo ut eleifend sagittis, sapien nisi interdum dui, non vulputate tellus magna vitae massa. Ut accumsan, erat at adipiscing adipiscing, tellus felis sollicitudin leo, a dictum elit nibh id arcu. Maecenas consequat vitae erat sed auctor.</p>
+</div>
+
+<!doctype html>
+<html>
+<title>iNoBounce Example - Touchable</title>
+
+<!-- Ensure correct presentation on iOS -->
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+<!-- iNoBounce to prevent bouncing -->
+<script src="../inobounce.js"></script>
+
+<style>
+	body, html {
+		height: 100%; /* Fill the window */
+	}
+
+	body {
+		font-family: sans-serif;
+		margin: 0;
+	}
+
+	/* A simple CSS class to enable scrolling with momentum on iOS */
+	.scrollable {
+		overflow: auto;
+		-webkit-overflow-scrolling: touch;
+	}
+
+	#drawing {
+		position: absolute;
+		top: 0;
+		width: 100%;
+		height: 50%;
+		bottom: 50%;
+		left: 0;
+		right: 0;
+		box-sizing: border-box;
+		border: 1px solid gray;
+	}
+
+	ul {
+		position: absolute;
+		top: 50%;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+
+	li {
+		margin: 0;
+		padding: 0.5em 1em;
+		background: -webkit-linear-gradient(top, rgb(255,255,255) 0%,rgb(238,238,238) 100%);
+		background: linear-gradient(to bottom, rgb(255,255,255) 0%,rgb(238,238,238) 100%);
+	}
+</style>
+
+<canvas id="drawing"></canvas>
+<script>
+	window.addEventListener('load', function() {
+		// Get the device's pixel ratio
+		var pixelRatio = window.devicePixelRatio || 1;
+
+		// Get the canvas context
+		var canvas = document.getElementById('drawing');
+		var ctx = canvas.getContext('2d');
+
+		// Set the width according to pixel ratio
+		function setWidth() {
+			canvas.width = document.body.clientWidth * pixelRatio;
+			canvas.height = document.body.clientHeight/2 * pixelRatio;
+			console.log(canvas.width, canvas.height)
+		}
+
+		// Store the position of the last touch
+		var lastTouch = { x: null, y: null };
+		
+		// Add a few touch listeners
+		canvas.addEventListener('touchmove', function(evt) {
+			if (evt.touches && evt.touches.length) {
+				// Get the position of the touch
+				var touch = evt.touches[0];
+				var x = touch.pageX*pixelRatio;
+				var y = touch.pageY*pixelRatio;
+
+				// Draw a line
+				if (lastTouch.x !== null) {
+					ctx.beginPath();
+					ctx.moveTo(lastTouch.x, lastTouch.y);
+					ctx.lineTo(x, y);
+					ctx.closePath();
+					ctx.stroke();
+				}
+
+				// Store the coordinates for the start of our next line
+				lastTouch.x = x;
+				lastTouch.y = y;
+			}
+		}, false);
+
+		canvas.addEventListener('touchend', function(evt) {
+			lastTouch.x = null;
+			lastTouch.y = null;
+		}, false);
+
+		// Handle rotation
+		window.addEventListener('orientationchange', setWidth, false);
+
+		// Finally, set the initial width
+		setWidth();
+	}, false);
+</script>
+
+<ul class="scrollable">
+	<li>List Item 1</li>
+	<li>List Item 2</li>
+	<li>List Item 3</li>
+	<li>List Item 4</li>
+	<li>List Item 5</li>
+	<li>List Item 6</li>
+	<li>List Item 7</li>
+	<li>List Item 8</li>
+	<li>List Item 9</li>
+	<li>List Item 10</li>
+	<li>List Item 11</li>
+	<li>List Item 12</li>
+	<li>List Item 13</li>
+	<li>List Item 14</li>
+	<li>List Item 15</li>
+	<li>List Item 16</li>
+	<li>List Item 17</li>
+	<li>List Item 18</li>
+	<li>List Item 19</li>
+	<li>List Item 20</li>
+	<li>List Item 20</li>
+	<li>List Item 21</li>
+	<li>List Item 22</li>
+	<li>List Item 23</li>
+	<li>List Item 24</li>
+	<li>List Item 25</li>
+	<li>List Item 26</li>
+	<li>List Item 27</li>
+	<li>List Item 28</li>
+	<li>List Item 29</li>
+	<li>List Item 20</li>
+	<li>List Item 30</li>
+	<li>List Item 31</li>
+	<li>List Item 32</li>
+	<li>List Item 33</li>
+	<li>List Item 34</li>
+	<li>List Item 35</li>
+	<li>List Item 36</li>
+	<li>List Item 37</li>
+	<li>List Item 38</li>
+	<li>List Item 39</li>
+	<li>List Item 40</li>
+</ul>
+
+</html>
+<!doctype html>
+<html>
+<title>iNoBounce Example - Simple</title>
+
+<!-- iNoBounce to prevent bouncing -->
+<script src="../inobounce.js"></script>
+
+<style>
+	body, html {
+		height: 100%; /* Fill the window */
+	}
+
+	body {
+		font-family: sans-serif;
+		margin: 0;
+	}
+
+	/* A simple CSS class to enable elastic scrolling on iOS */
+	.scrollable {
+		overflow-y: auto;
+		-webkit-overflow-scrolling: touch;
+	}
+
+	ul {
+		height: 100%; /* Fill the window */
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+
+	li {
+		margin: 0;
+		padding: 0.5em 1em;
+		background: -webkit-linear-gradient(top, rgb(255,255,255) 0%,rgb(238,238,238) 100%);
+		background: linear-gradient(to bottom, rgb(255,255,255) 0%,rgb(238,238,238) 100%);
+	}
+</style>
+
+<ul class="scrollable">
+	<li>List Item 1</li>
+	<li>List Item 2</li>
+	<li>List Item 3</li>
+	<li>List Item 4</li>
+	<li>List Item 5</li>
+	<li>List Item 6</li>
+	<li>List Item 7</li>
+	<li>List Item 8</li>
+	<li>List Item 9</li>
+	<li>List Item 10</li>
+	<li>List Item 11</li>
+	<li>List Item 12</li>
+	<li>List Item 13</li>
+	<li>List Item 14</li>
+	<li>List Item 15</li>
+	<li>List Item 16</li>
+	<li>List Item 17</li>
+	<li>List Item 18</li>
+	<li>List Item 19</li>
+	<li>List Item 20</li>
+	<li>List Item 20</li>
+	<li>List Item 21</li>
+	<li>List Item 22</li>
+	<li>List Item 23</li>
+	<li>List Item 24</li>
+	<li>List Item 25</li>
+	<li>List Item 26</li>
+	<li>List Item 27</li>
+	<li>List Item 28</li>
+	<li>List Item 29</li>
+	<li>List Item 20</li>
+	<li>List Item 30</li>
+	<li>List Item 31</li>
+	<li>List Item 32</li>
+	<li>List Item 33</li>
+	<li>List Item 34</li>
+	<li>List Item 35</li>
+	<li>List Item 36</li>
+	<li>List Item 37</li>
+	<li>List Item 38</li>
+	<li>List Item 39</li>
+	<li>List Item 40</li>
+</ul>
+
+</html>
 <div data-template="footer">
     <div class="footer">
     </div>

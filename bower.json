@@ -18,7 +18,9 @@
     "angular": "~1.4.7",
     "angular-ui-router": "~0.2.15",
     "bootstrap": "~3.3.5",
+    "fastclick": "~1.0.6",
     "font-awesome": "fontawesome#~4.4.0",
+    "inobounce": "~0.1.2",
     "jquery": "~2.1.4",
     "lodash": "~3.10.1"
   }

@@ -1,4 +1,7 @@
-var app = angular.module('app', ['ui.router']);
+var app = angular.module('app', ['ui.router']).
+    run(function() {
+        FastClick.attach(document.body);
+    });;
 
 app.directive('ngEnter', () => {
     return (scope, element, attrs) => {
