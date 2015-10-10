@@ -127,6 +127,18 @@
 
     </div>
 </script>
+<script type="text/ng-template" id="menu-bar.html">
+    <div template="menu">
+        <div class="menu-background" ng-class="{active:isMenuVisible()}" ng-click="setMenuVisible(false)"></div>
+        <div class="menu" ng-class="{active:isMenuVisible()}" ng-click="setMenuVisible(false)">
+            <div class="menu-header">
+                <div class="header-title">Nathan Nelson</div>
+            </div>
+            <div class="menu-item"><i class="fa fa-fw fa-users"></i> &nbsp; New Group</div>
+            <div class="menu-item" ng-click="logOut()"><i class="fa fa-fw fa-sign-out"></i> &nbsp; Logout</div>
+        </div>
+    </div>
+</script>
 <script type="text/ng-template" id="login.html">
     <div template="login">
         <div class="login-container">
@@ -137,8 +149,8 @@
             </div>
             <div class="login-bottom">
                 <div class="login-thin">
-                    <input class="input block" type="text" placeholder="Email" ng-model="username" ng-init="username = 'nathan'">
-                    <input class="input block" type="password" placeholder="Password" ng-model="password" ng-init="password = 'nathan'">
+                    <input class="input block" ng-enter="login(username, password)" type="text" placeholder="Email" ng-model="username" ng-init="username = 'nathan'">
+                    <input class="input block" ng-enter="login(username, password)" type="password" placeholder="Password" ng-model="password" ng-init="password = 'nathan'">
                     <div class="butn block primary" ng-click="login(username, password)">Sign In</div>
                     <div class="butn block grey">Register</div>
                 </div>
@@ -155,18 +167,6 @@
             <div class="bar-item" ng-class="{active:isCurrentNav('single')}" ng-click="setCurrentNav('single')">
                 Single
             </div>
-        </div>
-    </div>
-</script>
-<script type="text/ng-template" id="menu-bar.html">
-    <div template="menu">
-        <div class="menu-background" ng-class="{active:isMenuVisible()}" ng-click="setMenuVisible(false)"></div>
-        <div class="menu" ng-class="{active:isMenuVisible()}" ng-click="setMenuVisible(false)">
-            <div class="menu-header">
-                <div class="header-title">Nathan Nelson</div>
-            </div>
-            <div class="menu-item"><i class="fa fa-fw fa-users"></i> &nbsp; New Group</div>
-            <div class="menu-item" ng-click="logOut()"><i class="fa fa-fw fa-sign-out"></i> &nbsp; Logout</div>
         </div>
     </div>
 </script>

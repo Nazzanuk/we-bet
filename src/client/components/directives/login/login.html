@@ -8,8 +8,8 @@
             </div>
             <div class="login-bottom">
                 <div class="login-thin">
-                    <input class="input block" type="text" placeholder="Email" ng-model="username" ng-init="username = 'nathan'">
-                    <input class="input block" type="password" placeholder="Password" ng-model="password" ng-init="password = 'nathan'">
+                    <input class="input block" ng-enter="login(username, password)" type="text" placeholder="Email" ng-model="username" ng-init="username = 'nathan'">
+                    <input class="input block" ng-enter="login(username, password)" type="password" placeholder="Password" ng-model="password" ng-init="password = 'nathan'">
                     <div class="butn block primary" ng-click="login(username, password)">Sign In</div>
                     <div class="butn block grey">Register</div>
                 </div>
