@@ -43,6 +43,16 @@
         <div class="alert-message {{getColour()}}" ng-class="{active:getActive()}" ng-click="setActive(false)" ng-bind="getMessage()"></div>
     </div>
 </script>
+<script type="text/ng-template" id="group-hero.html">
+    <div template="group-hero">
+        <div class="group-hero" style="background-image: url('https://unsplash.it/750/750/?random&10')">
+            <div class="hero-background"></div>
+            <div class="hero-title">
+                Premiership Game Of The Week <br/> dddd
+            </div>
+        </div>
+    </div>
+</script>
 <script type="text/ng-template" id="feed.html">
     <div class="case">
 
@@ -127,6 +137,21 @@
 
     </div>
 </script>
+<script type="text/ng-template" id="group-nav-bar.html">
+    <div template="group-nav-bar">
+        <div class="bar">
+            <div class="bar-item" ng-class="{active:isCurrentGroupNav('leaderboard')}" ng-click="setCurrentGroupNav('leaderboard')">
+                Leaderboard
+            </div>
+            <div class="bar-item" ng-class="{active:isCurrentGroupNav('bet')}" ng-click="setCurrentGroupNav('bet')">
+                Bet
+            </div>
+            <div class="bar-item" ng-class="{active:isCurrentGroupNav('chat')}" ng-click="setCurrentGroupNav('chat')">
+                Chat
+            </div>
+        </div>
+    </div>
+</script>
 <script type="text/ng-template" id="login.html">
     <div template="login">
         <div class="login-container">
@@ -186,7 +211,9 @@
 </script>
 <script type="text/ng-template" id="group-screen.html">
     <div screen>
-        group
+
+        <group-hero></group-hero>
+        <group-nav-bar></group-nav-bar>
     </div>
 </script>
 <script type="text/ng-template" id="home-screen.html">

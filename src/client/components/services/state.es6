@@ -4,6 +4,7 @@ app.factory('State', function ($rootScope, $http, $state) {
 
     var state = {
         currentNav: "groups",
+        currentGroupNav: "leaderboard",
         loggedIn: false,
         menuVisible: false,
         currentGroup:""
@@ -26,8 +27,12 @@ app.factory('State', function ($rootScope, $http, $state) {
         $state.go('splash');
     };
 
-    var isCurrentNav = (nav) => {
-        return state.currentNav == nav;
+    var isCurrentNav = (name) => {
+        return state.currentNav == name;
+    };
+
+    var isCurrentGroupNav = (name) => {
+        return state.currentGroupNav == name;
     };
 
     var getStateAttr = (attr) => {
@@ -45,13 +50,21 @@ app.factory('State', function ($rootScope, $http, $state) {
 
     return {
         isCurrentNav: isCurrentNav,
+        isCurrentGroupNav: isCurrentGroupNav,
         isLoggedIn: getStateAttr('loggedIn'),
         logOut: logOut,
+
         getCurrentNav: getStateAttr('currentNav'),
         setCurrentNav: setStateAttr('currentNav'),
+
+        getCurrentGroupNav: getStateAttr('currentGroupNav'),
+        setCurrentGroupNav: setStateAttr('currentGroupNav'),
+
         setCurrentGroup: setStateAttr('currentGroup'),
+
         isMenuVisible: getStateAttr('menuVisible'),
         setMenuVisible: setStateAttr('menuVisible'),
+
         setLoggedIn: setStateAttr('loggedIn')
     }
 });

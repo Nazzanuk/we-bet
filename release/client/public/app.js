@@ -140,6 +140,7 @@ app.factory('State', function ($rootScope, $http, $state) {
 
     var state = {
         currentNav: "groups",
+        currentGroupNav: "leaderboard",
         loggedIn: false,
         menuVisible: false,
         currentGroup: ""
@@ -162,8 +163,12 @@ app.factory('State', function ($rootScope, $http, $state) {
         $state.go('splash');
     };
 
-    var isCurrentNav = function isCurrentNav(nav) {
-        return state.currentNav == nav;
+    var isCurrentNav = function isCurrentNav(name) {
+        return state.currentNav == name;
+    };
+
+    var isCurrentGroupNav = function isCurrentGroupNav(name) {
+        return state.currentGroupNav == name;
     };
 
     var getStateAttr = function getStateAttr(attr) {
@@ -181,13 +186,21 @@ app.factory('State', function ($rootScope, $http, $state) {
 
     return {
         isCurrentNav: isCurrentNav,
+        isCurrentGroupNav: isCurrentGroupNav,
         isLoggedIn: getStateAttr('loggedIn'),
         logOut: logOut,
+
         getCurrentNav: getStateAttr('currentNav'),
         setCurrentNav: setStateAttr('currentNav'),
+
+        getCurrentGroupNav: getStateAttr('currentGroupNav'),
+        setCurrentGroupNav: setStateAttr('currentGroupNav'),
+
         setCurrentGroup: setStateAttr('currentGroup'),
+
         isMenuVisible: getStateAttr('menuVisible'),
         setMenuVisible: setStateAttr('menuVisible'),
+
         setLoggedIn: setStateAttr('loggedIn')
     };
 });
@@ -209,6 +222,22 @@ app.directive('alert', function (Alert) {
             scope.getActive = Alert.getActive;
             scope.setActive = Alert.setActive;
             scope.switchActive = Alert.switchActive;
+        }
+    };
+});
+
+'use strict';
+
+app.directive('groupHero', function ($timeout, API, $state, State) {
+    return {
+        templateUrl: 'group-hero.html',
+        scope: {},
+
+        link: function link(scope, element, attrs) {
+
+            var init = function init() {};
+
+            init();
         }
     };
 });
@@ -237,6 +266,26 @@ app.directive('feed', function ($timeout, API, $state, State) {
 
             scope.feedHeight = feedHeight;
             scope.setCurrentGroup = setCurrentGroup;
+        }
+    };
+});
+
+'use strict';
+
+app.directive('groupNavBar', function ($timeout, API, $state, State) {
+    return {
+        templateUrl: 'group-nav-bar.html',
+        scope: {},
+
+        link: function link(scope, element, attrs) {
+
+            var init = function init() {};
+
+            init();
+
+            scope.isCurrentGroupNav = State.isCurrentGroupNav;
+            scope.getCurrentGroupNav = State.getCurrentGroupNav;
+            scope.setCurrentGroupNav = State.setCurrentGroupNav;
         }
     };
 });
