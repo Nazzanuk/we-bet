@@ -13,17 +13,6 @@ app.directive('ngEnter', function () {
         });
     };
 });
-app.controller('ScreenCtrl', function ($element, $timeout) {
-
-    var init = function init() {
-        $timeout(function () {
-            return $element.find('[screen]').addClass('active');
-        }, 50);
-    };
-
-    init();
-});
-
 app.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
 
     var resolve = {
@@ -52,6 +41,17 @@ app.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
 
     //$locationProvider.html5Mode(true);
 });
+app.controller('ScreenCtrl', function ($element, $timeout) {
+
+    var init = function init() {
+        $timeout(function () {
+            return $element.find('[screen]').addClass('active');
+        }, 50);
+    };
+
+    init();
+});
+
 'use strict';
 
 app.factory('Alert', function ($timeout) {
@@ -182,6 +182,28 @@ app.directive('alert', function (Alert) {
 
 'use strict';
 
+app.directive('feed', function ($timeout, API, $state) {
+    return {
+        templateUrl: 'feed.html',
+        scope: {},
+
+        link: function link(scope, element, attrs) {
+
+            var feedHeight = function feedHeight() {
+                return $(window).height() - 50 + 'px';
+            };
+
+            var init = function init() {};
+
+            init();
+
+            scope.feedHeight = feedHeight;
+        }
+    };
+});
+
+'use strict';
+
 app.directive('login', function ($timeout, API, $state, Alert) {
     return {
         templateUrl: 'login.html',
@@ -205,28 +227,6 @@ app.directive('login', function ($timeout, API, $state, Alert) {
             init();
 
             scope.login = login;
-        }
-    };
-});
-
-'use strict';
-
-app.directive('feed', function ($timeout, API, $state) {
-    return {
-        templateUrl: 'feed.html',
-        scope: {},
-
-        link: function link(scope, element, attrs) {
-
-            var feedHeight = function feedHeight() {
-                return $(window).height() - 50 + 'px';
-            };
-
-            var init = function init() {};
-
-            init();
-
-            scope.feedHeight = feedHeight;
         }
     };
 });
