@@ -49,7 +49,7 @@ app.controller('ScreenCtrl', function ($element, $timeout, State, $state) {
         $timeout(function () {
             return $element.find('[screen]').addClass('active');
         }, 50);
-        if (!State.isLoggedIn()) $state.go('splash');
+        if (!State.isLoggedIn()) $state.go('splash');else $state.go('home');
     };
 
     init();
@@ -197,6 +197,28 @@ app.directive('alert', function (Alert) {
 
 'use strict';
 
+app.directive('feed', function ($timeout, API, $state) {
+    return {
+        templateUrl: 'feed.html',
+        scope: {},
+
+        link: function link(scope, element, attrs) {
+
+            var feedHeight = function feedHeight() {
+                return $(window).height() - 80 + 'px';
+            };
+
+            var init = function init() {};
+
+            init();
+
+            scope.feedHeight = feedHeight;
+        }
+    };
+});
+
+'use strict';
+
 app.directive('login', function ($timeout, API, $state, Alert, State) {
     return {
         templateUrl: 'login.html',
@@ -227,22 +249,20 @@ app.directive('login', function ($timeout, API, $state, Alert, State) {
 
 'use strict';
 
-app.directive('feed', function ($timeout, API, $state) {
+app.directive('navBar', function ($timeout, API, $state, State) {
     return {
-        templateUrl: 'feed.html',
+        templateUrl: 'nav-bar.html',
         scope: {},
 
         link: function link(scope, element, attrs) {
-
-            var feedHeight = function feedHeight() {
-                return $(window).height() - 80 + 'px';
-            };
 
             var init = function init() {};
 
             init();
 
-            scope.feedHeight = feedHeight;
+            scope.isCurrentNav = State.isCurrentNav;
+            scope.getCurrentNav = State.getCurrentNav;
+            scope.setCurrentNav = State.setCurrentNav;
         }
     };
 });
@@ -263,26 +283,6 @@ app.directive('menuBar', function (State) {
             scope.logOut = State.logOut;
             scope.isMenuVisible = State.isMenuVisible;
             scope.setMenuVisible = State.setMenuVisible;
-        }
-    };
-});
-
-'use strict';
-
-app.directive('navBar', function ($timeout, API, $state, State) {
-    return {
-        templateUrl: 'nav-bar.html',
-        scope: {},
-
-        link: function link(scope, element, attrs) {
-
-            var init = function init() {};
-
-            init();
-
-            scope.isCurrentNav = State.isCurrentNav;
-            scope.getCurrentNav = State.getCurrentNav;
-            scope.setCurrentNav = State.setCurrentNav;
         }
     };
 });
