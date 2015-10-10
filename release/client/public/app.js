@@ -39,6 +39,11 @@ app.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
         templateUrl: "home-screen.html",
         controller: "ScreenCtrl",
         resolve: resolve
+    }).state('group', {
+        url: "/group",
+        templateUrl: "group-screen.html",
+        controller: "ScreenCtrl",
+        resolve: resolve
     });
 
     //$locationProvider.html5Mode(true);
@@ -49,7 +54,6 @@ app.controller('ScreenCtrl', function ($element, $timeout, State, $state) {
         $timeout(function () {
             return $element.find('[screen]').addClass('active');
         }, 50);
-        if (!State.isLoggedIn()) $state.go('splash');else $state.go('home');
     };
 
     init();
@@ -137,8 +141,21 @@ app.factory('State', function ($rootScope, $http, $state) {
     var state = {
         currentNav: "groups",
         loggedIn: false,
-        menuVisible: false
+        menuVisible: false,
+        currentGroup: ""
     };
+
+    $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
+
+        if (state.loggedIn && toState.name == 'splash') {
+            event.preventDefault();
+        }
+
+        if (!state.loggedIn && toState.name != 'splash') {
+            event.preventDefault();
+            $state.go('splash');
+        }
+    });
 
     var logOut = function logOut() {
         state.loggedIn = false;
@@ -168,6 +185,7 @@ app.factory('State', function ($rootScope, $http, $state) {
         logOut: logOut,
         getCurrentNav: getStateAttr('currentNav'),
         setCurrentNav: setStateAttr('currentNav'),
+        setCurrentGroup: setStateAttr('currentGroup'),
         isMenuVisible: getStateAttr('menuVisible'),
         setMenuVisible: setStateAttr('menuVisible'),
         setLoggedIn: setStateAttr('loggedIn')
@@ -197,7 +215,7 @@ app.directive('alert', function (Alert) {
 
 'use strict';
 
-app.directive('feed', function ($timeout, API, $state) {
+app.directive('feed', function ($timeout, API, $state, State) {
     return {
         templateUrl: 'feed.html',
         scope: {},
@@ -208,11 +226,47 @@ app.directive('feed', function ($timeout, API, $state) {
                 return $(window).height() - 80 + 'px';
             };
 
+            var setCurrentGroup = function setCurrentGroup(group) {
+                State.setCurrentGroup(group);
+                $state.go('group');
+            };
+
             var init = function init() {};
 
             init();
 
             scope.feedHeight = feedHeight;
+            scope.setCurrentGroup = setCurrentGroup;
+        }
+    };
+});
+
+'use strict';
+
+app.directive('login', function ($timeout, API, $state, Alert, State) {
+    return {
+        templateUrl: 'login.html',
+        scope: {},
+
+        link: function link(scope, element, attrs) {
+
+            var login = function login(username, password) {
+                API.login({ username: username, password: password }).then(function (response) {
+                    if (response) {
+                        State.setLoggedIn(true);
+                        $state.go('home');
+                        Alert.showMessage("Welcome!");
+                    } else {
+                        Alert.showError("Username and password didn't match");
+                    }
+                });
+            };
+
+            var init = function init() {};
+
+            init();
+
+            scope.login = login;
         }
     };
 });
@@ -233,36 +287,6 @@ app.directive('menuBar', function (State) {
             scope.logOut = State.logOut;
             scope.isMenuVisible = State.isMenuVisible;
             scope.setMenuVisible = State.setMenuVisible;
-        }
-    };
-});
-
-'use strict';
-
-app.directive('login', function ($timeout, API, $state, Alert, State) {
-    return {
-        templateUrl: 'login.html',
-        scope: {},
-
-        link: function link(scope, element, attrs) {
-
-            var login = function login(username, password) {
-                API.login({ username: username, password: password }).then(function (response) {
-                    if (response) {
-                        $state.go('home');
-                        Alert.showMessage("Welcome!");
-                        State.setLoggedIn(true);
-                    } else {
-                        Alert.showError("Username and password didn't match");
-                    }
-                });
-            };
-
-            var init = function init() {};
-
-            init();
-
-            scope.login = login;
         }
     };
 });
@@ -296,10 +320,15 @@ app.directive('topBar', function ($timeout, API, $state, State) {
 
         link: function link(scope, element, attrs) {
 
+            var getCurrentPage = function getCurrentPage() {
+                return $state.current.name;
+            };
+
             var init = function init() {};
 
             init();
 
+            scope.getCurrentPage = getCurrentPage;
             scope.isLoggedIn = State.isLoggedIn;
             scope.isMenuVisible = State.isMenuVisible;
             scope.setMenuVisible = State.setMenuVisible;

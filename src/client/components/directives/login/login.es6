@@ -10,9 +10,9 @@ app.directive('login', ($timeout, API, $state, Alert, State) => {
             var login = (username, password) => {
                 API.login({username: username, password: password}).then(response => {
                     if (response) {
+                        State.setLoggedIn(true);
                         $state.go('home');
                         Alert.showMessage("Welcome!");
-                        State.setLoggedIn(true);
                     } else {
                         Alert.showError("Username and password didn't match");
                     }

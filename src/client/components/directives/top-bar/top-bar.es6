@@ -7,12 +7,17 @@ app.directive('topBar', ($timeout, API, $state, State) => {
 
         link(scope, element, attrs) {
 
+            var getCurrentPage = () => {
+                return $state.current.name
+            };
+
             var init = () => {
 
             };
 
             init();
 
+            scope.getCurrentPage = getCurrentPage;
             scope.isLoggedIn = State.isLoggedIn;
             scope.isMenuVisible = State.isMenuVisible;
             scope.setMenuVisible = State.setMenuVisible;

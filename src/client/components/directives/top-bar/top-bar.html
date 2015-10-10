@@ -1,6 +1,10 @@
 <script type="text/ng-template" id="top-bar.html">
     <div template="top-bar">
         <div class="bar" ng-class="{active:isLoggedIn()}">
+            <div class="back-butn" onclick="history.go(-1);" ng-show="getCurrentPage() != 'home'" z="{{getCurrentPage()}}">
+                <i class="fa fa-chevron-left"></i>
+            </div>
+
             <div class="menu-butn" ng-click="setMenuVisible(!isMenuVisible())">
                 <i class="fa fa-bars"></i>
             </div>

@@ -24,6 +24,12 @@ app.config(($stateProvider, $urlRouterProvider, $locationProvider) => {
             templateUrl: "home-screen.html",
             controller: "ScreenCtrl",
             resolve: resolve
+        })
+        .state('group', {
+            url: "/group",
+            templateUrl: "group-screen.html",
+            controller: "ScreenCtrl",
+            resolve: resolve
         });
 
     //$locationProvider.html5Mode(true);

@@ -1,6 +1,6 @@
 'use strict';
 
-app.directive('feed', ($timeout, API, $state) => {
+app.directive('feed', ($timeout, API, $state, State) => {
     return {
         templateUrl: 'feed.html',
         scope: {},
@@ -11,6 +11,11 @@ app.directive('feed', ($timeout, API, $state) => {
                 return ($(window).height() - 80) + 'px';
             };
 
+            var setCurrentGroup = (group) => {
+                State.setCurrentGroup(group);
+                $state.go('group')
+            };
+
             var init = () => {
 
             };
@@ -18,6 +23,7 @@ app.directive('feed', ($timeout, API, $state) => {
             init();
 
             scope.feedHeight = feedHeight;
+            scope.setCurrentGroup = setCurrentGroup;
         }
     }
 });

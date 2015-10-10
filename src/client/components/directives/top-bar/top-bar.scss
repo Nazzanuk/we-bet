@@ -1,8 +1,8 @@
 [template=top-bar] {
   .bar {
     height: 40px;
-    display : flex;
-    flex-direction: row;
+//    display : flex;
+//    flex-direction: row;
     top: 0;
     left: 0;
     right: 0;
@@ -23,6 +23,13 @@
       width: 40px;
       text-align: center;
       cursor: pointer;
+      float: right;
+    }
+
+    .back-butn {
+      @extend .menu-butn;
+      float: left;
+
     }
   }
 }

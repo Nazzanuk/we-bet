@@ -5,8 +5,21 @@ app.factory('State', function ($rootScope, $http, $state) {
     var state = {
         currentNav: "groups",
         loggedIn: false,
-        menuVisible: false
+        menuVisible: false,
+        currentGroup:""
     };
+
+    $rootScope.$on('$stateChangeStart', (event, toState, toParams, fromState, fromParams) => {
+
+        if (state.loggedIn && toState.name == 'splash') {
+            event.preventDefault();
+        }
+
+        if (!state.loggedIn && toState.name != 'splash') {
+            event.preventDefault();
+            $state.go('splash')
+        }
+    });
 
     var logOut = () => {
         state.loggedIn = false;
@@ -36,6 +49,7 @@ app.factory('State', function ($rootScope, $http, $state) {
         logOut: logOut,
         getCurrentNav: getStateAttr('currentNav'),
         setCurrentNav: setStateAttr('currentNav'),
+        setCurrentGroup: setStateAttr('currentGroup'),
         isMenuVisible: getStateAttr('menuVisible'),
         setMenuVisible: setStateAttr('menuVisible'),
         setLoggedIn: setStateAttr('loggedIn')
