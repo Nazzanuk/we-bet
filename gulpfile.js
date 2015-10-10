@@ -42,7 +42,7 @@ gulp.task('test-es6', function () {
 gulp.task("gen-client-html", function () {
     return gulp.src([
         "src/client/components/head/head.html",
-        "src/client/**/!(footer)*.html",
+        "src/client/components/**/!(footer)*.html",
         "src/client/components/footer/footer.html"
     ])
         .pipe(concat("index.html"))
