@@ -40,55 +40,77 @@
         <div class="alert-message {{getColour()}}" ng-class="{active:getActive()}" ng-click="setActive(false)" ng-bind="getMessage()"></div>
     </div>
 </script>
-<script type="text/ng-template" id="feed.html">
-    <div template="feed">
-        <div class="item">
-            <div class="score">25</div>
-            <div class="title">Game Of The Week</div>
-            <div class="description">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus ad aliquam architecto at blanditiis, eaque eligendi expedita ipsam iusto nam, quibusdam quis reiciendis rem tempore, temporibus. Adipisci beatae excepturi ipsam maiores neque, non officia officiis praesentium quo sed totam unde!
-            </div>
-        </div>
-        <div class="item">
-            <div class="score">80</div>
-            <div class="title">Game Of The Week</div>
-            <div class="description">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus ad aliquam architecto at blanditiis, eaque eligendi expedita ipsam iusto nam, quibusdam quis reiciendis rem tempore, temporibus. Adipisci beatae excepturi ipsam maiores neque, non officia officiis praesentium quo sed totam unde!
-            </div>
-        </div>
-
-
-
-    </div>
-</script>
 <script type="text/ng-template" id="login.html">
     <div template="login">
         <div class="login-container">
-            <div class="login-top">
+            <div class="login-top" style="background-image: url('/public/img/subtle-grey.png')">
+            <!--<div class="login-top">-->
                 <div class="top-title">We Bet</div>
-                <div class="top top-1"></div>
-                <div class="top top-2"></div>
-                <div class="top top-3"></div>
-                <div class="top top-4"></div>
+                <div class="top"></div>
             </div>
             <div class="login-bottom">
                 <div class="login-thin">
                     <input class="input block" type="text" placeholder="Email" ng-model="username" ng-init="username = 'nathan'">
                     <input class="input block" type="password" placeholder="Password" ng-model="password" ng-init="password = 'nathan'">
-                    <div class="butn block" ng-click="login(username, password)">Sign In</div>
-                    <div class="butn block primary">Register</div>
+                    <div class="butn block primary" ng-click="login(username, password)">Sign In</div>
+                    <div class="butn block grey">Register</div>
                 </div>
             </div>
         </div>
     </div>
 </script>
+<script type="text/ng-template" id="feed.html">
+    <div template="feed" style="height: {{feedHeight()}}">
+        <div class="items">
+            <div class="item-sizing">
+                <div class="item">
+                    <div class="score">25</div>
+                    <div class="image" style="background-image: url('http://i4.mirror.co.uk/incoming/article6572401.ece/ALTERNATES/s615b/Arsenal-vs-Manchester-United.jpg')"></div>
+                    <div class="item-content">
+                        <div class="title">Premiership Game Of The Week</div>
+                        <div class="description">
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus ad aliquam architecto at blanditiis, eaque eligendi expedita ipsam iusto nam, quibusdam quis reiciendis rem tempore, temporibus. Adipisci beatae excepturi ipsam maiores neque, non officia officiis praesentium quo sed totam unde!
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="item-sizing">
+                <div class="item">
+                    <div class="score">25</div>
+                    <div class="image" style="background-image: url('http://www.fifavip.net/upload/images/22222222.jpg')"></div>
+                    <div class="item-content">
+                        <div class="title">FIFA 16 Head to Head</div>
+                        <div class="description">
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus ad aliquam architecto at blanditiis, eaque eligendi expedita ipsam iusto nam, quibusdam quis reiciendis rem tempore, temporibus. Adipisci beatae excepturi ipsam maiores neque, non officia officiis praesentium quo sed totam unde!
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="item-sizing">
+                <div class="item">
+                    <div class="score">25</div>
+                    <div class="image" style="background-image: url('http://www.fifavip.net/upload/images/22222222.jpg')"></div>
+                    <div class="item-content">
+                        <div class="title">FIFA 16 Head to Head</div>
+                        <div class="description">
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus ad aliquam architecto at blanditiis, eaque eligendi expedita ipsam iusto nam, quibusdam quis reiciendis rem tempore, temporibus. Adipisci beatae excepturi ipsam maiores neque, non officia officiis praesentium quo sed totam unde!
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</script>
 <script type="text/ng-template" id="nav-bar.html">
     <div template="nav-bar">
         <div class="bar">
-            <div class="bar-item active">
+            <div class="bar-item" ng-class="{active:isCurrentNav('groups')}" ng-click="setCurrentNav('groups')">
                 Groups
             </div>
-            <div class="bar-item">
+            <div class="bar-item" ng-class="{active:isCurrentNav('single')}" ng-click="setCurrentNav('single')">
                 Single
             </div>
         </div>

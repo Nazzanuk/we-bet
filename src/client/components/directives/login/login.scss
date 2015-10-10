@@ -7,37 +7,18 @@
     background:white;
 
     .login-top {
-      background: $primary;
+      background: #0B71C7;
+//      background-size: cover;
+      background-position: center;
+
       height: 40vh;
       position: relative;
       overflow: hidden;
 
+
       .top {
-        height: 10vh;
-      }
-
-      .vert {
-        position: absolute;
-        width: 300%;
         height: 100%;
-        background: rgba(255,255,255,0.05);
-//        transform: rotate(45deg);
-      }
-
-      .top-1 {
-        background: rgba(255,255,255,0.15);
-      }
-
-      .top-2 {
-        background: rgba(255,255,255,0.10);
-      }
-
-      .top-3 {
-        background: rgba(255,255,255,0.05);
-      }
-
-      .top-4 {
-        background: rgba(255,255,255,0.0);
+        background: rgba(0,0,0,0.4);
       }
 
       .top-title {

@@ -7,10 +7,17 @@ app.directive('feed', ($timeout, API, $state) => {
 
         link(scope, element, attrs) {
 
+            var feedHeight = () => {
+                return ($(window).height() - 50) + 'px';
+            };
+
             var init = () => {
+
             };
 
             init();
+
+            scope.feedHeight = feedHeight;
         }
     }
 });

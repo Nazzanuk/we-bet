@@ -3,25 +3,28 @@ html {
   height: 100vh; }
 
 body {
+  background: #2b72ae;
   height: 100vh;
   overflow: hidden;
-  color: #555;
+  color: #444;
   font-family: "Raleway", sans-serif;
-  font-size: 15px;
+  font-size: 12px;
   font-weight: 400;
   line-height: 2.2; }
 
 [screen] {
   opacity: 0;
   transform: translateX(-50px);
-  transition: .3s; }
+  transition: .3s;
+  overflow: hidden;
+  height: 100vh; }
   [screen].active {
     opacity: 1;
     transform: translateX(0); }
 
 .butn {
   background: none;
-  border: 2px solid #3784ae;
+  border: 2px solid #2b72ae;
   border-radius: 50px;
   line-height: 36px;
   height: 40px;
@@ -30,19 +33,37 @@ body {
   font-weight: 400;
   text-align: center;
   margin-bottom: 30px;
-  color: #3784ae;
+  color: #2b72ae;
   outline: none;
   transition: .3s;
   cursor: pointer; }
   .butn.block {
     display: block; }
   .butn.primary {
-    border: 2px solid #3784ae;
-    background: #3784ae;
-    color: #ffffff; }
+    border: 2px solid #2b72ae;
+    background: #2b72ae;
+    color: white; }
+    .butn.primary:hover {
+      background: #3d8ccf;
+      color: #ffffff; }
+  .butn.grey {
+    border: 2px solid #444;
+    background: #444;
+    color: white; }
+    .butn.grey:hover {
+      border: 2px solid #5e5e5e;
+      background: #5e5e5e;
+      color: #ffffff; }
+  .butn.green {
+    border: 2px solid #97bc41;
+    color: #97bc41; }
+    .butn.green:hover {
+      border: 2px solid #acca66;
+      background: #acca66;
+      color: #ffffff; }
   .butn:hover {
-    border: 2px solid #509ec8;
-    background: #509ec8;
+    border: 2px solid #3d8ccf;
+    background: #3d8ccf;
     color: #ffffff; }
 
 .input {
@@ -53,7 +74,7 @@ body {
   line-height: 40px;
   height: 40px;
   padding: 0 20px;
-  color: #555;
+  color: #444;
   display: inline-block;
   font-weight: 400;
   text-align: center;
@@ -81,40 +102,10 @@ body {
   [template=alert] .alert-message.red {
     background: #b63c3c; }
   [template=alert] .alert-message.primary {
-    background: #3784ae; }
+    background: #2b72ae; }
   [template=alert] .alert-message.active {
     transform: translateY(0);
     opacity: 1; }
-
-[template=feed] .item {
-  padding: 15px;
-  position: relative;
-  border-bottom: 1px solid #eee; }
-  [template=feed] .item .score {
-    position: absolute;
-    top: 15px;
-    left: 15px;
-    height: 30px;
-    line-height: 30px;
-    width: 30px;
-    border-radius: 100px;
-    text-align: center;
-    color: #ffffff;
-    background: #97bc41;
-    font-size: 10px;
-    font-weight: bold; }
-  [template=feed] .item .title {
-    margin-left: 45px;
-    margin-bottom: 5px;
-    font-weight: bold;
-    line-height: 20px;
-    color: black; }
-  [template=feed] .item .description {
-    overflow: hidden;
-    font-size: 13px;
-    margin-left: 45px;
-    line-height: 20px;
-    height: 60px; }
 
 [template=login] .login-container {
   height: 100vh;
@@ -123,25 +114,14 @@ body {
   position: relative;
   background: white; }
   [template=login] .login-container .login-top {
-    background: #3784ae;
+    background: #0B71C7;
+    background-position: center;
     height: 40vh;
     position: relative;
     overflow: hidden; }
     [template=login] .login-container .login-top .top {
-      height: 10vh; }
-    [template=login] .login-container .login-top .vert {
-      position: absolute;
-      width: 300%;
       height: 100%;
-      background: rgba(255, 255, 255, 0.05); }
-    [template=login] .login-container .login-top .top-1 {
-      background: rgba(255, 255, 255, 0.15); }
-    [template=login] .login-container .login-top .top-2 {
-      background: rgba(255, 255, 255, 0.1); }
-    [template=login] .login-container .login-top .top-3 {
-      background: rgba(255, 255, 255, 0.05); }
-    [template=login] .login-container .login-top .top-4 {
-      background: rgba(255, 255, 255, 0); }
+      background: rgba(0, 0, 0, 0.4); }
     [template=login] .login-container .login-top .top-title {
       position: absolute;
       top: 50%;
@@ -162,22 +142,77 @@ body {
   max-width: 500px;
   margin: auto; }
 
+[template=feed] {
+  background: #2b72ae;
+  padding: 7.5px;
+  overflow-y: auto; }
+  [template=feed] .items {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap; }
+  [template=feed] .item-sizing {
+    padding: 7.5px;
+    width: 50%; }
+  [template=feed] .item {
+    background: #ffffff;
+    border-radius: 4px;
+    box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.3);
+    padding: 15px;
+    overflow: hidden;
+    position: relative;
+    border-bottom: 1px solid #eee; }
+    [template=feed] .item .item-content {
+      overflow: hidden;
+      height: 80px; }
+    [template=feed] .item .image {
+      height: 100px;
+      background: #eee;
+      margin: -15px -15px 15px;
+      background-size: cover;
+      background-position: center; }
+    [template=feed] .item .score {
+      position: absolute;
+      top: 85px;
+      left: 15px;
+      height: 30px;
+      line-height: 26px;
+      width: 30px;
+      border-radius: 100px;
+      text-align: center;
+      color: #fff;
+      background: #97bc41;
+      font-size: 10px;
+      font-weight: bold;
+      border: 2px solid white; }
+    [template=feed] .item .title {
+      margin-bottom: 5px;
+      font-weight: bold;
+      line-height: 20px;
+      color: black; }
+    [template=feed] .item .description {
+      font-size: 10px;
+      line-height: 20px; }
+
 [template=nav-bar] .bar {
   height: 50px;
   display: flex;
-  flex-direction: row; }
+  flex-direction: row;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10; }
   [template=nav-bar] .bar .bar-item {
-    background: #3784ae;
+    background: #26659a;
     flex: 1 1 auto;
     height: 50px;
     line-height: 47px;
-    border-bottom: 3px solid #3784ae;
+    border-bottom: 3px solid #26659a;
     color: #ffffff;
     text-align: center;
     font-weight: bold;
     cursor: pointer;
     transition: .3s; }
     [template=nav-bar] .bar .bar-item:hover {
-      border-bottom: 3px solid #509ec8; }
+      background: 3px solid #286ba4; }
     [template=nav-bar] .bar .bar-item.active {
       border-bottom: 3px solid white; }

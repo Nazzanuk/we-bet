@@ -41,6 +41,7 @@ app.factory('Alert', function ($timeout) {
     };
 
     var init = () => {
+
     };
 
     init();

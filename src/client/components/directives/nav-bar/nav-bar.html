@@ -1,10 +1,10 @@
 <script type="text/ng-template" id="nav-bar.html">
     <div template="nav-bar">
         <div class="bar">
-            <div class="bar-item active">
+            <div class="bar-item" ng-class="{active:isCurrentNav('groups')}" ng-click="setCurrentNav('groups')">
                 Groups
             </div>
-            <div class="bar-item">
+            <div class="bar-item" ng-class="{active:isCurrentNav('single')}" ng-click="setCurrentNav('single')">
                 Single
             </div>
         </div>

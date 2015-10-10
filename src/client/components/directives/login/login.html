@@ -1,19 +1,17 @@
 <script type="text/ng-template" id="login.html">
     <div template="login">
         <div class="login-container">
-            <div class="login-top">
+            <div class="login-top" style="background-image: url('/public/img/subtle-grey.png')">
+            <!--<div class="login-top">-->
                 <div class="top-title">We Bet</div>
-                <div class="top top-1"></div>
-                <div class="top top-2"></div>
-                <div class="top top-3"></div>
-                <div class="top top-4"></div>
+                <div class="top"></div>
             </div>
             <div class="login-bottom">
                 <div class="login-thin">
                     <input class="input block" type="text" placeholder="Email" ng-model="username" ng-init="username = 'nathan'">
                     <input class="input block" type="password" placeholder="Password" ng-model="password" ng-init="password = 'nathan'">
-                    <div class="butn block" ng-click="login(username, password)">Sign In</div>
-                    <div class="butn block primary">Register</div>
+                    <div class="butn block primary" ng-click="login(username, password)">Sign In</div>
+                    <div class="butn block grey">Register</div>
                 </div>
             </div>
         </div>

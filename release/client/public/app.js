@@ -13,6 +13,17 @@ app.directive('ngEnter', function () {
         });
     };
 });
+app.controller('ScreenCtrl', function ($element, $timeout) {
+
+    var init = function init() {
+        $timeout(function () {
+            return $element.find('[screen]').addClass('active');
+        }, 50);
+    };
+
+    init();
+});
+
 app.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
 
     var resolve = {
@@ -41,17 +52,6 @@ app.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
 
     //$locationProvider.html5Mode(true);
 });
-app.controller('ScreenCtrl', function ($element, $timeout) {
-
-    var init = function init() {
-        $timeout(function () {
-            return $element.find('[screen]').addClass('active');
-        }, 50);
-    };
-
-    init();
-});
-
 'use strict';
 
 app.factory('Alert', function ($timeout) {
@@ -131,10 +131,31 @@ app.factory('API', function ($rootScope, $http) {
 
 app.factory('State', function ($rootScope, $http) {
 
-    var state = {};
+    var state = {
+        currentNav: "groups"
+    };
+
+    var isCurrentNav = function isCurrentNav(nav) {
+        return state.currentNav == nav;
+    };
+
+    var getStateAttr = function getStateAttr(attr) {
+        return function () {
+            return state[attr];
+        };
+    };
+
+    var setStateAttr = function setStateAttr(attr) {
+        return function (value) {
+            state[attr] = value;
+            console.log('set state[' + attr + '] = ' + value);
+        };
+    };
 
     return {
-        login: login
+        isCurrentNav: isCurrentNav,
+        getCurrentNav: getStateAttr('currentNav'),
+        setCurrentNav: setStateAttr('currentNav')
     };
 });
 'use strict';
@@ -155,22 +176,6 @@ app.directive('alert', function (Alert) {
             scope.getActive = Alert.getActive;
             scope.setActive = Alert.setActive;
             scope.switchActive = Alert.switchActive;
-        }
-    };
-});
-
-'use strict';
-
-app.directive('feed', function ($timeout, API, $state) {
-    return {
-        templateUrl: 'feed.html',
-        scope: {},
-
-        link: function link(scope, element, attrs) {
-
-            var init = function init() {};
-
-            init();
         }
     };
 });
@@ -206,7 +211,29 @@ app.directive('login', function ($timeout, API, $state, Alert) {
 
 'use strict';
 
-app.directive('navBar', function ($timeout, API, $state) {
+app.directive('feed', function ($timeout, API, $state) {
+    return {
+        templateUrl: 'feed.html',
+        scope: {},
+
+        link: function link(scope, element, attrs) {
+
+            var feedHeight = function feedHeight() {
+                return $(window).height() - 50 + 'px';
+            };
+
+            var init = function init() {};
+
+            init();
+
+            scope.feedHeight = feedHeight;
+        }
+    };
+});
+
+'use strict';
+
+app.directive('navBar', function ($timeout, API, $state, State) {
     return {
         templateUrl: 'nav-bar.html',
         scope: {},
@@ -216,6 +243,10 @@ app.directive('navBar', function ($timeout, API, $state) {
             var init = function init() {};
 
             init();
+
+            scope.isCurrentNav = State.isCurrentNav;
+            scope.getCurrentNav = State.getCurrentNav;
+            scope.setCurrentNav = State.setCurrentNav;
         }
     };
 });

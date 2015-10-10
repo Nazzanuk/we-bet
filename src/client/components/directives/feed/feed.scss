@@ -1,42 +1,77 @@
 [template=feed] {
-  .item {
-//    height: 100px;
-    padding: 15px;
+  background: $primary;
+  padding: 7.5px;
 
+  overflow-y: auto;
+
+  .items {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .item-sizing {
+    padding: 7.5px;
+    width: 50%;
+  }
+
+  .item {
+    background: #ffffff;
+    border-radius: 4px;
+    box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.3);
+    padding: 15px;
+    overflow: hidden;
     position: relative;
     border-bottom: 1px solid #eee;
 
+    @media (max-width: 768px) {
+
+    }
+
+    .item-content {
+      overflow: hidden;
+      height: 80px;
+    }
+
+    .image {
+      height: 100px;
+      background: #eee;
+      margin: -15px -15px 15px;
+      background-size: cover;
+      background-position: center;
+    }
+
     .score {
       position: absolute;
-      top: 15px;
+      top: 85px;
       left: 15px;
       height: 30px;
-      line-height: 30px;
+      line-height: 26px;
       width: 30px;
       border-radius: 100px;
       text-align: center;
-      color: #ffffff;
+      color: #fff;
       background: $green;
       font-size: 10px;
       font-weight: bold;
+      border: 2px solid white;
     }
 
     .title {
-      margin-left: 45px;
+//      margin-left: 45px;
       margin-bottom: 5px;
       font-weight: bold;
       line-height: 20px;
       color: black;
-//      margin: 5px 0 5px 45px;
+      //      margin: 5px 0 5px 45px;
 
     }
 
     .description {
-      overflow: hidden;
-      font-size: 13px;
-      margin-left: 45px;
+//      overflow: hidden;
+      font-size: 10px;
+//      margin-left: 45px;
       line-height: 20px;
-      height: 60px;
     }
   }
 }

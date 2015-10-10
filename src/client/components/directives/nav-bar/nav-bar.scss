@@ -3,13 +3,17 @@
     height: 50px;
     display : flex;
     flex-direction: row;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 10;
 
     .bar-item {
-      background: $primary;
+      background: darken($primary, 5%);
       flex: 1 1 auto;
       height: 50px;
       line-height: 47px;
-      border-bottom: 3px solid $primary;
+      border-bottom: 3px solid darken($primary, 5%);
       color: #ffffff;
       text-align: center;
       font-weight: bold;
@@ -17,7 +21,7 @@
       transition: .3s;
 
       &:hover {
-        border-bottom: 3px solid lighten($primary, 10%);
+        background: 3px solid darken($primary, 2.5%);
       }
 
       &.active {

@@ -1,11 +1,11 @@
-$body: #555;
+$body: #444;
 $primary: #3784ae;
 $green: #97bc41;
 $red: #b63c3c;
 $orange: #b67e2c;
 $purple: #704ab6;
 
-$primary: #3784ae;
+$primary: #2b72ae;
 
 html {
   overflow: hidden;
@@ -13,11 +13,12 @@ html {
 }
 
 body {
+  background: $primary;
   height: 100vh;
   overflow: hidden;
   color: $body;
   font-family: "Raleway", sans-serif;
-  font-size: 15px;
+  font-size: 12px;
   font-weight: 400;
   line-height: 2.2;
 }
@@ -26,6 +27,8 @@ body {
   opacity: 0;
   transform: translateX(-50px);
   transition: .3s;
+  overflow: hidden;
+  height: 100vh;
 
   &.active {
     opacity: 1;
@@ -58,7 +61,36 @@ body {
   &.primary {
     border: 2px solid $primary;
     background: $primary;
-    color: #ffffff;
+    color: white;
+
+    &:hover {
+//      border: 2px solid lighten($primary, 10%);
+      background: lighten($primary, 10%);
+      color: #ffffff;
+    }
+  }
+
+  &.grey {
+    border: 2px solid $body;
+    background: $body;
+    color: white;
+
+    &:hover {
+      border: 2px solid lighten($body, 10%);
+      background: lighten($body, 10%);
+      color: #ffffff;
+    }
+  }
+
+  &.green {
+    border: 2px solid $green;
+    color: $green;
+
+    &:hover {
+      border: 2px solid lighten($green, 10%);
+      background: lighten($green, 10%);
+      color: #ffffff;
+    }
   }
 
   &:hover {
