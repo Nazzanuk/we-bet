@@ -1,14 +1,38 @@
 <script type="text/ng-template" id="group-nav-bar.html">
     <div template="group-nav-bar">
-        <div class="bar">
-            <div class="bar-item" ng-class="{active:isCurrentGroupNav('leaderboard')}" ng-click="setCurrentGroupNav('leaderboard')">
-                Leaderboard
+        <div class="case">
+            <div class="bar">
+                <div class="bar-item" ng-class="{active:isCurrentGroupNav('leaderboard')}" ng-click="setScreen(0);setCurrentGroupNav('leaderboard')">
+                    Leaderboard
+                </div>
+                <div class="bar-item" ng-class="{active:isCurrentGroupNav('bet')}" ng-click="setScreen(1);setCurrentGroupNav('bet')">
+                    Bet
+                </div>
+                <div class="bar-item" ng-class="{active:isCurrentGroupNav('chat')}" ng-click="setScreen(2);setCurrentGroupNav('chat')">
+                    Chat
+                </div>
             </div>
-            <div class="bar-item" ng-class="{active:isCurrentGroupNav('bet')}" ng-click="setCurrentGroupNav('bet')">
-                Bet
-            </div>
-            <div class="bar-item" ng-class="{active:isCurrentGroupNav('chat')}" ng-click="setCurrentGroupNav('chat')">
-                Chat
+            <div class="group-nav-content" style="transform:translateX({{getScreen() * -100}}%)">
+                <div class="content-row">
+                    <div class="leaderboard">
+                        <div class="leaderboard-item">
+                            <div class="image" style="background-image: url('https://pbs.twimg.com/profile_images/535203215260676096/kmRf0jUn_400x400.jpeg')"></div>
+                            <div class="points">45</div>
+                            <div class="name">Nathan N</div>
+                        </div>
+                        <div class="leaderboard-item">
+                            <div class="image" style="background-image: url('https://pbs.twimg.com/profile_images/603230570152361984/BlSDXc6r_400x400.jpg')"></div>
+                            <div class="points">45</div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="content-row">
+                    bet
+                </div>
+                <div class="content-row">
+
+                </div>
             </div>
         </div>
     </div>

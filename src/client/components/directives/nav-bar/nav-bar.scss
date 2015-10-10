@@ -11,11 +11,11 @@
 
     .bar-item {
       background: $primary;
-      flex: 1 1 auto;
+      flex: 1;
       height: 40px;
       line-height: 37px;
       border-bottom: 0px solid white;
-      color: white;
+      color: rgba(255,255,255,0.6);
       text-align: center;
       font-weight: bold;
       cursor: pointer;
@@ -23,10 +23,12 @@
 
       &:hover {
 //        background: 3px solid darken($primary, 2.5%);
+        color: white;
       }
 
       &.active {
         border-bottom: 3px solid white;
+        color: white;
 //        color: black;
       }
     }
