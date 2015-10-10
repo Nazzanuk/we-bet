@@ -30,6 +30,7 @@ body {
   overflow: hidden;
   height: 100vh;
   max-height: 100vh;
+  display:block;
 
   &.active {
     opacity: 1;
