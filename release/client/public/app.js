@@ -43,12 +43,13 @@ app.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
 
     //$locationProvider.html5Mode(true);
 });
-app.controller('ScreenCtrl', function ($element, $timeout) {
+app.controller('ScreenCtrl', function ($element, $timeout, State, $state) {
 
     var init = function init() {
         $timeout(function () {
             return $element.find('[screen]').addClass('active');
         }, 50);
+        if (!State.isLoggedIn()) $state.go('splash');
     };
 
     init();
@@ -131,10 +132,17 @@ app.factory('API', function ($rootScope, $http) {
 });
 'use strict';
 
-app.factory('State', function ($rootScope, $http) {
+app.factory('State', function ($rootScope, $http, $state) {
 
     var state = {
-        currentNav: "groups"
+        currentNav: "groups",
+        loggedIn: false,
+        menuVisible: false
+    };
+
+    var logOut = function logOut() {
+        state.loggedIn = false;
+        $state.go('splash');
     };
 
     var isCurrentNav = function isCurrentNav(nav) {
@@ -156,8 +164,13 @@ app.factory('State', function ($rootScope, $http) {
 
     return {
         isCurrentNav: isCurrentNav,
+        isLoggedIn: getStateAttr('loggedIn'),
+        logOut: logOut,
         getCurrentNav: getStateAttr('currentNav'),
-        setCurrentNav: setStateAttr('currentNav')
+        setCurrentNav: setStateAttr('currentNav'),
+        isMenuVisible: getStateAttr('menuVisible'),
+        setMenuVisible: setStateAttr('menuVisible'),
+        setLoggedIn: setStateAttr('loggedIn')
     };
 });
 'use strict';
@@ -184,6 +197,36 @@ app.directive('alert', function (Alert) {
 
 'use strict';
 
+app.directive('login', function ($timeout, API, $state, Alert, State) {
+    return {
+        templateUrl: 'login.html',
+        scope: {},
+
+        link: function link(scope, element, attrs) {
+
+            var login = function login(username, password) {
+                API.login({ username: username, password: password }).then(function (response) {
+                    if (response) {
+                        $state.go('home');
+                        Alert.showMessage("Welcome!");
+                        State.setLoggedIn(true);
+                    } else {
+                        Alert.showError("Username and password didn't match");
+                    }
+                });
+            };
+
+            var init = function init() {};
+
+            init();
+
+            scope.login = login;
+        }
+    };
+});
+
+'use strict';
+
 app.directive('feed', function ($timeout, API, $state) {
     return {
         templateUrl: 'feed.html',
@@ -192,7 +235,7 @@ app.directive('feed', function ($timeout, API, $state) {
         link: function link(scope, element, attrs) {
 
             var feedHeight = function feedHeight() {
-                return $(window).height() - 50 + 'px';
+                return $(window).height() - 80 + 'px';
             };
 
             var init = function init() {};
@@ -206,29 +249,20 @@ app.directive('feed', function ($timeout, API, $state) {
 
 'use strict';
 
-app.directive('login', function ($timeout, API, $state, Alert) {
+app.directive('menuBar', function (State) {
     return {
-        templateUrl: 'login.html',
+        templateUrl: 'menu-bar.html',
         scope: {},
 
         link: function link(scope, element, attrs) {
-
-            var login = function login(username, password) {
-                API.login({ username: username, password: password }).then(function (response) {
-                    if (response) {
-                        $state.go('home');
-                        Alert.showMessage("Welcome!");
-                    } else {
-                        Alert.showError("Username and password didn't match");
-                    }
-                });
-            };
 
             var init = function init() {};
 
             init();
 
-            scope.login = login;
+            scope.logOut = State.logOut;
+            scope.isMenuVisible = State.isMenuVisible;
+            scope.setMenuVisible = State.setMenuVisible;
         }
     };
 });
@@ -249,6 +283,26 @@ app.directive('navBar', function ($timeout, API, $state, State) {
             scope.isCurrentNav = State.isCurrentNav;
             scope.getCurrentNav = State.getCurrentNav;
             scope.setCurrentNav = State.setCurrentNav;
+        }
+    };
+});
+
+'use strict';
+
+app.directive('topBar', function ($timeout, API, $state, State) {
+    return {
+        templateUrl: 'top-bar.html',
+        scope: {},
+
+        link: function link(scope, element, attrs) {
+
+            var init = function init() {};
+
+            init();
+
+            scope.isLoggedIn = State.isLoggedIn;
+            scope.isMenuVisible = State.isMenuVisible;
+            scope.setMenuVisible = State.setMenuVisible;
         }
     };
 });

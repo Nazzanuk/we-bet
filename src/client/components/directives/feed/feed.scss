@@ -1,5 +1,4 @@
 [template=feed] {
-  background: $primary;
   padding: 8px;
 
   overflow-y: auto;
@@ -12,21 +11,21 @@
 
   .item-sizing {
     padding: 7px;
-    width: 50%;
+    width: 33.333333333%;
+
+    @media (max-width: 768px) {
+      width: 50%;
+    }
   }
 
   .item {
     background: #ffffff;
     border-radius: 4px;
-    box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.3);
+    box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.1);
     padding: 15px;
     overflow: hidden;
     position: relative;
     border-bottom: 1px solid #eee;
-
-    @media (max-width: 768px) {
-
-    }
 
     .item-content {
       overflow: hidden;
@@ -34,16 +33,20 @@
     }
 
     .image {
-      height: 150px;
-      background: #eee;
+      height: 250px;
+//      background: #eee;
       margin: -15px -16px 15px;
       background-size: cover;
       background-position: center;
+
+      @media (max-width: 768px) {
+        height: 150px;
+      }
     }
 
     .score {
       position: absolute;
-      top: 85px;
+      top: 235px;
       left: 15px;
       height: 30px;
       line-height: 26px;
@@ -55,6 +58,10 @@
       font-size: 10px;
       font-weight: bold;
       border: 2px solid white;
+
+      @media (max-width: 768px) {
+        top: 135px;
+      }
     }
 
     .title {

@@ -1,15 +1,22 @@
 'use strict';
 
-app.factory('State', function ($rootScope, $http) {
+app.factory('State', function ($rootScope, $http, $state) {
 
     var state = {
-        currentNav:"groups"
+        currentNav: "groups",
+        loggedIn: false,
+        menuVisible: false
+    };
+
+    var logOut = () => {
+        state.loggedIn = false;
+        $state.go('splash');
     };
 
     var isCurrentNav = (nav) => {
         return state.currentNav == nav;
     };
-    
+
     var getStateAttr = (attr) => {
         return () => {
             return state[attr];
@@ -25,7 +32,12 @@ app.factory('State', function ($rootScope, $http) {
 
     return {
         isCurrentNav: isCurrentNav,
-        getCurrentNav : getStateAttr('currentNav'),
-        setCurrentNav : setStateAttr('currentNav')
+        isLoggedIn: getStateAttr('loggedIn'),
+        logOut: logOut,
+        getCurrentNav: getStateAttr('currentNav'),
+        setCurrentNav: setStateAttr('currentNav'),
+        isMenuVisible: getStateAttr('menuVisible'),
+        setMenuVisible: setStateAttr('menuVisible'),
+        setLoggedIn: setStateAttr('loggedIn')
     }
 });

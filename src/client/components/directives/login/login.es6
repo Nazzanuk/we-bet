@@ -1,6 +1,6 @@
 'use strict';
 
-app.directive('login', ($timeout, API, $state, Alert) => {
+app.directive('login', ($timeout, API, $state, Alert, State) => {
     return {
         templateUrl: 'login.html',
         scope: {},
@@ -12,6 +12,7 @@ app.directive('login', ($timeout, API, $state, Alert) => {
                     if (response) {
                         $state.go('home');
                         Alert.showMessage("Welcome!");
+                        State.setLoggedIn(true);
                     } else {
                         Alert.showError("Username and password didn't match");
                     }

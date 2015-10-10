@@ -31,6 +31,9 @@
 </head>
 <body data-ng-app="app">
 
+<top-bar></top-bar>
+<menu-bar></menu-bar>
+
 <div ui-view></div>
 
 <alert></alert>
@@ -40,55 +43,10 @@
         <div class="alert-message {{getColour()}}" ng-class="{active:getActive()}" ng-click="setActive(false)" ng-bind="getMessage()"></div>
     </div>
 </script>
-<script type="text/ng-template" id="feed.html">
-    <div template="feed" style="height: {{feedHeight()}}">
-        <div class="items">
-            <div class="item-sizing">
-                <div class="item">
-                    <div class="score">25</div>
-                    <div class="image" style="background-image: url('http://i4.mirror.co.uk/incoming/article6572401.ece/ALTERNATES/s615b/Arsenal-vs-Manchester-United.jpg')"></div>
-                    <div class="item-content">
-                        <div class="title">Premiership Game Of The Week</div>
-                        <div class="description">
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus ad aliquam architecto at blanditiis, eaque eligendi expedita ipsam iusto nam, quibusdam quis reiciendis rem tempore, temporibus. Adipisci beatae excepturi ipsam maiores neque, non officia officiis praesentium quo sed totam unde!
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-            <div class="item-sizing">
-                <div class="item">
-                    <div class="score">25</div>
-                    <div class="image" style="background-image: url('http://www.fifavip.net/upload/images/22222222.jpg')"></div>
-                    <div class="item-content">
-                        <div class="title">FIFA 16 Head to Head</div>
-                        <div class="description">
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus ad aliquam architecto at blanditiis, eaque eligendi expedita ipsam iusto nam, quibusdam quis reiciendis rem tempore, temporibus. Adipisci beatae excepturi ipsam maiores neque, non officia officiis praesentium quo sed totam unde!
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="item-sizing">
-                <div class="item">
-                    <div class="score">25</div>
-                    <div class="image" style="background-image: url('http://www.fifavip.net/upload/images/22222222.jpg')"></div>
-                    <div class="item-content">
-                        <div class="title">FIFA 16 Head to Head</div>
-                        <div class="description">
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus ad aliquam architecto at blanditiis, eaque eligendi expedita ipsam iusto nam, quibusdam quis reiciendis rem tempore, temporibus. Adipisci beatae excepturi ipsam maiores neque, non officia officiis praesentium quo sed totam unde!
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
-    </div>
-</script>
 <script type="text/ng-template" id="login.html">
     <div template="login">
         <div class="login-container">
-            <div class="login-top" style="background-image: url('/public/img/subtle-grey.png')">
+            <div class="login-top" style="background-image: url('/public/img/shattered.png')">
             <!--<div class="login-top">-->
                 <div class="top-title">We Bet</div>
                 <div class="top"></div>
@@ -104,6 +62,102 @@
         </div>
     </div>
 </script>
+<script type="text/ng-template" id="feed.html">
+    <div class="case">
+
+        <div template="feed" style="height: {{feedHeight()}}">
+            <div class="items">
+                <div class="item-sizing">
+                    <div class="item">
+                        <div class="score">25</div>
+                        <div class="image" style="background-image: url('http://i4.mirror.co.uk/incoming/article6572401.ece/ALTERNATES/s615b/Arsenal-vs-Manchester-United.jpg')"></div>
+                        <div class="item-content">
+                            <div class="title">Premiership Game Of The Week</div>
+                            <div class="description">
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus ad aliquam architecto at blanditiis, eaque eligendi expedita ipsam iusto nam, quibusdam quis reiciendis rem tempore, temporibus. Adipisci beatae excepturi ipsam maiores neque, non officia officiis praesentium quo sed totam unde!
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="item-sizing">
+                    <div class="item">
+                        <div class="score">25</div>
+                        <div class="image" style="background-image: url('http://www.fifavip.net/upload/images/22222222.jpg')"></div>
+                        <div class="item-content">
+                            <div class="title">FIFA 16 Head to Head</div>
+                            <div class="description">
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus ad aliquam architecto at blanditiis, eaque eligendi expedita ipsam iusto nam, quibusdam quis reiciendis rem tempore, temporibus. Adipisci beatae excepturi ipsam maiores neque, non officia officiis praesentium quo sed totam unde!
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="item-sizing">
+                    <div class="item">
+                        <div class="score">25</div>
+                        <div class="image" style="background-image: url('http://www.medguidance.com/images/1HN00685/oreganoo.jpg')"></div>
+                        <div class="item-content">
+                            <div class="title">Grammar and Pronunciation</div>
+                            <div class="description">
+                                Because some people still don't know how to speak.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="item-sizing">
+                    <div class="item">
+                        <div class="score">25</div>
+                        <div class="image" style="background-image: url('https://unsplash.it/750/750/?random&1')"></div>
+                        <div class="item-content">
+                            <div class="title">Grammar and Pronunciation</div>
+                            <div class="description">
+                                Because some people still don't know how to speak.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="item-sizing">
+                    <div class="item">
+                        <div class="score">25</div>
+                        <div class="image" style="background-image: url('https://unsplash.it/750/750/?random&2')"></div>
+                        <div class="item-content">
+                            <div class="title">Grammar and Pronunciation</div>
+                            <div class="description">
+                                Because some people still don't know how to speak.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="item-sizing">
+                    <div class="item">
+                        <div class="score">25</div>
+                        <div class="image" style="background-image: url('https://unsplash.it/750/750/?random&3')"></div>
+                        <div class="item-content">
+                            <div class="title">Grammar and Pronunciation</div>
+                            <div class="description">
+                                Because some people still don't know how to speak.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</script>
+<script type="text/ng-template" id="menu-bar.html">
+    <div template="menu">
+        <div class="menu-background" ng-class="{active:isMenuVisible()}" ng-click="setMenuVisible(false)"></div>
+        <div class="menu" ng-class="{active:isMenuVisible()}" ng-click="setMenuVisible(false)">
+            <div class="menu-header">
+                <div class="header-title">Nathan Nelson</div>
+            </div>
+            <div class="menu-item"><i class="fa fa-fw fa-users"></i> &nbsp; New Group</div>
+            <div class="menu-item" ng-click="logOut()"><i class="fa fa-fw fa-sign-out"></i> &nbsp; Logout</div>
+        </div>
+    </div>
+</script>
 <script type="text/ng-template" id="nav-bar.html">
     <div template="nav-bar">
         <div class="bar">
@@ -113,6 +167,16 @@
             <div class="bar-item" ng-class="{active:isCurrentNav('single')}" ng-click="setCurrentNav('single')">
                 Single
             </div>
+        </div>
+    </div>
+</script>
+<script type="text/ng-template" id="top-bar.html">
+    <div template="top-bar">
+        <div class="bar" ng-class="{active:isLoggedIn()}">
+            <div class="menu-butn" ng-click="setMenuVisible(!isMenuVisible())">
+                <i class="fa fa-bars"></i>
+            </div>
+
         </div>
     </div>
 </script>

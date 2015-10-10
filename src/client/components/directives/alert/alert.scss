@@ -1,6 +1,6 @@
 [template=alert] {
   .alert-message {
-    padding: 15px;
+    padding: 10px 15px;
     color: #ffffff;
     background: $red;
     position: absolute;
@@ -20,7 +20,8 @@
     }
 
     &.primary {
-      background: $primary;
+//      background: darken($primary, 5%);
+      background: $body;
     }
 
     &.active {

@@ -1,31 +1,33 @@
 [template=nav-bar] {
   .bar {
-    height: 50px;
+    height: 40px;
     display : flex;
     flex-direction: row;
     top: 0;
     left: 0;
     right: 0;
     z-index: 10;
+    box-shadow: 0 0 5px 0 rgba(0, 0,0,0.1);
 
     .bar-item {
-      background: darken($primary, 5%);
+      background: $primary;
       flex: 1 1 auto;
-      height: 50px;
-      line-height: 47px;
-      border-bottom: 3px solid darken($primary, 5%);
-      color: #ffffff;
+      height: 40px;
+      line-height: 37px;
+      border-bottom: 0px solid white;
+      color: white;
       text-align: center;
       font-weight: bold;
       cursor: pointer;
       transition: .3s;
 
       &:hover {
-        background: 3px solid darken($primary, 2.5%);
+//        background: 3px solid darken($primary, 2.5%);
       }
 
       &.active {
         border-bottom: 3px solid white;
+//        color: black;
       }
     }
   }

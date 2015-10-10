@@ -5,7 +5,7 @@ $red: #b63c3c;
 $orange: #b67e2c;
 $purple: #704ab6;
 
-$primary: #2b72ae;
+$primary: #1877ae;
 
 html {
   height  : 100%;
@@ -13,7 +13,9 @@ html {
 }
 
 body {
-  background: $primary;
+  background: lighten(desaturate($primary, 30%), 30%);
+  background: white;
+  background: #f7f7f7;
   max-height: 100vh;
   overflow: hidden;
   color: $body;
@@ -21,6 +23,11 @@ body {
   font-size: 12px;
   font-weight: 400;
   line-height: 2.2;
+}
+
+.case {
+  margin: auto;
+  max-width: 1000px;
 }
 
 [screen] {
@@ -31,6 +38,7 @@ body {
   height: 100vh;
   max-height: 100vh;
   display:block;
+  padding-top: 40px;
 
   &.active {
     opacity: 1;

@@ -1,0 +1,12 @@
+<script type="text/ng-template" id="menu-bar.html">
+    <div template="menu">
+        <div class="menu-background" ng-class="{active:isMenuVisible()}" ng-click="setMenuVisible(false)"></div>
+        <div class="menu" ng-class="{active:isMenuVisible()}" ng-click="setMenuVisible(false)">
+            <div class="menu-header">
+                <div class="header-title">Nathan Nelson</div>
+            </div>
+            <div class="menu-item"><i class="fa fa-fw fa-users"></i> &nbsp; New Group</div>
+            <div class="menu-item" ng-click="logOut()"><i class="fa fa-fw fa-sign-out"></i> &nbsp; Logout</div>
+        </div>
+    </div>
+</script>
