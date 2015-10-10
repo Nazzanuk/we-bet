@@ -3,7 +3,7 @@ html {
   overflow: hidden; }
 
 body {
-  background: #8bb9d4;
+  background: #e2e2e4;
   background: white;
   background: #f7f7f7;
   max-height: 100vh;
@@ -33,7 +33,7 @@ body {
 
 .butn {
   background: none;
-  border: 2px solid #1877ae;
+  border: 2px solid #7576b8;
   border-radius: 50px;
   line-height: 36px;
   height: 40px;
@@ -42,18 +42,18 @@ body {
   font-weight: 400;
   text-align: center;
   margin-bottom: 30px;
-  color: #1877ae;
+  color: #7576b8;
   outline: none;
   transition: .3s;
   cursor: pointer; }
   .butn.block {
     display: block; }
   .butn.primary {
-    border: 2px solid #1877ae;
-    background: #1877ae;
+    border: 2px solid #7576b8;
+    background: #7576b8;
     color: white; }
     .butn.primary:hover {
-      background: #1e96db;
+      background: #9797c9;
       color: #ffffff; }
   .butn.grey {
     border: 2px solid #444;
@@ -71,8 +71,8 @@ body {
       background: #acca66;
       color: #ffffff; }
   .butn:hover {
-    border: 2px solid #1e96db;
-    background: #1e96db;
+    border: 2px solid #9797c9;
+    background: #9797c9;
     color: #ffffff; }
 
 .input {
@@ -211,7 +211,7 @@ body {
   z-index: 10;
   box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.1); }
   [template=group-nav-bar] .bar .bar-item {
-    background: #1877ae;
+    background: #7576b8;
     flex: 1;
     height: 40px;
     line-height: 37px;
@@ -277,9 +277,9 @@ body {
   background: white;
   margin-top: -40px; }
   [template=login] .login-container .login-top {
-    background: #003d60;
+    background: #303197;
     background-position: center;
-    height: 40vh;
+    height: 35vh;
     position: relative;
     overflow: hidden; }
     [template=login] .login-container .login-top .top {
@@ -303,6 +303,32 @@ body {
   min-width: 300px;
   max-width: 500px;
   margin: auto; }
+
+[template=nav-bar] .bar {
+  height: 40px;
+  display: flex;
+  flex-direction: row;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.1); }
+  [template=nav-bar] .bar .bar-item {
+    background: #7576b8;
+    flex: 1;
+    height: 40px;
+    line-height: 37px;
+    border-bottom: 0px solid white;
+    color: rgba(255, 255, 255, 0.6);
+    text-align: center;
+    font-weight: bold;
+    cursor: pointer;
+    transition: .3s; }
+    [template=nav-bar] .bar .bar-item:hover {
+      color: white; }
+    [template=nav-bar] .bar .bar-item.active {
+      border-bottom: 3px solid white;
+      color: white; }
 
 [template=menu] .menu-background {
   position: absolute;
@@ -340,7 +366,7 @@ body {
     opacity: 1; }
   [template=menu] .menu .menu-header {
     height: 200px;
-    background: #1877ae; }
+    background: #7576b8; }
     [template=menu] .menu .menu-header .header-title {
       padding: 30px 15px;
       color: #ffffff;
@@ -353,35 +379,9 @@ body {
     font-weight: bold;
     border-bottom: 1px solid #eee; }
     [template=menu] .menu .menu-item .fa {
-      color: #1877ae;
+      color: #7576b8;
       font-size: 20px;
       line-height: inherit; }
-
-[template=nav-bar] .bar {
-  height: 40px;
-  display: flex;
-  flex-direction: row;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 10;
-  box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.1); }
-  [template=nav-bar] .bar .bar-item {
-    background: #1877ae;
-    flex: 1;
-    height: 40px;
-    line-height: 37px;
-    border-bottom: 0px solid white;
-    color: rgba(255, 255, 255, 0.6);
-    text-align: center;
-    font-weight: bold;
-    cursor: pointer;
-    transition: .3s; }
-    [template=nav-bar] .bar .bar-item:hover {
-      color: white; }
-    [template=nav-bar] .bar .bar-item.active {
-      border-bottom: 3px solid white;
-      color: white; }
 
 [template=top-bar] .bar {
   height: 40px;
@@ -389,7 +389,7 @@ body {
   left: 0;
   right: 0;
   z-index: 10;
-  background: #156898;
+  background: #6465af;
   position: absolute;
   transform: translateY(-40px); }
   [template=top-bar] .bar.active {

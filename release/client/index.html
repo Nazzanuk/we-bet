@@ -183,7 +183,7 @@
     <div template="login">
         <div class="login-container">
             <div class="login-top" style="background-image: url('/public/img/shattered.png')">
-            <!--<div class="login-top">-->
+                <!--<div class="login-top">-->
                 <div class="top-title">We Bet</div>
                 <div class="top"></div>
             </div>
@@ -191,9 +191,23 @@
                 <div class="login-thin">
                     <input class="input block" ng-enter="login(username, password)" type="text" placeholder="Email" ng-model="username" ng-init="username = 'nathan'">
                     <input class="input block" ng-enter="login(username, password)" type="password" placeholder="Password" ng-model="password" ng-init="password = 'nathan'">
+
+                    <div style="height: 10px"></div>
                     <div class="butn block primary" ng-click="login(username, password)">Sign In</div>
                     <div class="butn block grey">Register</div>
                 </div>
+            </div>
+        </div>
+    </div>
+</script>
+<script type="text/ng-template" id="nav-bar.html">
+    <div template="nav-bar">
+        <div class="bar">
+            <div class="bar-item" ng-class="{active:isCurrentNav('groups')}" ng-click="setCurrentNav('groups')">
+                Groups
+            </div>
+            <div class="bar-item" ng-class="{active:isCurrentNav('single')}" ng-click="setCurrentNav('single')">
+                Single
             </div>
         </div>
     </div>
@@ -208,18 +222,6 @@
             <div class="menu-item" ui-sref="home"><i class="fa fa-fw fa-home"></i> &nbsp; Home</div>
             <div class="menu-item"><i class="fa fa-fw fa-users"></i> &nbsp; New Group</div>
             <div class="menu-item" ng-click="logOut()"><i class="fa fa-fw fa-sign-out"></i> &nbsp; Logout</div>
-        </div>
-    </div>
-</script>
-<script type="text/ng-template" id="nav-bar.html">
-    <div template="nav-bar">
-        <div class="bar">
-            <div class="bar-item" ng-class="{active:isCurrentNav('groups')}" ng-click="setCurrentNav('groups')">
-                Groups
-            </div>
-            <div class="bar-item" ng-class="{active:isCurrentNav('single')}" ng-click="setCurrentNav('single')">
-                Single
-            </div>
         </div>
     </div>
 </script>
@@ -244,17 +246,17 @@
         <group-nav-bar></group-nav-bar>
     </div>
 </script>
-<script type="text/ng-template" id="home-screen.html">
-    <div screen>
-        <nav-bar></nav-bar>
-        <feed></feed>
-    </div>
-</script>
 <script type="text/ng-template" id="splash-screen.html">
     <div screen>
         <login></login>
     </div>
 
+</script>
+<script type="text/ng-template" id="home-screen.html">
+    <div screen>
+        <nav-bar></nav-bar>
+        <feed></feed>
+    </div>
 </script>
 <div data-template="footer">
     <div class="footer">

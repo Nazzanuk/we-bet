@@ -2,7 +2,7 @@
     <div template="login">
         <div class="login-container">
             <div class="login-top" style="background-image: url('/public/img/shattered.png')">
-            <!--<div class="login-top">-->
+                <!--<div class="login-top">-->
                 <div class="top-title">We Bet</div>
                 <div class="top"></div>
             </div>
@@ -10,6 +10,8 @@
                 <div class="login-thin">
                     <input class="input block" ng-enter="login(username, password)" type="text" placeholder="Email" ng-model="username" ng-init="username = 'nathan'">
                     <input class="input block" ng-enter="login(username, password)" type="password" placeholder="Password" ng-model="password" ng-init="password = 'nathan'">
+
+                    <div style="height: 10px"></div>
                     <div class="butn block primary" ng-click="login(username, password)">Sign In</div>
                     <div class="butn block grey">Register</div>
                 </div>
