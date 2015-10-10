@@ -202,9 +202,6 @@ body {
     font-weight: 200;
     font-size: 35px;
     line-height: 1.3; }
-    @media (max-width: 768px) {
-      [template=group-hero] .group-hero .hero-title {
-        padding: 30px 30px; } }
 
 [template=group-nav-bar] .bar {
   height: 40px;
@@ -221,7 +218,6 @@ body {
     border-bottom: 0px solid white;
     color: rgba(255, 255, 255, 0.6);
     text-align: center;
-    font-weight: bold;
     cursor: pointer;
     transition: .3s; }
     [template=group-nav-bar] .bar .bar-item:hover {
