@@ -109,14 +109,14 @@ body {
 
 [template=feed] {
   background: #2b72ae;
-  padding: 7.5px;
+  padding: 8px;
   overflow-y: auto; }
   [template=feed] .items {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap; }
   [template=feed] .item-sizing {
-    padding: 7.5px;
+    padding: 7px;
     width: 50%; }
   [template=feed] .item {
     background: #ffffff;
