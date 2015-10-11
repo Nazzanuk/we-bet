@@ -1,6 +1,7 @@
 'use strict';
 
 var LoginService = require('./../services/login-service');
+var MongoService = require('./../services/mongo-service');
 
 module.exports = {
 
@@ -10,8 +11,17 @@ module.exports = {
 
     users: function users(req, res) {
         res.send({
-            id: req.params.id,
+            _id: req.params._id,
             username: "nathan"
+        });
+    },
+
+    groups: function groups(req, res) {
+        var params = {};
+        if (req.params) params = req.params;
+
+        MongoService.find('groups', params, {}, function (response) {
+            res.send(response);
         });
     },
 

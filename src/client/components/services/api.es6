@@ -11,7 +11,23 @@ app.factory('API', function ($rootScope, $http) {
         });
     };
 
+    var getGroups = (object) => {
+        return $http.get(API_URL + "groups/", {params : object}).then((response) => {
+            console.log(response.data);
+            return response.data;
+        });
+    };
+
+    var getGroupById = (_id) => {
+        return $http.get(`${API_URL}groups/_id/${_id}`, {}).then((response) => {
+            console.log(response.data);
+            return response.data;
+        });
+    };
+
     return {
-        login: login
+        login: login,
+        getGroups: getGroups,
+        getGroupById: getGroupById
     }
 });

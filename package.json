@@ -24,7 +24,9 @@
     "gulp-sourcemaps": "^1.6.0",
     "jasmine": "^2.3.2",
     "mocha": "^2.3.3",
+    "mongodb": "^2.0.45",
     "rewire": "^2.3.4",
+    "shortid": "^2.2.2",
     "supertest": "^1.1.0"
   }
 }

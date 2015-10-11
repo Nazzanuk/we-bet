@@ -22,13 +22,13 @@ app.config(($stateProvider, $urlRouterProvider, $locationProvider) => {
         .state('home', {
             url: "/home",
             templateUrl: "home-screen.html",
-            controller: "ScreenCtrl",
+            controller: "HomeCtrl",
             resolve: resolve
         })
         .state('group', {
-            url: "/group",
+            url: "/group/:_id",
             templateUrl: "group-screen.html",
-            controller: "ScreenCtrl",
+            controller: "GroupCtrl",
             resolve: resolve
         });
 

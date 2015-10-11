@@ -27,10 +27,10 @@ describe('GET', () => {
     });
 
     describe('/users', () => {
-        beforeEach(() => GET.users({params: {id: "123"}}, res));
+        beforeEach(() => GET.users({params: {_id: "123"}}, res));
 
         describe('/users:123', () => {
-            it(`should respond with: "Returns user with id 123"`, () => res.response.should.have.property('id',  '123'));
+            it(`should respond with: "Returns user with id 123"`, () => res.response.should.have.property('_id',  '123'));
             it(`should respond with: "Returns username"`, () => res.response.should.have.property('username'));
             it('should show function has been called', () => res.called.should.equal(true));
         });

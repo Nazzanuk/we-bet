@@ -15,17 +15,6 @@ app.directive('ngEnter', function () {
         });
     };
 });
-app.controller('ScreenCtrl', function ($element, $timeout, State, $state) {
-
-    var init = function init() {
-        $timeout(function () {
-            return $element.find('[screen]').addClass('active');
-        }, 50);
-    };
-
-    init();
-});
-
 app.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
 
     var resolve = {
@@ -48,17 +37,28 @@ app.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
     }).state('home', {
         url: "/home",
         templateUrl: "home-screen.html",
-        controller: "ScreenCtrl",
+        controller: "HomeCtrl",
         resolve: resolve
     }).state('group', {
-        url: "/group",
+        url: "/group/:_id",
         templateUrl: "group-screen.html",
-        controller: "ScreenCtrl",
+        controller: "GroupCtrl",
         resolve: resolve
     });
 
     //$locationProvider.html5Mode(true);
 });
+app.controller('ScreenCtrl', function ($element, $timeout, State, $state) {
+
+    var init = function init() {
+        $timeout(function () {
+            return $element.find('[screen]').addClass('active');
+        }, 50);
+    };
+
+    init();
+});
+
 'use strict';
 
 app.factory('Alert', function ($timeout) {
@@ -130,8 +130,24 @@ app.factory('API', function ($rootScope, $http) {
         });
     };
 
+    var getGroups = function getGroups(object) {
+        return $http.get(API_URL + "groups/", { params: object }).then(function (response) {
+            console.log(response.data);
+            return response.data;
+        });
+    };
+
+    var getGroupById = function getGroupById(_id) {
+        return $http.get(API_URL + 'groups/_id/' + _id, {}).then(function (response) {
+            console.log(response.data);
+            return response.data;
+        });
+    };
+
     return {
-        login: login
+        login: login,
+        getGroups: getGroups,
+        getGroupById: getGroupById
     };
 });
 'use strict';
@@ -231,7 +247,9 @@ app.directive('alert', function (Alert) {
 app.directive('feed', function ($timeout, API, $state, State) {
     return {
         templateUrl: 'feed.html',
-        scope: {},
+        scope: {
+            groups: '='
+        },
 
         link: function link(scope, element, attrs) {
 
@@ -239,17 +257,28 @@ app.directive('feed', function ($timeout, API, $state, State) {
                 return $(window).height() - 80 + 'px';
             };
 
-            var setCurrentGroup = function setCurrentGroup(group) {
-                State.setCurrentGroup(group);
-                $state.go('group');
-            };
+            (function () {})();
+
+            scope.feedHeight = feedHeight;
+        }
+    };
+});
+
+'use strict';
+
+app.directive('groupHero', function ($timeout, API, $state, State) {
+    return {
+        templateUrl: 'group-hero.html',
+        scope: {
+            image: '=',
+            title: '='
+        },
+
+        link: function link(scope, element, attrs) {
 
             var init = function init() {};
 
             init();
-
-            scope.feedHeight = feedHeight;
-            scope.setCurrentGroup = setCurrentGroup;
         }
     };
 });
@@ -293,25 +322,6 @@ app.directive('groupNavBar', function ($timeout, API, $state, State) {
             scope.getScreenIndex = getScreenIndex;
             scope.getScreens = getScreens;
             scope.isCurrentScreen = isCurrentScreen;
-        }
-    };
-});
-
-'use strict';
-
-app.directive('groupHero', function ($timeout, API, $state, State) {
-    return {
-        templateUrl: 'group-hero.html',
-        scope: {
-            image: '@',
-            title: '@'
-        },
-
-        link: function link(scope, element, attrs) {
-
-            var init = function init() {};
-
-            init();
         }
     };
 });
@@ -368,26 +378,6 @@ app.directive('menuBar', function (State) {
 
 'use strict';
 
-app.directive('navBar', function ($timeout, API, $state, State) {
-    return {
-        templateUrl: 'nav-bar.html',
-        scope: {},
-
-        link: function link(scope, element, attrs) {
-
-            var init = function init() {};
-
-            init();
-
-            scope.isCurrentNav = State.isCurrentNav;
-            scope.getCurrentNav = State.getCurrentNav;
-            scope.setCurrentNav = State.setCurrentNav;
-        }
-    };
-});
-
-'use strict';
-
 app.directive('topBar', function ($timeout, API, $state, State) {
     return {
         templateUrl: 'top-bar.html',
@@ -409,4 +399,57 @@ app.directive('topBar', function ($timeout, API, $state, State) {
             scope.setMenuVisible = State.setMenuVisible;
         }
     };
+});
+
+app.controller('GroupCtrl', function ($element, $timeout, API, $scope, State, $stateParams) {
+
+    var group = {};
+
+    var getGroup = function getGroup() {
+        return group;
+    };
+
+    var loadGroup = function loadGroup() {
+        API.getGroupById($stateParams._id).then(function (response) {
+            group = response[0];
+            $timeout(function () {
+                return $element.find('[screen]').addClass('active');
+            }, 50);
+        });
+    };
+
+    var init = function init() {
+        console.log($stateParams);
+        loadGroup();
+    };
+
+    init();
+
+    $scope.getGroup = getGroup;
+});
+
+app.controller('HomeCtrl', function ($element, $timeout, API, $scope, State, $state) {
+
+    var groups = [];
+
+    var getGroups = function getGroups() {
+        return groups;
+    };
+
+    var loadGroups = function loadGroups() {
+        API.getGroups({}).then(function (response) {
+            groups = response;
+        });
+    };
+
+    var init = function init() {
+        $timeout(function () {
+            return $element.find('[screen]').addClass('active');
+        }, 50);
+        loadGroups();
+    };
+
+    init();
+
+    $scope.getGroups = getGroups;
 });

@@ -1,21 +1,31 @@
 'use strict';
 
 var LoginService = require('./../services/login-service');
+var MongoService = require('./../services/mongo-service');
 
 module.exports = {
 
-    index (req, res) {
+    index(req, res) {
         res.send("Hello");
     },
 
-    users (req, res) {
+    users(req, res) {
         res.send({
-            id:req.params.id,
-            username:"nathan"
+            _id: req.params._id,
+            username: "nathan"
         });
     },
 
-    login (req, res) {
+    groups(req, res) {
+        var params = {};
+        if (req.params) params = req.params;
+
+        MongoService.find('groups', params, {}, (response) => {
+            res.send(response);
+        });
+    },
+
+    login(req, res) {
         var username = req.query.username;
         var password = req.query.password;
 

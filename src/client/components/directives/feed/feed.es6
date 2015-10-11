@@ -3,7 +3,9 @@
 app.directive('feed', ($timeout, API, $state, State) => {
     return {
         templateUrl: 'feed.html',
-        scope: {},
+        scope: {
+            groups: '='
+        },
 
         link(scope, element, attrs) {
 
@@ -11,19 +13,11 @@ app.directive('feed', ($timeout, API, $state, State) => {
                 return ($(window).height() - 80) + 'px';
             };
 
-            var setCurrentGroup = (group) => {
-                State.setCurrentGroup(group);
-                $state.go('group')
-            };
+            (() => {
 
-            var init = () => {
-
-            };
-
-            init();
+            })();
 
             scope.feedHeight = feedHeight;
-            scope.setCurrentGroup = setCurrentGroup;
         }
     }
 });

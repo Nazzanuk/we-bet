@@ -53,12 +53,12 @@ describe('GET', function () {
 
     describe('/users', function () {
         beforeEach(function () {
-            return GET.users({ params: { id: "123" } }, res);
+            return GET.users({ params: { _id: "123" } }, res);
         });
 
         describe('/users:123', function () {
             it('should respond with: "Returns user with id 123"', function () {
-                return res.response.should.have.property('id', '123');
+                return res.response.should.have.property('_id', '123');
             });
             it('should respond with: "Returns username"', function () {
                 return res.response.should.have.property('username');
