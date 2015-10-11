@@ -63,14 +63,6 @@
         </div>
     </div>
 </script>
-<script type="text/ng-template" id="group-hero.html">
-        <div template="group-hero">
-            <div class="group-hero" style="background-image: url('{{image}}')">
-                <div class="hero-background"></div>
-                <div class="hero-title">{{title}}</div>
-            </div>
-        </div>
-</script>
 <script type="text/ng-template" id="group-nav-bar.html">
     <div template="group-nav-bar">
         <div class="bar">
@@ -82,6 +74,14 @@
             <ng-transclude></ng-transclude>
         </div>
     </div>
+</script>
+<script type="text/ng-template" id="group-hero.html">
+        <div template="group-hero">
+            <div class="group-hero" style="background-image: url('{{image}}')">
+                <div class="hero-background"></div>
+                <div class="hero-title">{{title}}</div>
+            </div>
+        </div>
 </script>
 <script type="text/ng-template" id="login.html">
     <div template="login">
@@ -104,6 +104,20 @@
         </div>
     </div>
 </script>
+<script type="text/ng-template" id="top-bar.html">
+    <div template="top-bar">
+        <div class="bar" ng-class="{active:isLoggedIn()}">
+            <div class="back-butn" onclick="history.go(-1);" ng-class="{active:getCurrentPage() != 'home'}">
+                <i class="fa fa-chevron-left"></i>
+            </div>
+
+            <div class="menu-butn" ng-click="setMenuVisible(!isMenuVisible())">
+                <i class="fa fa-bars"></i>
+            </div>
+
+        </div>
+    </div>
+</script>
 <script type="text/ng-template" id="menu-bar.html">
     <div template="menu">
         <div class="menu-background" ng-class="{active:isMenuVisible()}" ng-click="setMenuVisible(false)"></div>
@@ -116,20 +130,6 @@
             <div class="menu-item" ng-click="$root.Alert.showMessage('Feature Coming Soon!')"><i class="fa fa-fw fa-user"></i> &nbsp; Profile</div>
             <div class="menu-item" ng-click="$root.Alert.showMessage('Feature Coming Soon!')"><i class="fa fa-fw fa-users"></i> &nbsp; New Group</div>
             <div class="menu-item" ng-click="logOut()"><i class="fa fa-fw fa-sign-out"></i> &nbsp; Logout</div>
-        </div>
-    </div>
-</script>
-<script type="text/ng-template" id="top-bar.html">
-    <div template="top-bar">
-        <div class="bar" ng-class="{active:isLoggedIn()}">
-            <div class="back-butn" onclick="history.go(-1);" ng-class="{active:getCurrentPage() != 'home'}">
-                <i class="fa fa-chevron-left"></i>
-            </div>
-
-            <div class="menu-butn" ng-click="setMenuVisible(!isMenuVisible())">
-                <i class="fa fa-bars"></i>
-            </div>
-
         </div>
     </div>
 </script>

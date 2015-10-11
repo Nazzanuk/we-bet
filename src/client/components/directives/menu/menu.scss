@@ -10,6 +10,7 @@
     background: rgba(0,0,0,0.6);
     right: 0;
     display: none;
+    will-change: opacity;
 
     &.active {
       opacity: 1;
@@ -35,6 +36,7 @@
     cursor: pointer;
     z-index: 20;
     box-shadow: 0 0 5px 0 rgba(0, 0,0,0.1);
+    will-change: transform;
 
     &.active {
       transform: translateX(0);

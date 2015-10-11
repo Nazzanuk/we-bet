@@ -271,25 +271,6 @@ app.directive('feed', function ($timeout, API, $state, State) {
 
 'use strict';
 
-app.directive('groupHero', function ($timeout, API, $state, State) {
-    return {
-        templateUrl: 'group-hero.html',
-        scope: {
-            image: '=',
-            title: '='
-        },
-
-        link: function link(scope, element, attrs) {
-
-            var init = function init() {};
-
-            init();
-        }
-    };
-});
-
-'use strict';
-
 app.directive('groupNavBar', function ($timeout, API, $state, State) {
     return {
         templateUrl: 'group-nav-bar.html',
@@ -338,6 +319,25 @@ app.directive('groupNavBar', function ($timeout, API, $state, State) {
 
 'use strict';
 
+app.directive('groupHero', function ($timeout, API, $state, State) {
+    return {
+        templateUrl: 'group-hero.html',
+        scope: {
+            image: '=',
+            title: '='
+        },
+
+        link: function link(scope, element, attrs) {
+
+            var init = function init() {};
+
+            init();
+        }
+    };
+});
+
+'use strict';
+
 app.directive('login', function ($timeout, API, $state, Alert, State) {
     return {
         templateUrl: 'login.html',
@@ -368,26 +368,6 @@ app.directive('login', function ($timeout, API, $state, Alert, State) {
 
 'use strict';
 
-app.directive('menuBar', function (State) {
-    return {
-        templateUrl: 'menu-bar.html',
-        scope: {},
-
-        link: function link(scope, element, attrs) {
-
-            var init = function init() {};
-
-            init();
-
-            scope.logOut = State.logOut;
-            scope.isMenuVisible = State.isMenuVisible;
-            scope.setMenuVisible = State.setMenuVisible;
-        }
-    };
-});
-
-'use strict';
-
 app.directive('topBar', function ($timeout, API, $state, State) {
     return {
         templateUrl: 'top-bar.html',
@@ -405,6 +385,26 @@ app.directive('topBar', function ($timeout, API, $state, State) {
 
             scope.getCurrentPage = getCurrentPage;
             scope.isLoggedIn = State.isLoggedIn;
+            scope.isMenuVisible = State.isMenuVisible;
+            scope.setMenuVisible = State.setMenuVisible;
+        }
+    };
+});
+
+'use strict';
+
+app.directive('menuBar', function (State) {
+    return {
+        templateUrl: 'menu-bar.html',
+        scope: {},
+
+        link: function link(scope, element, attrs) {
+
+            var init = function init() {};
+
+            init();
+
+            scope.logOut = State.logOut;
             scope.isMenuVisible = State.isMenuVisible;
             scope.setMenuVisible = State.setMenuVisible;
         }
