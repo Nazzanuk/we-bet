@@ -112,7 +112,7 @@
                 <div class="header-title">Nathan Nelson</div>
             </div>
             <div class="menu-item" ui-sref="home"><i class="fa fa-fw fa-home"></i> &nbsp; Home</div>
-            <div class="menu-item"><i class="fa fa-fw fa-users"></i> &nbsp; New Group</div>
+            <div class="menu-item" ng-click="$root.Alert.showMessage('Feature Coming Soon!')"><i class="fa fa-fw fa-users"></i> &nbsp; New Group</div>
             <div class="menu-item" ng-click="logOut()"><i class="fa fa-fw fa-sign-out"></i> &nbsp; Logout</div>
         </div>
     </div>
@@ -130,6 +130,24 @@
 
         </div>
     </div>
+</script>
+<script type="text/ng-template" id="home-screen.html">
+    <div screen>
+        <group-nav-bar screens="['Groups', 'Single']">
+            <div class="content-row">
+                <feed groups="getGroups()"></feed>
+            </div>
+            <div class="content-row">
+
+            </div>
+        </group-nav-bar>
+    </div>
+</script>
+<script type="text/ng-template" id="splash-screen.html">
+    <div screen>
+        <login></login>
+    </div>
+
 </script>
 <script type="text/ng-template" id="group-screen.html">
     <div screen>
@@ -192,24 +210,6 @@
 
         </group-nav-bar>
     </div>
-</script>
-<script type="text/ng-template" id="home-screen.html">
-    <div screen>
-        <group-nav-bar screens="['Groups', 'Single']">
-            <div class="content-row">
-                <feed groups="getGroups()"></feed>
-            </div>
-            <div class="content-row">
-
-            </div>
-        </group-nav-bar>
-    </div>
-</script>
-<script type="text/ng-template" id="splash-screen.html">
-    <div screen>
-        <login></login>
-    </div>
-
 </script>
 <div data-template="footer">
     <div class="footer">

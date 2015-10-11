@@ -1,6 +1,7 @@
 'use strict';
 
-app.factory('Alert', function ($timeout) {
+app.factory('Alert', function ($timeout, $rootScope) {
+
 
     var active = false,
         message = false,
@@ -13,6 +14,7 @@ app.factory('Alert', function ($timeout) {
     };
 
     var showError = (msg) => {
+        console.log('hello')
         colour = "red";
         setActive(true);
         message = msg;
@@ -46,6 +48,16 @@ app.factory('Alert', function ($timeout) {
 
     init();
 
+    $rootScope.Alert = {
+        showMessage: showMessage,
+        showError: showError,
+        getMessage: getMessage,
+        getColour: getColour,
+        getActive: getActive,
+        setActive: setActive,
+        switchActive: switchActive
+    };
+
     return {
         showMessage: showMessage,
         showError: showError,
@@ -54,5 +66,5 @@ app.factory('Alert', function ($timeout) {
         getActive: getActive,
         setActive: setActive,
         switchActive: switchActive
-    }
+    };
 });
