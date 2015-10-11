@@ -41,6 +41,7 @@ body {
   max-height: 100vh;
   display:block;
   padding-top: 40px;
+  will-change:transform, opacity;
 
   &.active {
     opacity: 1;
