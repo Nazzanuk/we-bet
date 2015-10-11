@@ -1,6 +1,58 @@
 <script type="text/ng-template" id="group-screen.html">
     <div screen>
 
-        <group-nav-bar></group-nav-bar>
+        <group-nav-bar screens="['Leaderboard', 'Bet', 'Chat']">
+            <div class="content-row">
+
+                <group-hero image="http://cdn.fansided.com/wp-content/blogs.dir/207/files/2015/04/4628__premier-league_barclays-premier-league-2014.jpg"
+                            title="Premiership Game Of The Week"
+                        ></group-hero>
+                <div class="leaderboard">
+                    <div class="leaderboard-item">
+                        <div class="image" style="background-image: url('https://pbs.twimg.com/profile_images/535203215260676096/kmRf0jUn_400x400.jpeg')"></div>
+                        <div class="points">45</div>
+                        <div class="name">Nathan</div>
+                        <div class="summary">Arsenal</div>
+                    </div>
+                    <div class="leaderboard-item">
+                        <div class="image" style="background-image: url('https://pbs.twimg.com/profile_images/603230570152361984/BlSDXc6r_400x400.jpg')"></div>
+                        <div class="points">40</div>
+                        <div class="name">Eddy</div>
+                        <div class="summary">Arsenal</div>
+                    </div>
+                    <div class="leaderboard-item">
+                        <div class="image" style="background-image: url('https://pbs.twimg.com/profile_images/486959235482152961/xvl6JDuQ.jpeg')"></div>
+                        <div class="points">35</div>
+                        <div class="name">Adrian</div>
+                        <div class="summary">Arsenal</div>
+                    </div>
+                    <div class="leaderboard-item">
+                        <div class="image" style="background-image: url('https://lh6.googleusercontent.com/-R9zbnUp-FvM/UT5CllGErCI/AAAAAAAAAB4/ESt8hgnClFk/w1062-h1600-no/IMGP5874-vi.jpg')"></div>
+                        <div class="points">35</div>
+                        <div class="name">Pritesh</div>
+                        <div class="summary">Man United</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-row">
+                <div class="bet">
+                    <group-hero title="Who will win between Arsenal and Man United?"
+                                image="http://www.footballparadise.org/wp-content/uploads/2014/11/Arsenal-vs-Manchester-United.gif"
+                            ></group-hero>
+
+                    <div class="choices">
+                        <div class="butn block primary">Arsenal</div>
+                        <div class="butn block primary">Man United</div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="content-row">
+
+            </div>
+
+        </group-nav-bar>
     </div>
 </script>

@@ -3,18 +3,30 @@
 app.directive('groupNavBar', ($timeout, API, $state, State) => {
     return {
         templateUrl: 'group-nav-bar.html',
-        scope: {},
+        transclude: true,
+        scope: {
+            screens: '='
+        },
 
         link(scope, element, attrs) {
 
-            var screen = 0;
+            var screens = scope.screens;
+            var currentScreen = 0;
 
-            var setScreen = (index) => {
-                screen = index;
+            var setScreenIndex = (index) => {
+                currentScreen = index;
             };
 
-            var getScreen = () => {
-                return screen;
+            var getScreenIndex = () => {
+                return currentScreen;
+            };
+
+            var getScreens = () => {
+                return screens;
+            };
+
+            var isCurrentScreen = (index) => {
+                return index == currentScreen;
             };
 
             var init = () => {
@@ -23,11 +35,10 @@ app.directive('groupNavBar', ($timeout, API, $state, State) => {
 
             init();
 
-            scope.setScreen = setScreen;
-            scope.getScreen = getScreen;
-            scope.isCurrentGroupNav = State.isCurrentGroupNav;
-            scope.getCurrentGroupNav = State.getCurrentGroupNav;
-            scope.setCurrentGroupNav = State.setCurrentGroupNav;
+            scope.setScreenIndex = setScreenIndex;
+            scope.getScreenIndex = getScreenIndex;
+            scope.getScreens = getScreens;
+            scope.isCurrentScreen = isCurrentScreen;
         }
     }
 });

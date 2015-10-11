@@ -228,6 +228,25 @@ app.directive('alert', function (Alert) {
 
 'use strict';
 
+app.directive('groupHero', function ($timeout, API, $state, State) {
+    return {
+        templateUrl: 'group-hero.html',
+        scope: {
+            image: '@',
+            title: '@'
+        },
+
+        link: function link(scope, element, attrs) {
+
+            var init = function init() {};
+
+            init();
+        }
+    };
+});
+
+'use strict';
+
 app.directive('feed', function ($timeout, API, $state, State) {
     return {
         templateUrl: 'feed.html',
@@ -256,51 +275,43 @@ app.directive('feed', function ($timeout, API, $state, State) {
 
 'use strict';
 
-app.directive('groupHero', function ($timeout, API, $state, State) {
+app.directive('groupNavBar', function ($timeout, API, $state, State) {
     return {
-        templateUrl: 'group-hero.html',
+        templateUrl: 'group-nav-bar.html',
+        transclude: true,
         scope: {
-            image: '@',
-            title: '@'
+            screens: '='
         },
 
         link: function link(scope, element, attrs) {
 
-            var init = function init() {};
+            var screens = scope.screens;
+            var currentScreen = 0;
 
-            init();
-        }
-    };
-});
-
-'use strict';
-
-app.directive('groupNavBar', function ($timeout, API, $state, State) {
-    return {
-        templateUrl: 'group-nav-bar.html',
-        scope: {},
-
-        link: function link(scope, element, attrs) {
-
-            var screen = 0;
-
-            var setScreen = function setScreen(index) {
-                screen = index;
+            var setScreenIndex = function setScreenIndex(index) {
+                currentScreen = index;
             };
 
-            var getScreen = function getScreen() {
-                return screen;
+            var getScreenIndex = function getScreenIndex() {
+                return currentScreen;
+            };
+
+            var getScreens = function getScreens() {
+                return screens;
+            };
+
+            var isCurrentScreen = function isCurrentScreen(index) {
+                return index == currentScreen;
             };
 
             var init = function init() {};
 
             init();
 
-            scope.setScreen = setScreen;
-            scope.getScreen = getScreen;
-            scope.isCurrentGroupNav = State.isCurrentGroupNav;
-            scope.getCurrentGroupNav = State.getCurrentGroupNav;
-            scope.setCurrentGroupNav = State.setCurrentGroupNav;
+            scope.setScreenIndex = setScreenIndex;
+            scope.getScreenIndex = getScreenIndex;
+            scope.getScreens = getScreens;
+            scope.isCurrentScreen = isCurrentScreen;
         }
     };
 });

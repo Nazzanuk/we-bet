@@ -1,72 +1,13 @@
 <script type="text/ng-template" id="group-nav-bar.html">
     <div template="group-nav-bar">
         <div class="case">
-
             <div class="bar">
-                <div class="bar-item" ng-class="{active:isCurrentGroupNav('leaderboard')}" ng-click="setScreen(0);setCurrentGroupNav('leaderboard')">
-                    Leaderboard
-                </div>
-                <div class="bar-item" ng-class="{active:isCurrentGroupNav('bet')}" ng-click="setScreen(1);setCurrentGroupNav('bet')">
-                    <i class="fa fa-star"></i> Bet
-                </div>
-                <div class="bar-item" ng-class="{active:isCurrentGroupNav('chat')}" ng-click="setScreen(2);setCurrentGroupNav('chat')">
-                    Chat
+                <div class="bar-item" ng-repeat="screen in getScreens() track by $index" ng-class="{active:isCurrentScreen($index)}" ng-click="setScreenIndex($index)">
+                    {{screen}}
                 </div>
             </div>
-            <div class="group-nav-content" style="transform:translateX({{getScreen() * -100}}%)">
-                <div class="content-row">
-
-                    <group-hero image="http://cdn.fansided.com/wp-content/blogs.dir/207/files/2015/04/4628__premier-league_barclays-premier-league-2014.jpg"
-                                title="Premiership Game Of The Week"
-                            ></group-hero>
-                    <div class="leaderboard">
-                        <div class="leaderboard-item">
-                            <div class="image" style="background-image: url('https://pbs.twimg.com/profile_images/535203215260676096/kmRf0jUn_400x400.jpeg')"></div>
-                            <div class="points">45</div>
-                            <div class="name">Nathan</div>
-                            <div class="summary">Arsenal</div>
-                        </div>
-                        <div class="leaderboard-item">
-                            <div class="image" style="background-image: url('https://pbs.twimg.com/profile_images/603230570152361984/BlSDXc6r_400x400.jpg')"></div>
-                            <div class="points">40</div>
-                            <div class="name">Eddy</div>
-                            <div class="summary">Arsenal</div>
-                        </div>
-                        <div class="leaderboard-item">
-                            <div class="image" style="background-image: url('https://pbs.twimg.com/profile_images/486959235482152961/xvl6JDuQ.jpeg')"></div>
-                            <div class="points">35</div>
-                            <div class="name">Adrian</div>
-                            <div class="summary">Arsenal</div>
-                        </div>
-                        <div class="leaderboard-item">
-                            <div class="image" style="background-image: url('https://lh6.googleusercontent.com/-R9zbnUp-FvM/UT5CllGErCI/AAAAAAAAAB4/ESt8hgnClFk/w1062-h1600-no/IMGP5874-vi.jpg')"></div>
-                            <div class="points">35</div>
-                            <div class="name">Pritesh</div>
-                            <div class="summary">Man United</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="content-row">
-                    <div class="bet">
-                        <!--<div class="question">-->
-                            <!--Who will win between Arsenal and Man United?-->
-                        <!--</div>-->
-                        <group-hero title="Who will win between Arsenal and Man United?"
-                                    image="http://www.footballparadise.org/wp-content/uploads/2014/11/Arsenal-vs-Manchester-United.gif"
-                                ></group-hero>
-
-                        <div class="choices">
-                            <div class="butn block primary">Arsenal</div>
-                            <div class="butn block primary">Man United</div>
-                        </div>
-                    </div>
-
-                </div>
-
-                <div class="content-row">
-
-                </div>
+            <div class="group-nav-content" style="transform:translateX({{getScreenIndex() * -100}}%)">
+                <ng-transclude></ng-transclude>
             </div>
         </div>
     </div>

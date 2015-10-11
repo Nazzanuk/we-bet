@@ -32,6 +32,12 @@
     }
   }
 
+
+  ng-transclude {
+    display: inline-flex;
+    width: 100%;
+  }
+
   .group-nav-content {
     display: flex;
     flex-direction: row;
