@@ -74,7 +74,6 @@ app.factory('Alert', function ($timeout, $rootScope) {
     };
 
     var showError = function showError(msg) {
-        console.log('hello');
         colour = "red";
         setActive(true);
         message = msg;
@@ -110,12 +109,7 @@ app.factory('Alert', function ($timeout, $rootScope) {
 
     $rootScope.Alert = {
         showMessage: showMessage,
-        showError: showError,
-        getMessage: getMessage,
-        getColour: getColour,
-        getActive: getActive,
-        setActive: setActive,
-        switchActive: switchActive
+        showError: showError
     };
 
     return {
@@ -412,32 +406,6 @@ app.directive('topBar', function ($timeout, API, $state, State) {
     };
 });
 
-app.controller('HomeCtrl', function ($element, $timeout, API, $scope, State, $state) {
-
-    var groups = [];
-
-    var getGroups = function getGroups() {
-        return groups;
-    };
-
-    var loadGroups = function loadGroups() {
-        API.getGroups({}).then(function (response) {
-            groups = response;
-        });
-    };
-
-    var init = function init() {
-        $timeout(function () {
-            return $element.find('[screen]').addClass('active');
-        }, 50);
-        loadGroups();
-    };
-
-    init();
-
-    $scope.getGroups = getGroups;
-});
-
 app.controller('GroupCtrl', function ($element, $timeout, API, $scope, State, $stateParams) {
 
     var group = {};
@@ -463,4 +431,30 @@ app.controller('GroupCtrl', function ($element, $timeout, API, $scope, State, $s
     init();
 
     $scope.getGroup = getGroup;
+});
+
+app.controller('HomeCtrl', function ($element, $timeout, API, $scope, State, $state) {
+
+    var groups = [];
+
+    var getGroups = function getGroups() {
+        return groups;
+    };
+
+    var loadGroups = function loadGroups() {
+        API.getGroups({}).then(function (response) {
+            groups = response;
+        });
+    };
+
+    var init = function init() {
+        $timeout(function () {
+            return $element.find('[screen]').addClass('active');
+        }, 50);
+        loadGroups();
+    };
+
+    init();
+
+    $scope.getGroups = getGroups;
 });
