@@ -43,9 +43,17 @@
         <div class="alert-message {{getColour()}}" ng-class="{active:getActive()}" ng-click="setActive(false)" ng-bind="getMessage()"></div>
     </div>
 </script>
+<script type="text/ng-template" id="group-hero.html">
+        <div template="group-hero">
+            <div class="group-hero" style="background-image: url('{{image}}')">
+                <div class="hero-background"></div>
+                <div class="hero-title">{{title}}</div>
+            </div>
+        </div>
+</script>
 <script type="text/ng-template" id="feed.html">
     <div class="case">
-        <div template="feed" style="height: {{feedHeight()}}">
+        <div template="feed">
             <div class="items">
 
                 <div class="item-sizing" ng-repeat="group in groups track by $index">
@@ -63,14 +71,6 @@
         </div>
     </div>
 </script>
-<script type="text/ng-template" id="group-hero.html">
-        <div template="group-hero">
-            <div class="group-hero" style="background-image: url('{{image}}')">
-                <div class="hero-background"></div>
-                <div class="hero-title">{{title}}</div>
-            </div>
-        </div>
-</script>
 <script type="text/ng-template" id="group-nav-bar.html">
     <div template="group-nav-bar">
         <div class="bar">
@@ -78,7 +78,7 @@
                 {{screen}}
             </div>
         </div>
-        <div class="group-nav-content" style="transform:translateX({{getScreenIndex() * -100}}%)">
+        <div class="group-nav-content" style="transform:translateX({{getScreenIndex() * -100}}%); height: {{contentHeight()}}">
             <ng-transclude></ng-transclude>
         </div>
     </div>

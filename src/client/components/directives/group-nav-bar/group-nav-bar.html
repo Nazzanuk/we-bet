@@ -5,7 +5,7 @@
                 {{screen}}
             </div>
         </div>
-        <div class="group-nav-content" style="transform:translateX({{getScreenIndex() * -100}}%)">
+        <div class="group-nav-content" style="transform:translateX({{getScreenIndex() * -100}}%); height: {{contentHeight()}}">
             <ng-transclude></ng-transclude>
         </div>
     </div>

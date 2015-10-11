@@ -249,6 +249,25 @@ app.directive('alert', function (Alert) {
 
 'use strict';
 
+app.directive('groupHero', function ($timeout, API, $state, State) {
+    return {
+        templateUrl: 'group-hero.html',
+        scope: {
+            image: '=',
+            title: '='
+        },
+
+        link: function link(scope, element, attrs) {
+
+            var init = function init() {};
+
+            init();
+        }
+    };
+});
+
+'use strict';
+
 app.directive('feed', function ($timeout, API, $state, State) {
     return {
         templateUrl: 'feed.html',
@@ -265,25 +284,6 @@ app.directive('feed', function ($timeout, API, $state, State) {
             (function () {})();
 
             scope.feedHeight = feedHeight;
-        }
-    };
-});
-
-'use strict';
-
-app.directive('groupHero', function ($timeout, API, $state, State) {
-    return {
-        templateUrl: 'group-hero.html',
-        scope: {
-            image: '=',
-            title: '='
-        },
-
-        link: function link(scope, element, attrs) {
-
-            var init = function init() {};
-
-            init();
         }
     };
 });
@@ -319,6 +319,10 @@ app.directive('groupNavBar', function ($timeout, API, $state, State) {
                 return index == currentScreen;
             };
 
+            var contentHeight = function contentHeight() {
+                return $(window).height() - 80 + 'px';
+            };
+
             var init = function init() {};
 
             init();
@@ -327,6 +331,7 @@ app.directive('groupNavBar', function ($timeout, API, $state, State) {
             scope.getScreenIndex = getScreenIndex;
             scope.getScreens = getScreens;
             scope.isCurrentScreen = isCurrentScreen;
+            scope.contentHeight = contentHeight;
         }
     };
 });

@@ -29,6 +29,10 @@ app.directive('groupNavBar', ($timeout, API, $state, State) => {
                 return index == currentScreen;
             };
 
+            var contentHeight = () => {
+                return ($(window).height() - 80) + 'px';
+            };
+
             var init = () => {
 
             };
@@ -39,6 +43,7 @@ app.directive('groupNavBar', ($timeout, API, $state, State) => {
             scope.getScreenIndex = getScreenIndex;
             scope.getScreens = getScreens;
             scope.isCurrentScreen = isCurrentScreen;
+            scope.contentHeight = contentHeight;
         }
     }
 });
