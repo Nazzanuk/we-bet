@@ -1,4 +1,4 @@
-app.controller('HomeCtrl', ($element, $timeout, API, $scope, State, $state) => {
+app.controller('HomeCtrl', ($element, $timeout, API, $scope, State, Alert) => {
 
     var groups = [];
 
@@ -7,7 +7,8 @@ app.controller('HomeCtrl', ($element, $timeout, API, $scope, State, $state) => {
     };
 
     var loadGroups = () => {
-        API.getGroups({}).then((response) => {
+        API.getGroups({})
+            .then((response) => {
             groups = response;
             $element.find('[screen]').addClass('active')
         });

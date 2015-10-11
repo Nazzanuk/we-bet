@@ -249,25 +249,6 @@ app.directive('alert', function (Alert) {
 
 'use strict';
 
-app.directive('groupHero', function ($timeout, API, $state, State) {
-    return {
-        templateUrl: 'group-hero.html',
-        scope: {
-            image: '=',
-            title: '='
-        },
-
-        link: function link(scope, element, attrs) {
-
-            var init = function init() {};
-
-            init();
-        }
-    };
-});
-
-'use strict';
-
 app.directive('feed', function ($timeout, API, $state, State) {
     return {
         templateUrl: 'feed.html',
@@ -284,6 +265,25 @@ app.directive('feed', function ($timeout, API, $state, State) {
             (function () {})();
 
             scope.feedHeight = feedHeight;
+        }
+    };
+});
+
+'use strict';
+
+app.directive('groupHero', function ($timeout, API, $state, State) {
+    return {
+        templateUrl: 'group-hero.html',
+        scope: {
+            image: '=',
+            title: '='
+        },
+
+        link: function link(scope, element, attrs) {
+
+            var init = function init() {};
+
+            init();
         }
     };
 });
@@ -411,6 +411,30 @@ app.directive('topBar', function ($timeout, API, $state, State) {
     };
 });
 
+app.controller('HomeCtrl', function ($element, $timeout, API, $scope, State, Alert) {
+
+    var groups = [];
+
+    var getGroups = function getGroups() {
+        return groups;
+    };
+
+    var loadGroups = function loadGroups() {
+        API.getGroups({}).then(function (response) {
+            groups = response;
+            $element.find('[screen]').addClass('active');
+        });
+    };
+
+    var init = function init() {
+        loadGroups();
+    };
+
+    init();
+
+    $scope.getGroups = getGroups;
+});
+
 app.controller('GroupCtrl', function ($element, $timeout, API, $scope, State, $stateParams) {
 
     var group = {};
@@ -434,28 +458,4 @@ app.controller('GroupCtrl', function ($element, $timeout, API, $scope, State, $s
     init();
 
     $scope.getGroup = getGroup;
-});
-
-app.controller('HomeCtrl', function ($element, $timeout, API, $scope, State, $state) {
-
-    var groups = [];
-
-    var getGroups = function getGroups() {
-        return groups;
-    };
-
-    var loadGroups = function loadGroups() {
-        API.getGroups({}).then(function (response) {
-            groups = response;
-            $element.find('[screen]').addClass('active');
-        });
-    };
-
-    var init = function init() {
-        loadGroups();
-    };
-
-    init();
-
-    $scope.getGroups = getGroups;
 });

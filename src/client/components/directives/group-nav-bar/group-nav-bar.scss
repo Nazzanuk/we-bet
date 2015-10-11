@@ -45,6 +45,7 @@
     flex-wrap: nowrap;
     position: relative;
     transition: .3s;
+    will-change:transform;
 
     .content-row {
       width: 100%;

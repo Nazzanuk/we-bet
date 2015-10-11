@@ -43,14 +43,6 @@
         <div class="alert-message {{getColour()}}" ng-class="{active:getActive()}" ng-click="setActive(false)" ng-bind="getMessage()"></div>
     </div>
 </script>
-<script type="text/ng-template" id="group-hero.html">
-        <div template="group-hero">
-            <div class="group-hero" style="background-image: url('{{image}}')">
-                <div class="hero-background"></div>
-                <div class="hero-title">{{title}}</div>
-            </div>
-        </div>
-</script>
 <script type="text/ng-template" id="feed.html">
     <div class="case">
         <div template="feed">
@@ -70,6 +62,14 @@
             </div>
         </div>
     </div>
+</script>
+<script type="text/ng-template" id="group-hero.html">
+        <div template="group-hero">
+            <div class="group-hero" style="background-image: url('{{image}}')">
+                <div class="hero-background"></div>
+                <div class="hero-title">{{title}}</div>
+            </div>
+        </div>
 </script>
 <script type="text/ng-template" id="group-nav-bar.html">
     <div template="group-nav-bar">
@@ -108,10 +108,12 @@
     <div template="menu">
         <div class="menu-background" ng-class="{active:isMenuVisible()}" ng-click="setMenuVisible(false)"></div>
         <div class="menu" ng-class="{active:isMenuVisible()}" ng-click="setMenuVisible(false)">
-            <div class="menu-header">
-                <div class="header-title">Nathan Nelson</div>
+            <div class="menu-header" style="background-image:url('https://pbs.twimg.com/profile_images/535203215260676096/kmRf0jUn_400x400.jpeg')">
+                <div class="header-overlay"></div>
+                <div class="header-title">Nathan</div>
             </div>
             <div class="menu-item" ui-sref="home"><i class="fa fa-fw fa-home"></i> &nbsp; Home</div>
+            <div class="menu-item" ng-click="$root.Alert.showMessage('Feature Coming Soon!')"><i class="fa fa-fw fa-user"></i> &nbsp; Profile</div>
             <div class="menu-item" ng-click="$root.Alert.showMessage('Feature Coming Soon!')"><i class="fa fa-fw fa-users"></i> &nbsp; New Group</div>
             <div class="menu-item" ng-click="logOut()"><i class="fa fa-fw fa-sign-out"></i> &nbsp; Logout</div>
         </div>
@@ -129,6 +131,18 @@
             </div>
 
         </div>
+    </div>
+</script>
+<script type="text/ng-template" id="home-screen.html">
+    <div screen>
+        <group-nav-bar screens="['Groups', 'Single']">
+            <div class="content-row">
+                <feed groups="getGroups()"></feed>
+            </div>
+            <div class="content-row">
+
+            </div>
+        </group-nav-bar>
     </div>
 </script>
 <script type="text/ng-template" id="group-screen.html">
@@ -190,18 +204,6 @@
 
             </div>
 
-        </group-nav-bar>
-    </div>
-</script>
-<script type="text/ng-template" id="home-screen.html">
-    <div screen>
-        <group-nav-bar screens="['Groups', 'Single']">
-            <div class="content-row">
-                <feed groups="getGroups()"></feed>
-            </div>
-            <div class="content-row">
-
-            </div>
         </group-nav-bar>
     </div>
 </script>

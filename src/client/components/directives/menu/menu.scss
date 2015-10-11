@@ -44,12 +44,27 @@
     .menu-header {
       height: 200px;
       background: $primary;
+      position: relative;
+      background-size: cover;
+      background-position: center;
+
+      .header-overlay {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        right:0;
+        left: 0;
+        background: rgba(0,0,0,0.4);
+      }
 
       .header-title {
         padding: 30px 15px;
         color: #ffffff;
         font-size: 30px;
         font-weight: 200;
+        text-align: center;
+        position: relative;
+        z-index: 1;
       }
     }
 
