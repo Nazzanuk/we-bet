@@ -3,7 +3,10 @@
 app.directive('groupHero', ($timeout, API, $state, State) => {
     return {
         templateUrl: 'group-hero.html',
-        scope: {},
+        scope: {
+            image:'@',
+            title:'@'
+        },
 
         link(scope, element, attrs) {
 

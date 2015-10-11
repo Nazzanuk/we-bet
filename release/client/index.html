@@ -51,7 +51,7 @@
                 <div class="item-sizing">
                     <div class="item" ng-click="setCurrentGroup(1)">
                         <div class="score">25</div>
-                        <div class="image" style="background-image: url('http://i4.mirror.co.uk/incoming/article6572401.ece/ALTERNATES/s615b/Arsenal-vs-Manchester-United.jpg')"></div>
+                        <div class="image" style="background-image: url('http://cdn.fansided.com/wp-content/blogs.dir/207/files/2015/04/4628__premier-league_barclays-premier-league-2014.jpg')"></div>
                         <div class="item-content">
                             <div class="title">Premiership Game Of The Week</div>
                             <div class="description">
@@ -131,11 +131,9 @@
     <div class="case">
         <div template="group-hero">
             <!--<div class="group-hero" style="background-image: url('https://unsplash.it/750/750/?random&10')">-->
-            <div class="group-hero" style="background-image: url('http://i4.mirror.co.uk/incoming/article6572401.ece/ALTERNATES/s615b/Arsenal-vs-Manchester-United.jpg')">
+            <div class="group-hero" style="background-image: url('{{image}}')">
                 <div class="hero-background"></div>
-                <div class="hero-title">
-                    Premiership Game Of The Week <br/>
-                </div>
+                <div class="hero-title">{{title}}</div>
             </div>
         </div>
     </div>
@@ -143,12 +141,13 @@
 <script type="text/ng-template" id="group-nav-bar.html">
     <div template="group-nav-bar">
         <div class="case">
+
             <div class="bar">
                 <div class="bar-item" ng-class="{active:isCurrentGroupNav('leaderboard')}" ng-click="setScreen(0);setCurrentGroupNav('leaderboard')">
                     Leaderboard
                 </div>
                 <div class="bar-item" ng-class="{active:isCurrentGroupNav('bet')}" ng-click="setScreen(1);setCurrentGroupNav('bet')">
-                    Bet
+                    <i class="fa fa-star"></i> Bet
                 </div>
                 <div class="bar-item" ng-class="{active:isCurrentGroupNav('chat')}" ng-click="setScreen(2);setCurrentGroupNav('chat')">
                     Chat
@@ -156,22 +155,49 @@
             </div>
             <div class="group-nav-content" style="transform:translateX({{getScreen() * -100}}%)">
                 <div class="content-row">
+
+                    <group-hero image="http://cdn.fansided.com/wp-content/blogs.dir/207/files/2015/04/4628__premier-league_barclays-premier-league-2014.jpg"
+                                title="Premiership Game Of The Week"
+                            ></group-hero>
                     <div class="leaderboard">
                         <div class="leaderboard-item">
                             <div class="image" style="background-image: url('https://pbs.twimg.com/profile_images/535203215260676096/kmRf0jUn_400x400.jpeg')"></div>
                             <div class="points">45</div>
-                            <div class="name">Nathan N</div>
+                            <div class="name">Nathan</div>
+                            <div class="summary">Arsenal</div>
                         </div>
                         <div class="leaderboard-item">
                             <div class="image" style="background-image: url('https://pbs.twimg.com/profile_images/603230570152361984/BlSDXc6r_400x400.jpg')"></div>
-                            <div class="points">45</div>
+                            <div class="points">40</div>
+                            <div class="name">Eddy</div>
+                            <div class="summary">Arsenal</div>
+                        </div>
+                        <div class="leaderboard-item">
+                            <div class="image" style="background-image: url('https://pbs.twimg.com/profile_images/486959235482152961/xvl6JDuQ.jpeg')"></div>
+                            <div class="points">35</div>
+                            <div class="name">Adrian</div>
+                            <div class="summary">Arsenal</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-row">
+                    <div class="bet">
+                        <!--<div class="question">-->
+                            <!--Who will win between Arsenal and Man United?-->
+                        <!--</div>-->
+                        <group-hero title="Who will win between Arsenal and Man United?"
+                                    image="http://www.footballparadise.org/wp-content/uploads/2014/11/Arsenal-vs-Manchester-United.gif"
+                                ></group-hero>
+
+                        <div class="choices">
+                            <div class="butn block primary">Arsenal</div>
+                            <div class="butn block primary">Man United</div>
                         </div>
                     </div>
 
                 </div>
-                <div class="content-row">
-                    bet
-                </div>
+
                 <div class="content-row">
 
                 </div>
@@ -200,18 +226,6 @@
         </div>
     </div>
 </script>
-<script type="text/ng-template" id="nav-bar.html">
-    <div template="nav-bar">
-        <div class="bar">
-            <div class="bar-item" ng-class="{active:isCurrentNav('groups')}" ng-click="setCurrentNav('groups')">
-                Groups
-            </div>
-            <div class="bar-item" ng-class="{active:isCurrentNav('single')}" ng-click="setCurrentNav('single')">
-                Single
-            </div>
-        </div>
-    </div>
-</script>
 <script type="text/ng-template" id="menu-bar.html">
     <div template="menu">
         <div class="menu-background" ng-class="{active:isMenuVisible()}" ng-click="setMenuVisible(false)"></div>
@@ -222,6 +236,18 @@
             <div class="menu-item" ui-sref="home"><i class="fa fa-fw fa-home"></i> &nbsp; Home</div>
             <div class="menu-item"><i class="fa fa-fw fa-users"></i> &nbsp; New Group</div>
             <div class="menu-item" ng-click="logOut()"><i class="fa fa-fw fa-sign-out"></i> &nbsp; Logout</div>
+        </div>
+    </div>
+</script>
+<script type="text/ng-template" id="nav-bar.html">
+    <div template="nav-bar">
+        <div class="bar">
+            <div class="bar-item" ng-class="{active:isCurrentNav('groups')}" ng-click="setCurrentNav('groups')">
+                Groups
+            </div>
+            <div class="bar-item" ng-class="{active:isCurrentNav('single')}" ng-click="setCurrentNav('single')">
+                Single
+            </div>
         </div>
     </div>
 </script>
@@ -242,8 +268,13 @@
 <script type="text/ng-template" id="group-screen.html">
     <div screen>
 
-        <group-hero></group-hero>
         <group-nav-bar></group-nav-bar>
+    </div>
+</script>
+<script type="text/ng-template" id="home-screen.html">
+    <div screen>
+        <nav-bar></nav-bar>
+        <feed></feed>
     </div>
 </script>
 <script type="text/ng-template" id="splash-screen.html">
@@ -251,12 +282,6 @@
         <login></login>
     </div>
 
-</script>
-<script type="text/ng-template" id="home-screen.html">
-    <div screen>
-        <nav-bar></nav-bar>
-        <feed></feed>
-    </div>
 </script>
 <div data-template="footer">
     <div class="footer">

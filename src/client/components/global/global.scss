@@ -6,7 +6,7 @@ $orange: #b67e2c;
 $purple: #704ab6;
 
 $primary: #1877ae;
-$primary: #7576b8;
+$primary: #4380b9;
 
 html {
   height  : 100%;
@@ -14,9 +14,9 @@ html {
 }
 
 body {
-  background: lighten(desaturate($primary, 30%), 30%);
+  background: lighten(saturate($primary, 30%), 30%);
   background: white;
-  background: #f7f7f7;
+//  background: #f7f7f7;
   max-height: 100vh;
   overflow: hidden;
   color: $body;
@@ -29,6 +29,8 @@ body {
 .case {
   margin: auto;
   max-width: 1000px;
+  overflow:hidden;
+    background: #f7f7f7;
 }
 
 [screen] {
@@ -48,6 +50,17 @@ body {
   }
 }
 
+.sub-header {
+  background: darken($primary, 10%);
+  color: white;
+  line-height: 20px;
+  padding: 10px 15px;
+  font-weight: bold;
+  text-align: center;
+}
+
+
+
 .butn {
   background: none;
   border: 2px solid $primary;
@@ -56,7 +69,9 @@ body {
   height: 40px;
   padding: 0 20px;
   display: inline-block;
-  font-weight: 400;
+  font-weight: bold;
+  letter-spacing: 1px;
+  text-transform: uppercase;
   text-align: center;
   margin-bottom: 30px;
   color: $primary;
@@ -132,3 +147,57 @@ body {
   }
 }
 
+
+
+.leaderboard {
+  padding: 15px;
+
+  .leaderboard-item {
+    margin-bottom: 15px;
+
+    background: #ffffff;
+    border-radius: 4px;
+    box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    position: relative;
+    height: 60px;
+
+    .image {
+      height: 100%;
+      width: 60px;
+      float: left;
+      background-size: cover;
+      background-position: center;
+    }
+
+    .name {
+      margin-left: 60px;
+      margin-right: 60px;
+      line-height: 20px;
+      padding: 10px 15px 0;
+      font-weight: bold;
+    }
+
+    .summary {
+      margin-left: 60px;
+      margin-right: 60px;
+      line-height: 20px;
+      padding: 0px 15px 10px;
+      font-weight: bold;
+      color: $primary;
+      text-transform: uppercase;
+    }
+
+    .points {
+      height: 100%;
+      line-height: 43px;
+      padding: 5px;
+      width: 60px;
+      float: right;
+      text-align: center;
+      font-size: 30px;
+      font-weight: 700;
+      background-color: #f7f7f7;
+    }
+  }
+}

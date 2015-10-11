@@ -259,7 +259,10 @@ app.directive('feed', function ($timeout, API, $state, State) {
 app.directive('groupHero', function ($timeout, API, $state, State) {
     return {
         templateUrl: 'group-hero.html',
-        scope: {},
+        scope: {
+            image: '@',
+            title: '@'
+        },
 
         link: function link(scope, element, attrs) {
 
@@ -334,26 +337,6 @@ app.directive('login', function ($timeout, API, $state, Alert, State) {
 
 'use strict';
 
-app.directive('navBar', function ($timeout, API, $state, State) {
-    return {
-        templateUrl: 'nav-bar.html',
-        scope: {},
-
-        link: function link(scope, element, attrs) {
-
-            var init = function init() {};
-
-            init();
-
-            scope.isCurrentNav = State.isCurrentNav;
-            scope.getCurrentNav = State.getCurrentNav;
-            scope.setCurrentNav = State.setCurrentNav;
-        }
-    };
-});
-
-'use strict';
-
 app.directive('menuBar', function (State) {
     return {
         templateUrl: 'menu-bar.html',
@@ -368,6 +351,26 @@ app.directive('menuBar', function (State) {
             scope.logOut = State.logOut;
             scope.isMenuVisible = State.isMenuVisible;
             scope.setMenuVisible = State.setMenuVisible;
+        }
+    };
+});
+
+'use strict';
+
+app.directive('navBar', function ($timeout, API, $state, State) {
+    return {
+        templateUrl: 'nav-bar.html',
+        scope: {},
+
+        link: function link(scope, element, attrs) {
+
+            var init = function init() {};
+
+            init();
+
+            scope.isCurrentNav = State.isCurrentNav;
+            scope.getCurrentNav = State.getCurrentNav;
+            scope.setCurrentNav = State.setCurrentNav;
         }
     };
 });

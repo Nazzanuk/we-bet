@@ -4,9 +4,6 @@
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    //    top: 0;
-    //    left: 0;
-    //    right: 0;
     z-index: 10;
     box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.1);
 
@@ -14,23 +11,23 @@
       background: $primary;
       flex: 1;
       height: 40px;
-      line-height: 37px;
+      line-height: 40px;
       border-bottom: 0px solid white;
       color: rgba(255, 255, 255, 0.6);
       text-align: center;
-//      font-weight: bold;
       cursor: pointer;
       transition: .3s;
+//      font-size: 16px;
+      text-transform: uppercase;
 
       &:hover {
-        //        background: 3px solid darken($primary, 2.5%);
         color: white;
       }
 
       &.active {
-        border-bottom: 3px solid white;
+        font-weight: bold;
+        border-bottom: 2px solid white;
         color: white;
-        //        color: black;
       }
     }
   }
@@ -49,50 +46,45 @@
     }
   }
 
-  .leaderboard {
-    padding: 15px;
+  .question {
+    @extend .sub-header;
+    background: $body;
+//    text-align: left;
+  }
 
-    .leaderboard-item {
+  .choices {
+//    position: fixed;
+//    bottom: 0;
+//    left: 0;
+//    right: 0;
+    padding: 30px;
+
+    .choice-header {
+      background: $body;
+      font-weight: bold;
+      text-align: center;
+      color: #ffffff;
+    }
+
+    .butn {
       margin-bottom: 15px;
+    }
 
-      background: #ffffff;
-      border-radius: 4px;
-      box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.1);
-//      padding: 15px;
-      overflow: hidden;
-      position: relative;
-      height: 60px;
+    .choice {
+      font-size: 16px;
+      text-transform: uppercase;
+      color: #ffffff;
+      font-weight: bold;
+      text-align: center;
+      display: block;
+      line-height: 30px;
+      padding: 10px 15px;
+      background: lighten($primary, 5%);
 
-      .image {
-        height: 100%;
-        width: 60px;
-//        background: red;
-        float: left;
-        //      background: #eee;
-        background-size: cover;
-        background-position: center;
-//        border-right: 2px solid $primary;
-      }
-
-      .name {
-        margin-left: 60px;
-//        font-size: 20px;
-        line-height: 20px;
-        padding: 10px 15px 0;
-        font-weight: bold;
-      }
-
-      .points {
-        height: 100%;
-        line-height: 43px;
-        padding: 5px;
-        width: 60px;
-        float: right;
-        text-align: center;
-        font-size: 30px;
-        font-weight: 300;
-        background-color: #f7f7f7;
+      &:nth-child(2n) {
+      background: lighten($primary, 10%);
       }
     }
+
   }
 }
