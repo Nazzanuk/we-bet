@@ -9,7 +9,7 @@ app.controller('GroupCtrl', ($element, $timeout, API, $scope, State, $stateParam
     var loadGroup = () => {
         API.getGroupById($stateParams._id).then((response) => {
             group = response[0];
-            $timeout(() => $element.find('[screen]').addClass('active'), 50);
+            $element.find('[screen]').addClass('active');
         });
     };
 

@@ -417,9 +417,7 @@ app.controller('GroupCtrl', function ($element, $timeout, API, $scope, State, $s
     var loadGroup = function loadGroup() {
         API.getGroupById($stateParams._id).then(function (response) {
             group = response[0];
-            $timeout(function () {
-                return $element.find('[screen]').addClass('active');
-            }, 50);
+            $element.find('[screen]').addClass('active');
         });
     };
 
@@ -444,13 +442,11 @@ app.controller('HomeCtrl', function ($element, $timeout, API, $scope, State, $st
     var loadGroups = function loadGroups() {
         API.getGroups({}).then(function (response) {
             groups = response;
+            $element.find('[screen]').addClass('active');
         });
     };
 
     var init = function init() {
-        $timeout(function () {
-            return $element.find('[screen]').addClass('active');
-        }, 50);
         loadGroups();
     };
 

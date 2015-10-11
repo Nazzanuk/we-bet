@@ -9,11 +9,11 @@ app.controller('HomeCtrl', ($element, $timeout, API, $scope, State, $state) => {
     var loadGroups = () => {
         API.getGroups({}).then((response) => {
             groups = response;
+            $element.find('[screen]').addClass('active')
         });
     };
 
     var init = () => {
-        $timeout(() => $element.find('[screen]').addClass('active'), 50);
         loadGroups();
     };
 
