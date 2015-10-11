@@ -1,6 +1,6 @@
 <script type="text/ng-template" id="group-nav-bar.html">
     <div template="group-nav-bar">
-        <div class="case">
+        <!--<div class="case">-->
             <div class="bar">
                 <div class="bar-item" ng-repeat="screen in getScreens() track by $index" ng-class="{active:isCurrentScreen($index)}" ng-click="setScreenIndex($index)">
                     {{screen}}
@@ -9,6 +9,6 @@
             <div class="group-nav-content" style="transform:translateX({{getScreenIndex() * -100}}%)">
                 <ng-transclude></ng-transclude>
             </div>
-        </div>
+        <!--</div>-->
     </div>
 </script>

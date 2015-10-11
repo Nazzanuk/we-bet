@@ -16,7 +16,7 @@ html {
 body {
   background: lighten(saturate($primary, 30%), 30%);
   background: white;
-//  background: #f7f7f7;
+  background: #f7f7f7;
   max-height: 100vh;
   overflow: hidden;
   color: $body;
@@ -30,7 +30,6 @@ body {
   margin: auto;
   max-width: 1000px;
   overflow:hidden;
-    background: #f7f7f7;
 }
 
 [screen] {

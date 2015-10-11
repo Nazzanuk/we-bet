@@ -15,6 +15,17 @@ app.directive('ngEnter', function () {
         });
     };
 });
+app.controller('ScreenCtrl', function ($element, $timeout, State, $state) {
+
+    var init = function init() {
+        $timeout(function () {
+            return $element.find('[screen]').addClass('active');
+        }, 50);
+    };
+
+    init();
+});
+
 app.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
 
     var resolve = {
@@ -48,17 +59,6 @@ app.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
 
     //$locationProvider.html5Mode(true);
 });
-app.controller('ScreenCtrl', function ($element, $timeout, State, $state) {
-
-    var init = function init() {
-        $timeout(function () {
-            return $element.find('[screen]').addClass('active');
-        }, 50);
-    };
-
-    init();
-});
-
 'use strict';
 
 app.factory('Alert', function ($timeout) {
@@ -228,25 +228,6 @@ app.directive('alert', function (Alert) {
 
 'use strict';
 
-app.directive('groupHero', function ($timeout, API, $state, State) {
-    return {
-        templateUrl: 'group-hero.html',
-        scope: {
-            image: '@',
-            title: '@'
-        },
-
-        link: function link(scope, element, attrs) {
-
-            var init = function init() {};
-
-            init();
-        }
-    };
-});
-
-'use strict';
-
 app.directive('feed', function ($timeout, API, $state, State) {
     return {
         templateUrl: 'feed.html',
@@ -312,6 +293,25 @@ app.directive('groupNavBar', function ($timeout, API, $state, State) {
             scope.getScreenIndex = getScreenIndex;
             scope.getScreens = getScreens;
             scope.isCurrentScreen = isCurrentScreen;
+        }
+    };
+});
+
+'use strict';
+
+app.directive('groupHero', function ($timeout, API, $state, State) {
+    return {
+        templateUrl: 'group-hero.html',
+        scope: {
+            image: '@',
+            title: '@'
+        },
+
+        link: function link(scope, element, attrs) {
+
+            var init = function init() {};
+
+            init();
         }
     };
 });
