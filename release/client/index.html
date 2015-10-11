@@ -127,6 +127,27 @@
 
     </div>
 </script>
+<script type="text/ng-template" id="login.html">
+    <div template="login">
+        <div class="login-container">
+            <div class="login-top" style="background-image: url('/public/img/shattered.png')">
+                <!--<div class="login-top">-->
+                <div class="top-title">We Bet</div>
+                <div class="top"></div>
+            </div>
+            <div class="login-bottom">
+                <div class="login-thin">
+                    <input class="input block" ng-enter="login(username, password)" type="text" placeholder="Email" ng-model="username" ng-init="username = 'nathan'">
+                    <input class="input block" ng-enter="login(username, password)" type="password" placeholder="Password" ng-model="password" ng-init="password = 'nathan'">
+
+                    <div style="height: 10px"></div>
+                    <div class="butn block primary" ng-click="login(username, password)">Sign In</div>
+                    <div class="butn block grey">Register</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
 <script type="text/ng-template" id="group-hero.html">
     <div class="case">
         <div template="group-hero">
@@ -178,6 +199,12 @@
                             <div class="name">Adrian</div>
                             <div class="summary">Arsenal</div>
                         </div>
+                        <div class="leaderboard-item">
+                            <div class="image" style="background-image: url('https://lh6.googleusercontent.com/-R9zbnUp-FvM/UT5CllGErCI/AAAAAAAAAB4/ESt8hgnClFk/w1062-h1600-no/IMGP5874-vi.jpg')"></div>
+                            <div class="points">35</div>
+                            <div class="name">Pritesh</div>
+                            <div class="summary">Man United</div>
+                        </div>
                     </div>
                 </div>
 
@@ -200,27 +227,6 @@
 
                 <div class="content-row">
 
-                </div>
-            </div>
-        </div>
-    </div>
-</script>
-<script type="text/ng-template" id="login.html">
-    <div template="login">
-        <div class="login-container">
-            <div class="login-top" style="background-image: url('/public/img/shattered.png')">
-                <!--<div class="login-top">-->
-                <div class="top-title">We Bet</div>
-                <div class="top"></div>
-            </div>
-            <div class="login-bottom">
-                <div class="login-thin">
-                    <input class="input block" ng-enter="login(username, password)" type="text" placeholder="Email" ng-model="username" ng-init="username = 'nathan'">
-                    <input class="input block" ng-enter="login(username, password)" type="password" placeholder="Password" ng-model="password" ng-init="password = 'nathan'">
-
-                    <div style="height: 10px"></div>
-                    <div class="butn block primary" ng-click="login(username, password)">Sign In</div>
-                    <div class="butn block grey">Register</div>
                 </div>
             </div>
         </div>
