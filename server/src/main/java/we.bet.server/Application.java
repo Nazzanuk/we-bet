@@ -3,10 +3,16 @@ package we.bet.server;
 import java.util.Arrays;
 
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 
-@SpringBootApplication
+@Configuration
+@Import(value = {
+        RootContext.class,
+})
+@EnableAutoConfiguration
 public class Application {
     
     public static void main(String[] args) {
@@ -20,5 +26,15 @@ public class Application {
             System.out.println(beanName);
         }
     }
+
+//    @Bean
+//    public LoginService loginService(UserRepository userRepository){
+//        return new LoginService(userRepository);
+//    }
+//
+//    @Bean
+//    public LoginController loginController (LoginService loginService){
+//        return new LoginController(loginService);
+//    }
 
 }

@@ -26,13 +26,15 @@ targetCompatibility = 1.8
 
 dependencies {
     compile("org.springframework.boot:spring-boot-starter-web")
-    // tag::actuator[]
+    compile("org.springframework.boot:spring-boot-starter-security")
     compile("org.springframework.boot:spring-boot-starter-actuator")
-    // end::actuator[]
-    // tag::tests[]
+    compile("org.springframework.boot:spring-boot-starter-data-mongodb")
+    compile 'org.mongodb:mongo-java-driver:3.0.4'
     testCompile("org.springframework.boot:spring-boot-starter-test")
-    // end::tests[]
+    testCompile("org.easytesting:fest-assert:1.4")
 }
+
+
 
 task wrapper(type: Wrapper) {
     gradleVersion = '2.3'
