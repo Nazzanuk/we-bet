@@ -2,15 +2,15 @@ package we.bet.server.core.domain;
 
 import org.springframework.data.annotation.Id;
 
-public class User {
+public class WeBetUser {
 
     @Id
     private String username;
     private String password;
 
-    public User() {}
+    public WeBetUser() {}
 
-    public User(String username, String password) {
+    public WeBetUser(String username, String password) {
         this.username = username;
         this.password = password;
     }
@@ -19,11 +19,14 @@ public class User {
         return password;
     }
 
+    public String getUsername() {
+        return username;
+    }
+
     @Override
     public String toString() {
         return String.format(
-                "User[username='%s', password='%s']",
+                "WeBetUser[username='%s', password='%s']",
                 username, password);
     }
-
 }

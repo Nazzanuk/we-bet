@@ -3,7 +3,7 @@ package we.bet.server;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
-import we.bet.server.core.usecase.login.LoginService;
+import we.bet.server.core.usecase.login.WeBetUserService;
 import we.bet.server.dataproviders.UserRepository;
 import we.bet.server.entrypoints.LoginController;
 import we.bet.server.entrypoints.RegisterController;
@@ -15,17 +15,17 @@ import we.bet.server.entrypoints.RegisterController;
 })
 public class RootContext {
     @Bean
-    public LoginService loginService(UserRepository userRepository){
-        return new LoginService(userRepository);
+    public WeBetUserService loginService(UserRepository userRepository){
+        return new WeBetUserService(userRepository);
     }
 
     @Bean
-    public LoginController loginController (LoginService loginService){
-        return new LoginController(loginService);
+    public LoginController loginController(){
+        return new LoginController();
     }
 
     @Bean
-    public RegisterController registerController (LoginService loginService){
-        return new RegisterController(loginService);
+    public RegisterController registerController (WeBetUserService weBetUserService){
+        return new RegisterController(weBetUserService);
     }
 }
