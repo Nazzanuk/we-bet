@@ -52,9 +52,10 @@ public class SpringSecurityContext extends WebSecurityConfigurerAdapter {
 
         @Override
         public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-            final WeBetUser weBetUser = userRepository.findOne(username);
+            String lowerCaseUsername = username.toLowerCase();
+            final WeBetUser weBetUser = userRepository.findOne(lowerCaseUsername);
             if(weBetUser == null){
-                throw new UsernameNotFoundException("Username not found: " + username);
+                throw new UsernameNotFoundException("Username not found: " + lowerCaseUsername);
             }
             return new User(weBetUser.getUsername(), weBetUser.getPassword(), Collections.emptyList());
         }

@@ -19,9 +19,7 @@ public class RegisterController {
 
     @RequestMapping(method = RequestMethod.POST)
     public void register(@RequestParam String username, @RequestParam String password) {
-        if(!weBetUserService.register(username, password)){
-            throw new ConflictException();
-        }
+        weBetUserService.register(username, password);
     }
     
 }

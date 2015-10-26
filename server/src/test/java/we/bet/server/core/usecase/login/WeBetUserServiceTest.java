@@ -4,36 +4,49 @@ import org.junit.Test;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import we.bet.server.core.domain.WeBetUser;
 import we.bet.server.dataproviders.UserRepository;
+import we.bet.server.entrypoints.exceptions.BadRequestException;
+import we.bet.server.entrypoints.exceptions.ConflictException;
 
 import static org.fest.assertions.Assertions.assertThat;
 import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 public class WeBetUserServiceTest {
 
-    private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
     private final UserRepository userRepository = mock(UserRepository.class);
     private final WeBetUserService weBetUserService = new WeBetUserService(userRepository);
-    private static final String USERNAME = "someUser";
+    private static final String USERNAME = "someUser@somedomain.com";
+    private static final String BAD_USERNAME = "someUser.somedomain.com";
     private static final String PASSWORD = "somePassword";
 
-    @Test
-    public void registerReturnsFalseWhenUsernameExists(){
+    @Test(expected = ConflictException.class)
+    public void registerThrowsConflictExceptionWhenUsernameExists(){
         when(userRepository.exists(USERNAME)).thenReturn(true);
-        boolean got = weBetUserService.register(USERNAME, PASSWORD);
+        weBetUserService.register(USERNAME, PASSWORD);
+        verify(userRepository, never()).save(any(WeBetUser.class));
+    }
 
-        assertThat(got).isFalse();
+    @Test(expected = BadRequestException.class)
+    public void registerThrowsBadRequestExceptionWhenUsernameIsNotValid(){
+        weBetUserService.register(BAD_USERNAME, PASSWORD);
+        verifyZeroInteractions(userRepository);
     }
 
     @Test
-    public void registerReturnsTrueWhenUsernameDoesNotExist(){
+    public void registerReturnsSuccessfullyWhenUsernameDoesNotExistAndUsernameIsValid(){
         when(userRepository.exists(USERNAME)).thenReturn(false);
-        boolean got = weBetUserService.register(USERNAME, PASSWORD);
-
-        assertThat(got).isTrue();
+        weBetUserService.register(USERNAME, PASSWORD);
         verify(userRepository).save(any(WeBetUser.class));
+    }
+
+    @Test
+    public void registerSavesUsernameInLowerCase(){
+        String upperCaseUsername = USERNAME.toUpperCase();
+        when(userRepository.save(any(WeBetUser.class))).thenReturn(new WeBetUser(upperCaseUsername, PASSWORD));
+        when(userRepository.exists(USERNAME)).thenReturn(false);
+        WeBetUser got = weBetUserService.register(upperCaseUsername, PASSWORD);
+        verify(userRepository).save(any(WeBetUser.class));
+        assertThat(got.getUsername()).isEqualTo(USERNAME.toLowerCase());
     }
 
 }

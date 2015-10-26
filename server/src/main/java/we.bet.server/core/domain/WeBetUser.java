@@ -11,7 +11,7 @@ public class WeBetUser {
     public WeBetUser() {}
 
     public WeBetUser(String username, String password) {
-        this.username = username;
+        this.username = username.toLowerCase();
         this.password = password;
     }
 
