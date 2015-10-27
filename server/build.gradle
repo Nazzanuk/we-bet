@@ -35,8 +35,19 @@ dependencies {
     testCompile("org.easytesting:fest-assert:1.4")
 }
 
-
-
 task wrapper(type: Wrapper) {
     gradleVersion = '2.3'
 }
+
+
+//heroku
+task stage {
+    dependsOn build
+}
+
+task copyToLib(type: Copy) {
+    into "$buildDir/lib"
+    from(configurations.compile)
+}
+
+stage.dependsOn(copyToLib)
