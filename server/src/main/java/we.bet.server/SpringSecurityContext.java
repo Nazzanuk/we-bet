@@ -31,7 +31,7 @@ public class SpringSecurityContext extends WebSecurityConfigurerAdapter {
 
         http
             .authorizeRequests()
-                .regexMatchers("/register.*").permitAll()
+                .regexMatchers("/", "/register.*").permitAll()
                 .anyRequest().authenticated()
                 .and()
             .authenticationProvider(authenticationProvider)

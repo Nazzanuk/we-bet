@@ -13,7 +13,7 @@ apply plugin: 'idea'
 apply plugin: 'spring-boot'
 
 jar {
-    baseName = 'we-bet'
+    baseName = 'we-bet-server'
     version =  '1.0'
 }
 
@@ -31,6 +31,7 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-data-mongodb")
     compile 'org.mongodb:mongo-java-driver:3.0.4'
     compile 'org.apache.commons:commons-lang3:3.0'
+    compile("org.springframework.boot:spring-boot-starter-thymeleaf")
     testCompile("org.springframework.boot:spring-boot-starter-test")
     testCompile("org.easytesting:fest-assert:1.4")
 }
@@ -38,7 +39,6 @@ dependencies {
 task wrapper(type: Wrapper) {
     gradleVersion = '2.3'
 }
-
 
 //heroku
 task stage {
