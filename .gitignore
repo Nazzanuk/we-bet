@@ -1,4 +1,10 @@
-node_modules
+.gradle
+build
+classes
+build
 .idea
-gen
-/src/client/bower-components
+out
+*.iml
+*.ipr
+*.iws
+.DS_Store
