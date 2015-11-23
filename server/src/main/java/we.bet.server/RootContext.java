@@ -3,8 +3,11 @@ package we.bet.server;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+import we.bet.server.core.usecase.bet.BetService;
 import we.bet.server.core.usecase.login.WeBetUserService;
-import we.bet.server.dataproviders.UserRepository;
+import we.bet.server.dataproviders.bet.BetRepository;
+import we.bet.server.dataproviders.login.UserRepository;
+import we.bet.server.entrypoints.BetController;
 import we.bet.server.entrypoints.IndexController;
 import we.bet.server.entrypoints.LoginController;
 import we.bet.server.entrypoints.RegisterController;
@@ -21,8 +24,13 @@ public class RootContext {
     }
 
     @Bean
-    public LoginController loginController(){
-        return new LoginController();
+    public BetService betService(BetRepository betRepository, UserRepository userRepository){
+        return new BetService(betRepository, userRepository);
+    }
+
+    @Bean
+    public LoginController loginController(WeBetUserService weBetUserService){
+        return new LoginController(weBetUserService);
     }
 
     @Bean
@@ -32,4 +40,7 @@ public class RootContext {
 
     @Bean
     public IndexController indexController(){ return new IndexController();}
+
+    @Bean
+    public BetController betController(BetService betService){ return new BetController(betService );}
 }

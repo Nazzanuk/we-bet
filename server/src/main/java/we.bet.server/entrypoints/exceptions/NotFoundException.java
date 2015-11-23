@@ -6,11 +6,11 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 import javax.servlet.http.HttpServletRequest;
 
-@ResponseStatus(value = HttpStatus.CONFLICT)
-public class ConflictException extends RuntimeException {
+@ResponseStatus(value = HttpStatus.NOT_FOUND)
+public class NotFoundException extends RuntimeException {
     private final String message;
 
-    public ConflictException(String message){
+    public NotFoundException(String message){
         this.message = message;
     }
 
@@ -20,7 +20,7 @@ public class ConflictException extends RuntimeException {
     }
 
     @ResponseBody
-    ConflictException handleBadRequest(HttpServletRequest req, Exception ex) {
-        return new ConflictException(ex.getMessage());
+    NotFoundException handleBadRequest(HttpServletRequest req, Exception ex) {
+        return new NotFoundException(ex.getMessage());
     }
 }

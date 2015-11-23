@@ -11,8 +11,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import we.bet.server.core.domain.WeBetUser;
-import we.bet.server.dataproviders.UserRepository;
+import we.bet.server.core.domain.login.WeBetUser;
+import we.bet.server.dataproviders.login.UserRepository;
 
 import java.util.Collections;
 
@@ -53,7 +53,7 @@ public class SpringSecurityContext extends WebSecurityConfigurerAdapter {
         @Override
         public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
             String lowerCaseUsername = username.toLowerCase();
-            final WeBetUser weBetUser = userRepository.findOne(lowerCaseUsername);
+            final WeBetUser weBetUser = userRepository.findOneByUsername(lowerCaseUsername);
             if(weBetUser == null){
                 throw new UsernameNotFoundException("Username not found: " + lowerCaseUsername);
             }
