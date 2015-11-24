@@ -9,12 +9,15 @@ import we.bet.server.core.usecase.bet.BetService;
 import we.bet.server.entrypoints.exceptions.BadRequestException;
 
 import java.security.Principal;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 import static java.util.Arrays.asList;
 import static java.util.UUID.fromString;
 import static org.apache.commons.lang3.StringUtils.isEmpty;
 import static org.springframework.web.bind.annotation.RequestMethod.DELETE;
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 @RestController
@@ -36,6 +39,15 @@ public class BetController {
             throw new BadRequestException("Invalid parameter value");
         }
         return betService.getAllBets(fromString(id), page, pageSize);
+    }
+
+    @RequestMapping(value = "/{id}", method = GET)
+    public ApiResponse getBet(@PathVariable String id) {
+        if(id == null || isEmpty(id)){
+            throw new BadRequestException("Invalid parameter value");
+        }
+        Bet bet = betService.getBet(fromString(id));
+        return new ApiResponse(asList(bet));
     }
 
     @RequestMapping(value = "/delete/{id}", method = DELETE)

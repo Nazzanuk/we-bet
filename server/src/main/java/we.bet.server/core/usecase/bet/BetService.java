@@ -72,4 +72,17 @@ public class BetService {
 
         betRepository.delete(id);
     }
+
+    public Bet getBet(UUID id) {
+        if(id == null){
+            throw new BadRequestException("Invalid parameter value");
+        }
+
+        Bet bet = betRepository.findOne(id);
+        if(bet == null){
+            throw new NotFoundException("Bet not found");
+        }
+
+        return bet;
+    }
 }

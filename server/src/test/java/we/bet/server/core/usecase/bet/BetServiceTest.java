@@ -267,4 +267,33 @@ public class BetServiceTest {
         }
     }
 
+    @Test
+    public void getBetReturnsBetWhenExists(){
+        when(betRepository.findOne(id)).thenReturn(bet);
+        Bet got = betService.getBet(id);
+        verify(betRepository).findOne(id);
+        assertThat(got).isEqualTo(bet);
+    }
+
+    @Test(expected = NotFoundException.class)
+    public void getBetThrowsBadRequestExceptionWhenBetDoesNotExist(){
+        when(betRepository.findOne(id)).thenReturn(null);
+        try{
+            betService.getBet(id);
+        } catch (Exception e){
+            assertThat(e.getMessage()).isEqualTo("Bet not found");
+            throw e;
+        }
+    }
+
+    @Test(expected = BadRequestException.class)
+    public void getBetThrowsBadRequestExceptionWhenIdIsNull(){
+        try{
+            betService.getBet(null);
+        } catch (Exception e){
+            assertThat(e.getMessage()).isEqualTo("Invalid parameter value");
+            throw e;
+        }
+    }
+
 }

@@ -2,6 +2,7 @@ package we.bet.server.entrypoints;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.internal.matchers.Not;
 import we.bet.server.core.domain.bet.Bet;
 import we.bet.server.core.domain.login.WeBetUser;
 import we.bet.server.core.usecase.bet.BetService;
@@ -20,6 +21,7 @@ import static org.mockito.Mockito.*;
 public class BetControllerTest {
 
     private final BetService betService = mock(BetService.class);
+    private final Bet bet = mock(Bet.class);
     private final BetController betController = new BetController(betService);
     private static final String TITLE = "someTitle";
     private static final String DESCRIPTION = "someDescription";
@@ -238,6 +240,47 @@ public class BetControllerTest {
     public void deleteBetThrowsBadRequestExceptionWhenIdIsEmpty(){
         try{
             betController.deleteBet("");
+        } catch (Exception e){
+            assertThat(e.getMessage()).isEqualTo("Invalid parameter value");
+            verifyZeroInteractions(betService);
+            throw e;
+        }
+    }
+
+    @Test
+    public void getBetReturnsHttpOkWhenBetReturned(){
+        when(betService.getBet(UUID.fromString(id))).thenReturn(bet);
+        ApiResponse got = betController.getBet(id);
+        verify(betService).getBet(fromString(id));
+        assertThat(got.getContent().get(0)).isEqualTo(bet);
+    }
+
+    @Test(expected = NotFoundException.class)
+    public void getBetThrowsNotFoundExceptionWhenBetNotFound(){
+        when(betService.getBet(UUID.fromString(id))).thenThrow(new NotFoundException("Bet not found"));
+        try{
+            betController.getBet(id);
+        } catch (Exception e){
+            assertThat(e.getMessage()).isEqualTo("Bet not found");
+            throw e;
+        }
+    }
+
+    @Test(expected = BadRequestException.class)
+    public void getBetThrowsBadRequestExceptionWhenIdIsNull(){
+        try{
+            betController.getBet(null);
+        } catch (Exception e){
+            assertThat(e.getMessage()).isEqualTo("Invalid parameter value");
+            verifyZeroInteractions(betService);
+            throw e;
+        }
+    }
+
+    @Test(expected = BadRequestException.class)
+    public void getBetThrowsBadRequestExceptionWhenIdIsEmpty(){
+        try{
+            betController.getBet("");
         } catch (Exception e){
             assertThat(e.getMessage()).isEqualTo("Invalid parameter value");
             verifyZeroInteractions(betService);
