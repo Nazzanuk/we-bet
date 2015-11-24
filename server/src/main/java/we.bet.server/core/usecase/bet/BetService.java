@@ -10,10 +10,12 @@ import we.bet.server.dataproviders.login.UserRepository;
 import we.bet.server.entrypoints.PaginatedApiResponse;
 import we.bet.server.entrypoints.exceptions.BadRequestException;
 import we.bet.server.entrypoints.exceptions.NotFoundException;
+import we.bet.server.entrypoints.exceptions.UnauthorizedException;
 
 import java.util.UUID;
 
 import static org.apache.commons.lang3.StringUtils.isEmpty;
+import static we.bet.server.core.domain.bet.Bet.Status.ACCEPTED;
 import static we.bet.server.core.domain.bet.Bet.Status.CREATED;
 
 public class BetService {
@@ -84,5 +86,27 @@ public class BetService {
         }
 
         return bet;
+    }
+
+    public void acceptBet(UUID id) {
+        if(id == null){
+            throw new BadRequestException("Invalid parameter value");
+        }
+
+        Bet bet = betRepository.findOne(id);
+        if(bet == null){
+            throw new NotFoundException("Bet not found");
+        }
+
+        if(bet.getStatus() != CREATED){
+            throw new BadRequestException("Bet cannot be accepted. Invalid bet state");
+        }
+
+        if(!bet.getCreatedFor().equals(id)){
+            throw new UnauthorizedException();
+        }
+
+        bet.setStatus(ACCEPTED);
+        betRepository.save(bet);
     }
 }

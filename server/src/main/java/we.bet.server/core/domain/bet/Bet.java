@@ -56,6 +56,10 @@ public class Bet {
         return status;
     }
 
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
     public enum Status{
         CREATED, ACCEPTED
     }

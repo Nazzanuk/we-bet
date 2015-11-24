@@ -8,6 +8,7 @@ import we.bet.server.core.domain.login.WeBetUser;
 import we.bet.server.core.usecase.bet.BetService;
 import we.bet.server.entrypoints.exceptions.BadRequestException;
 import we.bet.server.entrypoints.exceptions.NotFoundException;
+import we.bet.server.entrypoints.exceptions.UnauthorizedException;
 
 import java.security.Principal;
 import java.util.UUID;
@@ -249,7 +250,7 @@ public class BetControllerTest {
 
     @Test
     public void getBetReturnsHttpOkWhenBetReturned(){
-        when(betService.getBet(UUID.fromString(id))).thenReturn(bet);
+        when(betService.getBet(fromString(id))).thenReturn(bet);
         ApiResponse got = betController.getBet(id);
         verify(betService).getBet(fromString(id));
         assertThat(got.getContent().get(0)).isEqualTo(bet);
@@ -257,7 +258,7 @@ public class BetControllerTest {
 
     @Test(expected = NotFoundException.class)
     public void getBetThrowsNotFoundExceptionWhenBetNotFound(){
-        when(betService.getBet(UUID.fromString(id))).thenThrow(new NotFoundException("Bet not found"));
+        when(betService.getBet(fromString(id))).thenThrow(new NotFoundException("Bet not found"));
         try{
             betController.getBet(id);
         } catch (Exception e){
@@ -281,6 +282,62 @@ public class BetControllerTest {
     public void getBetThrowsBadRequestExceptionWhenIdIsEmpty(){
         try{
             betController.getBet("");
+        } catch (Exception e){
+            assertThat(e.getMessage()).isEqualTo("Invalid parameter value");
+            verifyZeroInteractions(betService);
+            throw e;
+        }
+    }
+
+    @Test
+    public void acceptBetReturnsHttpOkWhenBetAccepted(){
+        betController.acceptBet(id);
+        verify(betService).acceptBet(fromString(id));
+    }
+
+    @Test(expected = BadRequestException.class)
+    public void acceptBetThrowsBadRequestExceptionWhenBetNotInCreatedState(){
+        doThrow(new BadRequestException("Bet cannot be accepted. Invalid bet state")).when(betService).acceptBet(fromString(id));
+        try{
+            betController.acceptBet(id);
+        } catch (Exception e){
+            assertThat(e.getMessage()).isEqualTo("Bet cannot be accepted. Invalid bet state");
+            throw e;
+        }
+    }
+
+    @Test(expected = NotFoundException.class)
+    public void acceptBetThrowsNotFoundExceptionWhenBetNotFound(){
+        doThrow(new NotFoundException("Bet not found")).when(betService).acceptBet(fromString(id));
+        try{
+            betController.acceptBet(id);
+        } catch (Exception e){
+            assertThat(e.getMessage()).isEqualTo("Bet not found");
+            throw e;
+        }
+    }
+
+    @Test(expected = UnauthorizedException.class)
+    public void acceptBetThrowsUnauthorizedExceptionWhenIdIsNotEqualToCreatedForUser(){
+        doThrow(new UnauthorizedException()).when(betService).acceptBet(fromString(id));
+        betController.acceptBet(id);
+    }
+
+    @Test(expected = BadRequestException.class)
+    public void acceptBetThrowsBadRequestExceptionWhenIdIsNull(){
+        try{
+            betController.acceptBet(null);
+        } catch (Exception e){
+            assertThat(e.getMessage()).isEqualTo("Invalid parameter value");
+            verifyZeroInteractions(betService);
+            throw e;
+        }
+    }
+
+    @Test(expected = BadRequestException.class)
+    public void acceptBetThrowsBadRequestExceptionWhenIdIsEmpty(){
+        try{
+            betController.acceptBet("");
         } catch (Exception e){
             assertThat(e.getMessage()).isEqualTo("Invalid parameter value");
             verifyZeroInteractions(betService);

@@ -50,6 +50,14 @@ public class BetController {
         return new ApiResponse(asList(bet));
     }
 
+    @RequestMapping(value = "/accept/{id}", method = GET)
+    public void acceptBet(@PathVariable String id) {
+        if(id == null || isEmpty(id)){
+            throw new BadRequestException("Invalid parameter value");
+        }
+        betService.acceptBet(fromString(id));
+    }
+
     @RequestMapping(value = "/delete/{id}", method = DELETE)
     public void deleteBet(@PathVariable String id) {
         if(id == null || isEmpty(id)){
