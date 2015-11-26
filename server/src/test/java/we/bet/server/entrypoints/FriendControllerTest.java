@@ -39,9 +39,31 @@ public class FriendControllerTest {
     }
 
     @Test(expected = BadRequestException.class)
+    public void requestThrowsBadRequestExceptionWhenRequestedByIsEmpty(){
+        try{
+            friendController.friendRequest("", requestFor.toString());
+        } catch(Exception e){
+            assertThat(e.getMessage()).isEqualTo("Invalid parameter value");
+            verifyZeroInteractions(friendService);
+            throw e;
+        }
+    }
+
+    @Test(expected = BadRequestException.class)
     public void requestThrowsBadRequestExceptionWhenRequestedForIsNull(){
         try{
             friendController.friendRequest(requestBy.toString(), null);
+        } catch(Exception e){
+            assertThat(e.getMessage()).isEqualTo("Invalid parameter value");
+            verifyZeroInteractions(friendService);
+            throw e;
+        }
+    }
+
+    @Test(expected = BadRequestException.class)
+    public void requestThrowsBadRequestExceptionWhenRequestedForIsEmpty(){
+        try{
+            friendController.friendRequest(requestBy.toString(), "");
         } catch(Exception e){
             assertThat(e.getMessage()).isEqualTo("Invalid parameter value");
             verifyZeroInteractions(friendService);
