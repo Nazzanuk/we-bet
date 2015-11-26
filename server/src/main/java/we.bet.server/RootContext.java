@@ -4,13 +4,13 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import we.bet.server.core.usecase.bet.BetService;
+import we.bet.server.core.usecase.friend.FriendService;
 import we.bet.server.core.usecase.login.WeBetUserService;
 import we.bet.server.dataproviders.bet.BetRepository;
+import we.bet.server.dataproviders.friend.FriendRepository;
+import we.bet.server.dataproviders.friend.FriendRequestRepository;
 import we.bet.server.dataproviders.login.UserRepository;
-import we.bet.server.entrypoints.BetController;
-import we.bet.server.entrypoints.IndexController;
-import we.bet.server.entrypoints.LoginController;
-import we.bet.server.entrypoints.RegisterController;
+import we.bet.server.entrypoints.*;
 
 @Configuration
 @Import(value = {
@@ -29,6 +29,13 @@ public class RootContext {
     }
 
     @Bean
+    public FriendService friendService(FriendRequestRepository friendRequestRepository,
+                                       FriendRepository friendRepository,
+                                       UserRepository userRepository){
+        return new FriendService(friendRequestRepository, friendRepository, userRepository);
+    }
+
+    @Bean
     public LoginController loginController(WeBetUserService weBetUserService){
         return new LoginController(weBetUserService);
     }
@@ -43,4 +50,9 @@ public class RootContext {
 
     @Bean
     public BetController betController(BetService betService){ return new BetController(betService );}
+
+    @Bean
+    public FriendController friendController(FriendService friendService){
+        return new FriendController(friendService);
+    }
 }
