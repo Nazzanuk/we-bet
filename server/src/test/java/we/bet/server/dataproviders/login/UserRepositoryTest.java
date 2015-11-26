@@ -35,7 +35,7 @@ public class UserRepositoryTest {
     public void usernameIsStoredInLowercase(){
         WeBetUser weBetUser = new WeBetUser("USER", "password");
         WeBetUser save = userRepository.save(weBetUser);
-        WeBetUser got = userRepository.findOne(save.getId());
+        WeBetUser got = userRepository.findOne(save.getUserId());
         assertThat(got.getUsername()).isEqualTo("user");
     }
 

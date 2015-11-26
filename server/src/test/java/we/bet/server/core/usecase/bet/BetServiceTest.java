@@ -46,7 +46,7 @@ public class BetServiceTest {
 
     @Test
     public void getAllBetsReturnsEmptyPageContentWhenNoBetsFound(){
-        when(betRepository.findByCreatedByOrCreatedFor(eq(uuid1), eq(uuid1), any(Pageable.class))).thenReturn(page);
+        when(betRepository.findByCreatedByUserIdOrCreatedForUserId(eq(uuid1), eq(uuid1), any(Pageable.class))).thenReturn(page);
         when(page.getContent()).thenReturn(emptyList());
         when(page.getTotalElements()).thenReturn(0L);
         when(page.getTotalPages()).thenReturn(0);
@@ -62,7 +62,7 @@ public class BetServiceTest {
     @Test
     public void getAllBetsReturnsPageContentOfBets(){
         Bet bet = new Bet(uuid1, uuid2, "title", "desc");
-        when(betRepository.findByCreatedByOrCreatedFor(eq(uuid1), eq(uuid1), any(Pageable.class))).thenReturn(page);
+        when(betRepository.findByCreatedByUserIdOrCreatedForUserId(eq(uuid1), eq(uuid1), any(Pageable.class))).thenReturn(page);
         when(page.getContent()).thenReturn(asList(bet));
         when(page.getTotalElements()).thenReturn(1L);
         when(page.getTotalPages()).thenReturn(1);
@@ -78,7 +78,7 @@ public class BetServiceTest {
     @Test
     public void getAllBetsReturnsPageContentOfBetsWithMorePages(){
         Bet bet = new Bet(uuid1, uuid2, "title", "desc");
-        when(betRepository.findByCreatedByOrCreatedFor(eq(uuid1), eq(uuid1), any(Pageable.class))).thenReturn(page);
+        when(betRepository.findByCreatedByUserIdOrCreatedForUserId(eq(uuid1), eq(uuid1), any(Pageable.class))).thenReturn(page);
         when(page.getContent()).thenReturn(asList(bet));
         when(page.getTotalElements()).thenReturn(2L);
         when(page.getTotalPages()).thenReturn(2);
@@ -102,8 +102,8 @@ public class BetServiceTest {
         Bet got = betService.create(uuid1, uuid2, TITLE, DESCRIPTION);
 
         verify(betRepository).save(any(Bet.class));
-        assertThat(got.getCreatedBy()).isEqualTo(uuid1);
-        assertThat(got.getCreatedFor()).isEqualTo(uuid2);
+        assertThat(got.getCreatedByUserId()).isEqualTo(uuid1);
+        assertThat(got.getCreatedForUserId()).isEqualTo(uuid2);
         assertThat(got.getDescription()).isEqualTo(DESCRIPTION);
         assertThat(got.getTitle()).isEqualTo(TITLE);
         assertThat(got.getStatus()).isEqualTo(CREATED);
@@ -300,7 +300,7 @@ public class BetServiceTest {
     public void acceptBetUpdatesBetToAcceptedWhenExistsAndIsInCreatedState(){
         when(betRepository.findOne(id)).thenReturn(bet);
         when(bet.getStatus()).thenReturn(CREATED);
-        when(bet.getCreatedFor()).thenReturn(id);
+        when(bet.getCreatedForUserId()).thenReturn(id);
         betService.acceptBet(id);
         verify(betRepository).save(bet);
         verify(bet).setStatus(ACCEPTED);
@@ -310,7 +310,7 @@ public class BetServiceTest {
     public void acceptBetThrowsUnauthorizedExceptionWhenCreatedForIsNotEqual(){
         when(betRepository.findOne(id)).thenReturn(bet);
         when(bet.getStatus()).thenReturn(CREATED);
-        when(bet.getCreatedFor()).thenReturn(UUID.randomUUID());
+        when(bet.getCreatedForUserId()).thenReturn(UUID.randomUUID());
         try{
             betService.acceptBet(id);
         } catch (Exception e){

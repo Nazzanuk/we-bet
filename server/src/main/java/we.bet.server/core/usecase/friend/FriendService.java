@@ -53,8 +53,8 @@ public class FriendService {
             throw new ConflictException("Users are already friends");
         }
 
-        FriendRequest requestedByAndRequestedFor = friendRequestRepository.findOneByRequestedByAndRequestedFor(requestedBy, requestedFor);
-        FriendRequest requestedForAndRequestedBy = friendRequestRepository.findOneByRequestedForAndRequestedBy(requestedFor, requestedBy);
+        FriendRequest requestedByAndRequestedFor = friendRequestRepository.findOneByRequestedByUserIdAndRequestedForUserId(requestedBy, requestedFor);
+        FriendRequest requestedForAndRequestedBy = friendRequestRepository.findOneByRequestedForUserIdAndRequestedByUserId(requestedFor, requestedBy);
         if(requestedByAndRequestedFor != null || requestedForAndRequestedBy != null){
             throw new ConflictException("A friend request already exists");
         }

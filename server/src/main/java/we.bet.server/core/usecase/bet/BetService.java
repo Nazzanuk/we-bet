@@ -33,7 +33,7 @@ public class BetService {
                 page,
                 pageSize,
                 new Sort(new Sort.Order(Sort.Direction.DESC, "createdDate")));
-        Page<Bet> bets = betRepository.findByCreatedByOrCreatedFor(id, id, pageRequest);
+        Page<Bet> bets = betRepository.findByCreatedByUserIdOrCreatedForUserId(id, id, pageRequest);
         return new PaginatedApiResponse<>(bets.getContent(), bets.getTotalElements(), bets.getTotalPages(), bets.isLast());
     }
 
@@ -56,7 +56,7 @@ public class BetService {
             throw new BadRequestException("CreatedBy user not found");
         }
 
-        return betRepository.save(new Bet(createdByUser.getId(), createdForUser.getId(), title, description));
+        return betRepository.save(new Bet(createdByUser.getUserId(), createdForUser.getUserId(), title, description));
     }
 
     public void deleteBet(UUID id) {
@@ -102,7 +102,7 @@ public class BetService {
             throw new BadRequestException("Bet cannot be accepted. Invalid bet state");
         }
 
-        if(!bet.getCreatedFor().equals(id)){
+        if(!bet.getCreatedForUserId().equals(id)){
             throw new UnauthorizedException();
         }
 

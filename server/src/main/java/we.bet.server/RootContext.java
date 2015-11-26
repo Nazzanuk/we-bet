@@ -10,6 +10,7 @@ import we.bet.server.dataproviders.bet.BetRepository;
 import we.bet.server.dataproviders.friend.FriendRepository;
 import we.bet.server.dataproviders.friend.FriendRequestRepository;
 import we.bet.server.dataproviders.login.UserRepository;
+import we.bet.server.dataproviders.profile.ProfileRepository;
 import we.bet.server.entrypoints.*;
 
 @Configuration
@@ -19,8 +20,8 @@ import we.bet.server.entrypoints.*;
 })
 public class RootContext {
     @Bean
-    public WeBetUserService loginService(UserRepository userRepository){
-        return new WeBetUserService(userRepository);
+    public WeBetUserService loginService(UserRepository userRepository, ProfileRepository profileRepository){
+        return new WeBetUserService(userRepository, profileRepository);
     }
 
     @Bean

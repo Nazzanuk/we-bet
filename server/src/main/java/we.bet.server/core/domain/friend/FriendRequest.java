@@ -11,15 +11,15 @@ public class FriendRequest {
 
     @Id
     private UUID id;
-    private UUID requestedBy;
-    private UUID requestedFor;
+    private UUID requestedByUserId;
+    private UUID requestedForUserId;
     private Status status;
     private Date createdDate;
 
-    public FriendRequest(UUID requestedBy, UUID requestedFor) {
+    public FriendRequest(UUID requestedByUserId, UUID requestedForUserId) {
         this.id = UUID.randomUUID();
-        this.requestedBy = requestedBy;
-        this.requestedFor = requestedFor;
+        this.requestedByUserId = requestedByUserId;
+        this.requestedForUserId = requestedForUserId;
         this.status = REQUESTED;
         this.createdDate = new Date();
     }
@@ -28,12 +28,12 @@ public class FriendRequest {
         return id;
     }
 
-    public UUID getRequestedBy() {
-        return requestedBy;
+    public UUID getRequestedByUserId() {
+        return requestedByUserId;
     }
 
-    public UUID getRequestedFor() {
-        return requestedFor;
+    public UUID getRequestedForUserId() {
+        return requestedForUserId;
     }
 
     public Status getStatus() {
@@ -55,16 +55,16 @@ public class FriendRequest {
 
         FriendRequest that = (FriendRequest) o;
 
-        if (!requestedBy.equals(that.requestedBy)) return false;
-        if (!requestedFor.equals(that.requestedFor)) return false;
+        if (!requestedByUserId.equals(that.requestedByUserId)) return false;
+        if (!requestedForUserId.equals(that.requestedForUserId)) return false;
         return status == that.status;
 
     }
 
     @Override
     public int hashCode() {
-        int result = requestedBy.hashCode();
-        result = 31 * result + requestedFor.hashCode();
+        int result = requestedByUserId.hashCode();
+        result = 31 * result + requestedForUserId.hashCode();
         result = 31 * result + status.hashCode();
         return result;
     }

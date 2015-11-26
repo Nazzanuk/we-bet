@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import we.bet.server.ApplicationStarter;
@@ -36,7 +35,7 @@ public class BetRepositoryTest {
                 0,
                 1,
                 new Sort(new Sort.Order(Sort.Direction.DESC, "createdDate")));
-        Page<Bet> got = betRepository.findByCreatedByOrCreatedFor(id, id, pageRequest);
+        Page<Bet> got = betRepository.findByCreatedByUserIdOrCreatedForUserId(id, id, pageRequest);
 
         assertThat(got.getTotalElements()).isEqualTo(0);
         assertThat(got.getTotalPages()).isEqualTo(0);
@@ -54,7 +53,7 @@ public class BetRepositoryTest {
                 0,
                 2,
                 new Sort(new Sort.Order(Sort.Direction.DESC, "createdDate")));
-        Page<Bet> got = betRepository.findByCreatedByOrCreatedFor(createdBy, createdBy, pageRequest);
+        Page<Bet> got = betRepository.findByCreatedByUserIdOrCreatedForUserId(createdBy, createdBy, pageRequest);
 
         assertThat(got.getTotalElements()).isEqualTo(1);
         assertThat(got.getTotalPages()).isEqualTo(1);
@@ -75,7 +74,7 @@ public class BetRepositoryTest {
                 0,
                 1,
                 new Sort(new Sort.Order(Sort.Direction.DESC, "createdDate")));
-        Page<Bet> got = betRepository.findByCreatedByOrCreatedFor(createdFor, createdFor, pageRequest);
+        Page<Bet> got = betRepository.findByCreatedByUserIdOrCreatedForUserId(createdFor, createdFor, pageRequest);
 
         assertThat(got.getTotalElements()).isEqualTo(2);
         assertThat(got.getTotalPages()).isEqualTo(2);

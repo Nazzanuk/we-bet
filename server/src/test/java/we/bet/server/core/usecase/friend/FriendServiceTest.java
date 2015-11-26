@@ -34,8 +34,8 @@ public class FriendServiceTest {
     public void requestCreatesFriendRequest(){
         when(userRepository.findOne(requestBy)).thenReturn(requestedByUser);
         when(userRepository.findOne(requestFor)).thenReturn(requestedForUser);
-        when(friendRequestRepository.findOneByRequestedByAndRequestedFor(requestBy, requestFor)).thenReturn(null);
-        when(friendRequestRepository.findOneByRequestedForAndRequestedBy(requestFor, requestBy)).thenReturn(null);
+        when(friendRequestRepository.findOneByRequestedByUserIdAndRequestedForUserId(requestBy, requestFor)).thenReturn(null);
+        when(friendRequestRepository.findOneByRequestedForUserIdAndRequestedByUserId(requestFor, requestBy)).thenReturn(null);
         when(friendRepository.findOne(requestBy)).thenReturn(friend);
         when(friend.getFriendsList()).thenReturn(Collections.<UUID>emptyList());
         friendService.request(requestBy, requestFor);
@@ -106,7 +106,7 @@ public class FriendServiceTest {
     public void requestThrowsConflictExceptionWhenFriendRequestAlreadyExists(){
         when(userRepository.findOne(requestBy)).thenReturn(requestedByUser);
         when(userRepository.findOne(requestFor)).thenReturn(requestedForUser);
-        when(friendRequestRepository.findOneByRequestedByAndRequestedFor(requestBy, requestFor)).thenReturn(friendRequest);
+        when(friendRequestRepository.findOneByRequestedByUserIdAndRequestedForUserId(requestBy, requestFor)).thenReturn(friendRequest);
         try{
             friendService.request(requestBy, requestFor);
         } catch(Exception e){
@@ -120,8 +120,8 @@ public class FriendServiceTest {
     public void requestThrowsConflictExceptionWhenAReverseFriendRequestAlreadyExists(){
         when(userRepository.findOne(requestBy)).thenReturn(requestedByUser);
         when(userRepository.findOne(requestFor)).thenReturn(requestedForUser);
-        when(friendRequestRepository.findOneByRequestedByAndRequestedFor(requestBy, requestFor)).thenReturn(null);
-        when(friendRequestRepository.findOneByRequestedForAndRequestedBy(requestFor, requestBy)).thenReturn(friendRequest);
+        when(friendRequestRepository.findOneByRequestedByUserIdAndRequestedForUserId(requestBy, requestFor)).thenReturn(null);
+        when(friendRequestRepository.findOneByRequestedForUserIdAndRequestedByUserId(requestFor, requestBy)).thenReturn(friendRequest);
         try{
             friendService.request(requestBy, requestFor);
         } catch(Exception e){
@@ -135,8 +135,8 @@ public class FriendServiceTest {
     public void requestThrowsConflictExceptionWhenExistingFriends(){
         when(userRepository.findOne(requestBy)).thenReturn(requestedByUser);
         when(userRepository.findOne(requestFor)).thenReturn(requestedForUser);
-        when(friendRequestRepository.findOneByRequestedByAndRequestedFor(requestBy, requestFor)).thenReturn(friendRequest);
-        when(friendRequestRepository.findOneByRequestedForAndRequestedBy(requestFor, requestBy)).thenReturn(friendRequest);
+        when(friendRequestRepository.findOneByRequestedByUserIdAndRequestedForUserId(requestBy, requestFor)).thenReturn(friendRequest);
+        when(friendRequestRepository.findOneByRequestedForUserIdAndRequestedByUserId(requestFor, requestBy)).thenReturn(friendRequest);
         when(friendRepository.findOne(requestBy)).thenReturn(friend);
         when(friend.getFriendsList()).thenReturn(asList(requestFor));
         try{

@@ -3,7 +3,9 @@ package we.bet.server.core.usecase.login;
 import org.hibernate.validator.internal.constraintvalidators.EmailValidator;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import we.bet.server.core.domain.login.WeBetUser;
+import we.bet.server.core.domain.profile.WeBetUserProfile;
 import we.bet.server.dataproviders.login.UserRepository;
+import we.bet.server.dataproviders.profile.ProfileRepository;
 import we.bet.server.entrypoints.exceptions.BadRequestException;
 import we.bet.server.entrypoints.exceptions.ConflictException;
 
@@ -15,15 +17,17 @@ import static org.apache.commons.lang3.StringUtils.isEmpty;
 public class WeBetUserService {
 
     private final UserRepository repository;
+    private ProfileRepository profileRepository;
     private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
     private final EmailValidator emailValidator = new EmailValidator();
 
-    public WeBetUserService(UserRepository repository) {
+    public WeBetUserService(UserRepository repository, ProfileRepository profileRepository) {
         this.repository = repository;
+        this.profileRepository = profileRepository;
     }
 
-    public UUID register(String username, String password) {
-        if( isEmpty(username) || isEmpty(password)){
+    public UUID register(String username, String password, String firstname, String lastname) {
+        if( isEmpty(username) || isEmpty(password) || isEmpty(firstname) || isEmpty(lastname)){
             throw new BadRequestException("Invalid parameter value");
         }
 
@@ -36,7 +40,9 @@ public class WeBetUserService {
         }
 
         String encryptedPassword = encoder.encode(password);
-        return repository.save(new WeBetUser(username, encryptedPassword)).getId();
+        UUID userId = repository.save(new WeBetUser(username, encryptedPassword)).getUserId();
+        profileRepository.save(new WeBetUserProfile(userId, firstname, lastname));
+        return userId;
     }
 
     public Optional<UUID> getIdForUser(String username){
@@ -48,6 +54,6 @@ public class WeBetUserService {
         if(user == null){
             return Optional.empty();
         }
-        return Optional.of(user.getId());
+        return Optional.of(user.getUserId());
     }
 }

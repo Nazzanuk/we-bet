@@ -25,13 +25,16 @@ public class RegisterController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public ApiResponse register(@RequestParam String username, @RequestParam String password) {
-        if(isEmpty(username) || isEmpty(password)){
+    public ApiResponse register(@RequestParam String username,
+                                @RequestParam String password,
+                                @RequestParam String firstname,
+                                @RequestParam String lastname) {
+        if(isEmpty(username) || isEmpty(password) || isEmpty(firstname) || isEmpty(lastname)){
             throw new BadRequestException("Invalid parameter value");
         }
-        UUID id = weBetUserService.register(username, password);
+        UUID id = weBetUserService.register(username, password, firstname, lastname);
         Map map = new HashMap<>();
-        map.put("id", id);
+        map.put("userId", id);
         return new ApiResponse(asList(map));
     }
     

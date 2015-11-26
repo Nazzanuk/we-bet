@@ -7,12 +7,12 @@ import java.util.UUID;
 public class WeBetUser {
 
     @Id
-    private UUID id;
+    private UUID userId;
     private String username;
     private String password;
 
     public WeBetUser(String username, String password) {
-        this.id = UUID.randomUUID();
+        this.userId = UUID.randomUUID();
         this.username = username.toLowerCase();
         this.password = password;
     }
@@ -25,8 +25,8 @@ public class WeBetUser {
         return username;
     }
 
-    public UUID getId() {
-        return id;
+    public UUID getUserId() {
+        return userId;
     }
 
     @Override

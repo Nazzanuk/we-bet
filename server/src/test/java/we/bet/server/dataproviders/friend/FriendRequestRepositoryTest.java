@@ -32,7 +32,7 @@ public class FriendRequestRepositoryTest {
     public void canFindOneByRequestedByAndRequestedFor(){
         FriendRequest friendRequest = new FriendRequest(requestBy, requestFor);
         friendRequestRepository.save(friendRequest);
-        FriendRequest got = friendRequestRepository.findOneByRequestedByAndRequestedFor(requestBy, requestFor);
+        FriendRequest got = friendRequestRepository.findOneByRequestedByUserIdAndRequestedForUserId(requestBy, requestFor);
         assertThat(got).isEqualTo(friendRequest);
     }
 
@@ -40,7 +40,7 @@ public class FriendRequestRepositoryTest {
     public void canFindOneByRequestedForAndRequestedBy(){
         FriendRequest friendRequest = new FriendRequest(requestBy, requestFor);
         friendRequestRepository.save(friendRequest);
-        FriendRequest got = friendRequestRepository.findOneByRequestedForAndRequestedBy(requestFor, requestBy);
+        FriendRequest got = friendRequestRepository.findOneByRequestedForUserIdAndRequestedByUserId(requestFor, requestBy);
         assertThat(got).isEqualTo(friendRequest);
     }
 }

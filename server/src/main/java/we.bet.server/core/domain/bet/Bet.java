@@ -12,17 +12,17 @@ public class Bet {
     @Id
     private UUID id;
     private Date createdDate;
-    private UUID createdBy;
-    private UUID createdFor;
+    private UUID createdByUserId;
+    private UUID createdForUserId;
     private String title;
     private String description;
     private Status status;
 
-    public Bet(UUID createdBy, UUID createdFor, String title, String description) {
+    public Bet(UUID createdByUserId, UUID createdForUserId, String title, String description) {
         this.id = UUID.randomUUID();
         this.createdDate = new Date();
-        this.createdBy = createdBy;
-        this.createdFor = createdFor;
+        this.createdByUserId = createdByUserId;
+        this.createdForUserId = createdForUserId;
         this.title = title;
         this.description = description;
         this.status = CREATED;
@@ -36,12 +36,12 @@ public class Bet {
         return createdDate;
     }
 
-    public UUID getCreatedBy() {
-        return createdBy;
+    public UUID getCreatedByUserId() {
+        return createdByUserId;
     }
 
-    public UUID getCreatedFor() {
-        return createdFor;
+    public UUID getCreatedForUserId() {
+        return createdForUserId;
     }
 
     public String getTitle() {

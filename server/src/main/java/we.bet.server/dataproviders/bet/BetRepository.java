@@ -9,6 +9,6 @@ import java.util.UUID;
 
 public interface BetRepository extends MongoRepository<Bet, UUID> {
 
-        Page<Bet> findByCreatedByOrCreatedFor(UUID createdBy, UUID createdFor, Pageable pageable);
+        Page<Bet> findByCreatedByUserIdOrCreatedForUserId(UUID createdByUserId, UUID createdForUserId, Pageable pageable);
 
 }
