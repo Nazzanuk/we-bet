@@ -1,5 +1,6 @@
 package we.bet.server.core.usecase.bet;
 
+import org.omg.CORBA.UnknownUserException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -78,14 +79,17 @@ public class BetService {
         betRepository.delete(betId);
     }
 
-    public Bet getBet(UUID id) {
-        if(id == null){
+    public Bet getBet(UUID userId, UUID betId) {
+        if(userId == null || betId == null){
             throw new BadRequestException("Invalid parameter value");
         }
 
-        Bet bet = betRepository.findOne(id);
+        Bet bet = betRepository.findOne(betId);
         if(bet == null){
             throw new NotFoundException("Bet not found");
+        }
+        if(bet.getCreatedByUserId() != userId && bet.getCreatedForUserId() != userId){
+            throw new UnauthorizedException();
         }
 
         return bet;

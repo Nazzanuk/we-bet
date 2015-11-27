@@ -276,18 +276,28 @@ public class BetServiceTest {
     }
 
     @Test
-    public void getBetReturnsBetWhenExists(){
+    public void getBetReturnsBetWhenExistsAndUserIsAssociatedWithBet(){
         when(betRepository.findOne(id)).thenReturn(bet);
-        Bet got = betService.getBet(id);
+        when(bet.getCreatedByUserId()).thenReturn(uuid1);
+        when(bet.getCreatedForUserId()).thenReturn(uuid2);
+        Bet got = betService.getBet(uuid1, id);
         verify(betRepository).findOne(id);
         assertThat(got).isEqualTo(bet);
+    }
+
+    @Test(expected = UnauthorizedException.class)
+    public void getBetThrowsUnauthorzedExceptionWhenBetIsNotAssociatedWithUser(){
+        when(betRepository.findOne(id)).thenReturn(bet);
+        when(bet.getCreatedByUserId()).thenReturn(uuid2);
+        when(bet.getCreatedForUserId()).thenReturn(uuid2);
+        betService.getBet(uuid1, id);
     }
 
     @Test(expected = NotFoundException.class)
     public void getBetThrowsBadRequestExceptionWhenBetDoesNotExist(){
         when(betRepository.findOne(id)).thenReturn(null);
         try{
-            betService.getBet(id);
+            betService.getBet(uuid1, id);
         } catch (Exception e){
             assertThat(e.getMessage()).isEqualTo("Bet not found");
             throw e;
@@ -297,9 +307,21 @@ public class BetServiceTest {
     @Test(expected = BadRequestException.class)
     public void getBetThrowsBadRequestExceptionWhenIdIsNull(){
         try{
-            betService.getBet(null);
+            betService.getBet(uuid1, null);
         } catch (Exception e){
             assertThat(e.getMessage()).isEqualTo("Invalid parameter value");
+            verifyZeroInteractions(betRepository);
+            throw e;
+        }
+    }
+
+    @Test(expected = BadRequestException.class)
+    public void getBetThrowsBadRequestExceptionWhenUserIdIsNull(){
+        try{
+            betService.getBet(null, id);
+        } catch (Exception e){
+            assertThat(e.getMessage()).isEqualTo("Invalid parameter value");
+            verifyZeroInteractions(betRepository);
             throw e;
         }
     }

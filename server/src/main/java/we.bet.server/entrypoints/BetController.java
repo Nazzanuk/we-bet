@@ -44,16 +44,19 @@ public class BetController {
         return betService.getAllBets(userId, page, pageSize);
     }
 
-    @RequestMapping(value = "/{id}", method = GET)
-    public ApiResponse getBet(@PathVariable String id) {
-        if(id == null || isEmpty(id)){
+    @RequestMapping(value = "/{betId}", method = GET)
+    public ApiResponse getBet(@PathVariable String betId, Principal principal) {
+        String username = principal.getName();
+        if(isEmpty(username) || isEmpty(betId)){
             throw new BadRequestException("Invalid parameter value");
         }
-        Bet bet = betService.getBet(fromString(id));
+
+        UUID userId = weBetUserService.getIdForUser(username);
+        Bet bet = betService.getBet(userId, fromString(betId));
         return new ApiResponse(asList(bet));
     }
 
-    @RequestMapping(value = "/accept/{betId}", method = GET)
+    @RequestMapping(value = "/accept/{betId}", method = POST)
     public void acceptBet(@PathVariable String betId, Principal principal) {
         String username = principal.getName();
         if(isEmpty(betId) || isEmpty(username)){
