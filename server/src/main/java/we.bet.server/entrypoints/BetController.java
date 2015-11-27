@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import we.bet.server.core.domain.bet.Bet;
 import we.bet.server.core.usecase.bet.BetService;
+import we.bet.server.core.usecase.login.WeBetUserService;
 import we.bet.server.entrypoints.exceptions.BadRequestException;
 
 import java.security.Principal;
@@ -25,20 +26,24 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 public class BetController {
 
     private final BetService betService;
+    private final WeBetUserService weBetUserService;
 
-    public BetController(BetService betService) {
+    public BetController(BetService betService, WeBetUserService weBetUserService) {
         this.betService = betService;
+        this.weBetUserService = weBetUserService;
     }
 
     @RequestMapping(method = POST)
     public PaginatedApiResponse<Bet> getAllBets(
             @RequestParam(required = false, defaultValue = "0") int page,
-            @RequestParam(required = false, defaultValue = "1000") int pageSize,
-            @RequestParam String id) {
-        if(id == null || isEmpty(id)){
+            @RequestParam(required = false, defaultValue = "1000") int pageSize, Principal principal) {
+        String username = principal.getName();
+        if(username == null || isEmpty(username)){
             throw new BadRequestException("Invalid parameter value");
         }
-        return betService.getAllBets(fromString(id), page, pageSize);
+
+        UUID userId = weBetUserService.getIdForUser(username);
+        return betService.getAllBets(userId, page, pageSize);
     }
 
     @RequestMapping(value = "/{id}", method = GET)
@@ -68,14 +73,17 @@ public class BetController {
 
     @RequestMapping(value = "/create", method = POST)
     public ApiResponse createBet(
-            @RequestParam String createdBy,
             @RequestParam String createdFor,
             @RequestParam String title,
-            @RequestParam String description) {
-        if(createdBy == null || createdFor == null || isEmpty(createdBy) || isEmpty(createdFor)){
+            @RequestParam String description,
+            Principal principal) {
+        String username = principal.getName();
+        if(username == null || createdFor == null || isEmpty(username) || isEmpty(createdFor)){
             throw new BadRequestException("Invalid parameter value");
         }
-        return new ApiResponse(asList(betService.create(fromString(createdBy), fromString(createdFor), title, description)));
+
+        UUID userId = weBetUserService.getIdForUser(username);
+        return new ApiResponse(asList(betService.create(userId, fromString(createdFor), title, description)));
     }
     
 }

@@ -33,14 +33,38 @@ public class LoginControllerTest {
         UUID uuid = UUID.randomUUID();
         Map map = new HashMap<>();
         map.put("id", uuid);
-        when(weBetUserService.getIdForUser("USER")).thenReturn(Optional.of(uuid));
+        when(weBetUserService.getIdForUser("USER")).thenReturn(uuid);
         ApiResponse got = loginController.login(principal);
         assertThat(got.getContent()).isEqualTo(asList(map));
     }
 
     @Test(expected = UnauthorizedException.class)
     public void loginThrowsUnauthorizedExceptionWhenUserDoesNotExist(){
-        when(weBetUserService.getIdForUser("USER")).thenReturn(Optional.empty());
+        when(weBetUserService.getIdForUser("USER")).thenThrow(UnauthorizedException.class);
         loginController.login(principal);
     }
+
+    @Test(expected = BadRequestException.class)
+    public void loginThrowsBadRequestExceptionWhenPrincipleNameIsNull(){
+        when(principal.getName()).thenReturn(null);
+        when(weBetUserService.getIdForUser(null)).thenThrow(new BadRequestException("Invalid parameter value"));
+        try{
+            loginController.login(principal);
+        } catch(Exception e){
+            assertThat(e.getMessage()).isEqualTo("Invalid parameter value");
+            throw e;
+        }
+    }
+
+    @Test(expected = BadRequestException.class)
+    public void loginThrowsBadRequestExceptionWhenPrincipleNameIsEmpty(){
+        when(principal.getName()).thenReturn("");
+        when(weBetUserService.getIdForUser("")).thenThrow(new BadRequestException("Invalid parameter value"));
+        try{
+            loginController.login(principal);
+        } catch(Exception e){
+            assertThat(e.getMessage()).isEqualTo("Invalid parameter value");
+            throw e;
+        }    }
+
 }

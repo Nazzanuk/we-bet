@@ -4,7 +4,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import we.bet.server.core.usecase.friend.FriendService;
+import we.bet.server.core.usecase.login.WeBetUserService;
 import we.bet.server.entrypoints.exceptions.BadRequestException;
+
+import java.security.Principal;
+import java.util.UUID;
 
 import static java.util.UUID.fromString;
 import static org.apache.commons.lang3.StringUtils.isEmpty;
@@ -15,20 +19,23 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 public class FriendController {
 
     private final FriendService friendService;
+    private final WeBetUserService weBetUserService;
 
-    public FriendController(FriendService friendService) {
+    public FriendController(FriendService friendService, WeBetUserService weBetUserService) {
         this.friendService = friendService;
+        this.weBetUserService = weBetUserService;
     }
 
     @RequestMapping(value = "/request", method = POST)
     public void friendRequest(
-            @RequestParam String requestBy,
-            @RequestParam String requestFor
-    ) {
+            @RequestParam String requestFor,
+            Principal principal) {
+        String requestBy = principal.getName();
         if(isEmpty(requestBy) || isEmpty(requestFor)){
             throw new BadRequestException("Invalid parameter value");
         }
-        friendService.request(fromString(requestBy), fromString(requestFor));
+        UUID requestByUserId = weBetUserService.getIdForUser(requestBy);
+        friendService.request(requestByUserId, fromString(requestFor));
     }
 
 }

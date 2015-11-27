@@ -25,15 +25,10 @@ public class LoginController {
 
     @RequestMapping(method = RequestMethod.POST)
     public ApiResponse login(Principal principal) {
-        Optional<UUID> uuidOptional = weBetUserService.getIdForUser(principal.getName());
-        if(uuidOptional.isPresent()){
-            Map map = new HashMap<>();
-            map.put("id", uuidOptional.get());
-            return new ApiResponse(asList(map));
-        }
-        else{
-            throw new UnauthorizedException();
-        }
+        UUID userId = weBetUserService.getIdForUser(principal.getName());
+        Map map = new HashMap<>();
+        map.put("id", userId);
+        return new ApiResponse(asList(map));
     }
     
 }

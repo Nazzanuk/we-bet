@@ -2,10 +2,9 @@ package we.bet.server.entrypoints;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.internal.matchers.Not;
 import we.bet.server.core.domain.bet.Bet;
-import we.bet.server.core.domain.login.WeBetUser;
 import we.bet.server.core.usecase.bet.BetService;
+import we.bet.server.core.usecase.login.WeBetUserService;
 import we.bet.server.entrypoints.exceptions.BadRequestException;
 import we.bet.server.entrypoints.exceptions.NotFoundException;
 import we.bet.server.entrypoints.exceptions.UnauthorizedException;
@@ -23,7 +22,9 @@ public class BetControllerTest {
 
     private final BetService betService = mock(BetService.class);
     private final Bet bet = mock(Bet.class);
-    private final BetController betController = new BetController(betService);
+    private final Principal principal = mock(Principal.class);
+    private final WeBetUserService weBetUserService = mock(WeBetUserService.class);
+    private final BetController betController = new BetController(betService, weBetUserService);
     private static final String TITLE = "someTitle";
     private static final String DESCRIPTION = "someDescription";
     private static final String TITLE2 = "someTitle2";
@@ -37,6 +38,8 @@ public class BetControllerTest {
     public void setUp(){
         expectedBet = new Bet(uuid1, uuid2, TITLE, DESCRIPTION);
         id = UUID.randomUUID().toString();
+        when(principal.getName()).thenReturn("USER");
+        when(weBetUserService.getIdForUser("USER")).thenReturn(uuid1);
     }
 
     @Test
@@ -45,7 +48,7 @@ public class BetControllerTest {
         Bet bet2 = new Bet(uuid1, uuid2, TITLE2, DESCRIPTION2);
         PaginatedApiResponse<Bet> betPaginatedApiResponse = new PaginatedApiResponse<>(asList(bet1, bet2), 2L, 1, true);
         when(betService.getAllBets(uuid1, 0, 2)).thenReturn(betPaginatedApiResponse);
-        PaginatedApiResponse<Bet> got = betController.getAllBets(0, 2, uuid1.toString());
+        PaginatedApiResponse<Bet> got = betController.getAllBets(0, 2, principal);
         assertThat(got).isEqualTo(betPaginatedApiResponse);
     }
 
@@ -53,28 +56,30 @@ public class BetControllerTest {
     public void getAllBetsReturnsEmptyBetsWhenNoBetsReturned(){
         PaginatedApiResponse<Bet> betPaginatedApiResponse = new PaginatedApiResponse<>(emptyList(), 0L, 1, true);
         when(betService.getAllBets(uuid1, 0, 2)).thenReturn(betPaginatedApiResponse);
-        PaginatedApiResponse<Bet> got = betController.getAllBets(0, 2, uuid1.toString());
+        PaginatedApiResponse<Bet> got = betController.getAllBets(0, 2, principal);
         assertThat(got).isEqualTo(betPaginatedApiResponse);
     }
 
     @Test(expected = BadRequestException.class)
-    public void getAllBetsThrowsBadRequestExceptionWhenIdIsNull(){
+    public void getAllBetsThrowsBadRequestExceptionWhenPrincipalNameIsNull(){
+        when(principal.getName()).thenReturn(null);
         try{
-            betController.getAllBets(0, 1, null);
+            betController.getAllBets(0, 1, principal);
         } catch (Exception e){
             assertThat(e.getMessage()).isEqualTo("Invalid parameter value");
-            verifyZeroInteractions(betService);
+            verifyZeroInteractions(betService, weBetUserService);
             throw e;
         }
     }
 
     @Test(expected = BadRequestException.class)
-    public void getAllBetsThrowsBadRequestExceptionWhenIdIsEmpty(){
+    public void getAllBetsThrowsBadRequestExceptionWhenPrincipalNameIsEmpty(){
+        when(principal.getName()).thenReturn("");
         try{
-            betController.getAllBets(0, 1, "");
+            betController.getAllBets(0, 1, principal);
         } catch (Exception e){
             assertThat(e.getMessage()).isEqualTo("Invalid parameter value");
-            verifyZeroInteractions(betService);
+            verifyZeroInteractions(betService, weBetUserService);
             throw e;
         }
     }
@@ -82,7 +87,7 @@ public class BetControllerTest {
     @Test
     public void createBetReturnsBetOnSuccessfulCreate(){
         when(betService.create(uuid1, uuid2, TITLE, DESCRIPTION)).thenReturn(expectedBet);
-        ApiResponse got = betController.createBet(uuid1.toString(), uuid2.toString(), TITLE, DESCRIPTION);
+        ApiResponse got = betController.createBet(uuid2.toString(), TITLE, DESCRIPTION, principal);
         assertThat(got.getContent()).isEqualTo(asList(expectedBet));
     }
 
@@ -90,7 +95,7 @@ public class BetControllerTest {
     public void createBetThrowsBadRequestExceptionWhenCreatedForUserNotFound(){
         when(betService.create(uuid1, uuid2, TITLE, DESCRIPTION)).thenThrow(new BadRequestException("CreatedFor user not found"));
         try{
-            betController.createBet(uuid1.toString(), uuid2.toString(), TITLE, DESCRIPTION);
+            betController.createBet(uuid2.toString(), TITLE, DESCRIPTION, principal);
         } catch (Exception e){
             assertThat(e.getMessage()).isEqualTo("CreatedFor user not found");
             throw e;
@@ -101,22 +106,23 @@ public class BetControllerTest {
     public void createBetThrowsBadRequestExceptionWhenCreatedForIsNull() {
         when(betService.create(uuid1, null, TITLE, DESCRIPTION)).thenThrow(new BadRequestException("Invalid parameter value"));
         try{
-            betController.createBet(uuid1.toString(), null, TITLE, DESCRIPTION);
+            betController.createBet(null, TITLE, DESCRIPTION, principal);
         } catch (Exception e){
             assertThat(e.getMessage()).isEqualTo("Invalid parameter value");
-            verifyZeroInteractions(betService);
+            verifyZeroInteractions(betService, weBetUserService);
             throw e;
         }
     }
 
     @Test(expected = BadRequestException.class)
-    public void createBetThrowsBadRequestExceptionWhenCreatedByIsNull() {
+    public void createBetThrowsBadRequestExceptionWhenPrincipleNameIsNull() {
+        when(principal.getName()).thenReturn(null);
         when(betService.create(null, uuid2, TITLE, DESCRIPTION)).thenThrow(new BadRequestException("Invalid parameter value"));
         try{
-            betController.createBet(null, uuid2.toString(), TITLE, DESCRIPTION);
+            betController.createBet(uuid2.toString(), TITLE, DESCRIPTION, principal);
         } catch (Exception e){
             assertThat(e.getMessage()).isEqualTo("Invalid parameter value");
-            verifyZeroInteractions(betService);
+            verifyZeroInteractions(betService, weBetUserService);
             throw e;
         }
     }
@@ -124,21 +130,22 @@ public class BetControllerTest {
     @Test(expected = BadRequestException.class)
     public void createBetThrowsBadRequestExceptionWhenCreatedForIsEmpty() {
         try{
-            betController.createBet(uuid1.toString(), "", TITLE, DESCRIPTION);
+            betController.createBet("", TITLE, DESCRIPTION, principal);
         } catch (Exception e){
             assertThat(e.getMessage()).isEqualTo("Invalid parameter value");
-            verifyZeroInteractions(betService);
+            verifyZeroInteractions(betService, weBetUserService);
             throw e;
         }
     }
 
     @Test(expected = BadRequestException.class)
-    public void createBetThrowsBadRequestExceptionWhenCreatedByIsEmpty() {
+    public void createBetThrowsBadRequestExceptionWhenPrincipalNameIsEmpty() {
+        when(principal.getName()).thenReturn("");
         try{
-            betController.createBet("", uuid2.toString(), TITLE, DESCRIPTION);
+            betController.createBet(uuid2.toString(), TITLE, DESCRIPTION, principal);
         } catch (Exception e){
             assertThat(e.getMessage()).isEqualTo("Invalid parameter value");
-            verifyZeroInteractions(betService);
+            verifyZeroInteractions(betService, weBetUserService);
             throw e;
         }
     }
@@ -147,7 +154,7 @@ public class BetControllerTest {
     public void createBetThrowsBadRequestExceptionWhenTitleIsNull() {
         when(betService.create(uuid1, uuid2, null, DESCRIPTION)).thenThrow(new BadRequestException("Invalid parameter value"));
         try{
-            betController.createBet(uuid1.toString(), uuid2.toString(), null, DESCRIPTION);
+            betController.createBet(uuid2.toString(), null, DESCRIPTION, principal);
         } catch (Exception e){
             assertThat(e.getMessage()).isEqualTo("Invalid parameter value");
             throw e;
@@ -158,7 +165,7 @@ public class BetControllerTest {
     public void createBetThrowsBadRequestExceptionWhenTitleIsEmpty() {
         when(betService.create(uuid1, uuid2, "", DESCRIPTION)).thenThrow(new BadRequestException("Invalid parameter value"));
         try{
-            betController.createBet(uuid1.toString(), uuid2.toString(), "", DESCRIPTION);
+            betController.createBet(uuid2.toString(), "", DESCRIPTION, principal);
         } catch (Exception e){
             assertThat(e.getMessage()).isEqualTo("Invalid parameter value");
             throw e;
@@ -169,7 +176,7 @@ public class BetControllerTest {
     public void createBetThrowsBadRequestExceptionWhenDescriptionIsNull() {
         when(betService.create(uuid1, uuid2, TITLE, null)).thenThrow(new BadRequestException("Invalid parameter value"));
         try{
-            betController.createBet(uuid1.toString(), uuid2.toString(), TITLE, null);
+            betController.createBet(uuid2.toString(), TITLE, null, principal);
         } catch (Exception e){
             assertThat(e.getMessage()).isEqualTo("Invalid parameter value");
             throw e;
@@ -180,7 +187,7 @@ public class BetControllerTest {
     public void createBetThrowsBadRequestExceptionWhenDescriptionIsEmpty() {
         when(betService.create(uuid1, uuid2, TITLE, "")).thenThrow(new BadRequestException("Invalid parameter value"));
         try{
-            betController.createBet(uuid1.toString(), uuid2.toString(), TITLE, "");
+            betController.createBet(uuid2.toString(), TITLE, "", principal);
         } catch (Exception e){
             assertThat(e.getMessage()).isEqualTo("Invalid parameter value");
             throw e;
@@ -191,7 +198,7 @@ public class BetControllerTest {
     public void createBetThrowsBadRequestExceptionWhenCreatedByIsEqualToCreatedFor(){
         when(betService.create(uuid1, uuid1, TITLE, DESCRIPTION)).thenThrow(new BadRequestException("CreatedBy user cannot be the same as CreatedFor user"));
         try{
-            betController.createBet(uuid1.toString(), uuid1.toString(), TITLE, DESCRIPTION);
+            betController.createBet(uuid1.toString(), TITLE, DESCRIPTION, principal);
         } catch (Exception e){
             assertThat(e.getMessage()).isEqualTo("CreatedBy user cannot be the same as CreatedFor user");
             throw e;

@@ -7,6 +7,7 @@ import we.bet.server.dataproviders.login.UserRepository;
 import we.bet.server.dataproviders.profile.ProfileRepository;
 import we.bet.server.entrypoints.exceptions.BadRequestException;
 import we.bet.server.entrypoints.exceptions.ConflictException;
+import we.bet.server.entrypoints.exceptions.UnauthorizedException;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -112,25 +113,27 @@ public class WeBetUserServiceTest {
     }
 
     @Test
-    public void getIdForUserReturnsOptionalWithUUIDWhenUserUserExists(){
+    public void getIdForUserReturnsUUIDWhenUserUserExists(){
         UUID uuid = UUID.randomUUID();
         when(weBetUser.getUserId()).thenReturn(uuid);
         when(userRepository.findOneByUsername(USERNAME)).thenReturn(weBetUser);
-        Optional<UUID> got = weBetUserService.getIdForUser(USERNAME);
-        assertThat(got.isPresent()).isTrue();
-        assertThat(got.get()).isEqualTo(uuid);
+        UUID got = weBetUserService.getIdForUser(USERNAME);
+        assertThat(got).isEqualTo(uuid);
         verify(userRepository, never()).save(any(WeBetUser.class));
         verifyZeroInteractions(profileRepository);
     }
 
-    @Test
-    public void getIdForUserReturnsEmptyOptionalWhenUserNotExists(){
+    @Test(expected = UnauthorizedException.class)
+    public void getIdForUserThrowsUnauthorizedExceptionWhenUserNotExists(){
         when(weBetUser.getUserId()).thenReturn(null);
         when(userRepository.findOneByUsername(USERNAME)).thenReturn(null);
-        Optional<UUID> got = weBetUserService.getIdForUser(USERNAME);
-        assertThat(got.isPresent()).isFalse();
-        verify(userRepository, never()).save(any(WeBetUser.class));
-        verifyZeroInteractions(profileRepository);
+        try{
+            weBetUserService.getIdForUser(USERNAME);
+        } catch (Exception e){
+            verify(userRepository, never()).save(any(WeBetUser.class));
+            verifyZeroInteractions(profileRepository);
+            throw e;
+        }
     }
 
     @Test(expected = BadRequestException.class)

@@ -50,10 +50,11 @@ public class RootContext {
     public IndexController indexController(){ return new IndexController();}
 
     @Bean
-    public BetController betController(BetService betService){ return new BetController(betService );}
+    public BetController betController(BetService betService, WeBetUserService weBetUserService){
+        return new BetController(betService, weBetUserService);}
 
     @Bean
-    public FriendController friendController(FriendService friendService){
-        return new FriendController(friendService);
+    public FriendController friendController(FriendService friendService, WeBetUserService weBetUserService){
+        return new FriendController(friendService, weBetUserService);
     }
 }

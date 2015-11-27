@@ -8,6 +8,7 @@ import we.bet.server.dataproviders.login.UserRepository;
 import we.bet.server.dataproviders.profile.ProfileRepository;
 import we.bet.server.entrypoints.exceptions.BadRequestException;
 import we.bet.server.entrypoints.exceptions.ConflictException;
+import we.bet.server.entrypoints.exceptions.UnauthorizedException;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -45,15 +46,15 @@ public class WeBetUserService {
         return userId;
     }
 
-    public Optional<UUID> getIdForUser(String username){
+    public UUID getIdForUser(String username){
         if( isEmpty(username)){
             throw new BadRequestException("Invalid parameter value");
         }
 
         WeBetUser user = repository.findOneByUsername(username);
         if(user == null){
-            return Optional.empty();
+            throw new UnauthorizedException();
         }
-        return Optional.of(user.getUserId());
+        return user.getUserId();
     }
 }
