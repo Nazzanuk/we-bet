@@ -30,14 +30,14 @@ public class BetControllerTest {
     private static final String TITLE2 = "someTitle2";
     private static final String DESCRIPTION2 = "someDescription2";
     private Bet expectedBet;
-    private String id;
+    private String betId;
     private final UUID uuid1 = UUID.randomUUID();
     private final UUID uuid2 = UUID.randomUUID();
 
     @Before
     public void setUp(){
         expectedBet = new Bet(uuid1, uuid2, TITLE, DESCRIPTION);
-        id = UUID.randomUUID().toString();
+        betId = UUID.randomUUID().toString();
         when(principal.getName()).thenReturn("USER");
         when(weBetUserService.getIdForUser("USER")).thenReturn(uuid1);
     }
@@ -207,15 +207,15 @@ public class BetControllerTest {
 
     @Test
     public void deleteBetReturnsHttpOkWhenBetDeleted(){
-        betController.deleteBet(id, principal);
-        verify(betService).deleteBet(uuid1, fromString(id));
+        betController.deleteBet(betId, principal);
+        verify(betService).deleteBet(uuid1, fromString(betId));
     }
 
     @Test(expected = NotFoundException.class)
     public void deleteBetThrowsBadRequestExceptionWhenBetNotFound(){
-        doThrow(new NotFoundException("Bet not found")).when(betService).deleteBet(uuid1, fromString(id));
+        doThrow(new NotFoundException("Bet not found")).when(betService).deleteBet(uuid1, fromString(betId));
         try{
-            betController.deleteBet(id, principal);
+            betController.deleteBet(betId, principal);
         } catch (Exception e){
             assertThat(e.getMessage()).isEqualTo("Bet not found");
             throw e;
@@ -224,9 +224,9 @@ public class BetControllerTest {
 
     @Test(expected = BadRequestException.class)
     public void deleteBetThrowsBadRequestExceptionWhenBetNotInCreatedState(){
-        doThrow(new BadRequestException("Bet cannot be deleted. Invalid bet state")).when(betService).deleteBet(uuid1, fromString(id));
+        doThrow(new BadRequestException("Bet cannot be deleted. Invalid bet state")).when(betService).deleteBet(uuid1, fromString(betId));
         try{
-            betController.deleteBet(id, principal);
+            betController.deleteBet(betId, principal);
         } catch (Exception e){
             assertThat(e.getMessage()).isEqualTo("Bet cannot be deleted. Invalid bet state");
             throw e;
@@ -235,8 +235,8 @@ public class BetControllerTest {
 
     @Test(expected = UnauthorizedException.class)
     public void deleteBetThrowsUnauthorizedExceptionWhenBetIsNotCreatedByUser(){
-        doThrow(new UnauthorizedException()).when(betService).deleteBet(uuid1, fromString(id));
-        betController.deleteBet(id, principal);
+        doThrow(new UnauthorizedException()).when(betService).deleteBet(uuid1, fromString(betId));
+        betController.deleteBet(betId, principal);
     }
 
     @Test(expected = BadRequestException.class)
@@ -287,17 +287,17 @@ public class BetControllerTest {
 
     @Test
     public void getBetReturnsHttpOkWhenBetReturned(){
-        when(betService.getBet(fromString(id))).thenReturn(bet);
-        ApiResponse got = betController.getBet(id);
-        verify(betService).getBet(fromString(id));
+        when(betService.getBet(fromString(betId))).thenReturn(bet);
+        ApiResponse got = betController.getBet(betId);
+        verify(betService).getBet(fromString(betId));
         assertThat(got.getContent().get(0)).isEqualTo(bet);
     }
 
     @Test(expected = NotFoundException.class)
     public void getBetThrowsNotFoundExceptionWhenBetNotFound(){
-        when(betService.getBet(fromString(id))).thenThrow(new NotFoundException("Bet not found"));
+        when(betService.getBet(fromString(betId))).thenThrow(new NotFoundException("Bet not found"));
         try{
-            betController.getBet(id);
+            betController.getBet(betId);
         } catch (Exception e){
             assertThat(e.getMessage()).isEqualTo("Bet not found");
             throw e;
@@ -328,15 +328,15 @@ public class BetControllerTest {
 
     @Test
     public void acceptBetReturnsHttpOkWhenBetAccepted(){
-        betController.acceptBet(id);
-        verify(betService).acceptBet(fromString(id));
+        betController.acceptBet(betId, principal);
+        verify(betService).acceptBet(uuid1, fromString(betId));
     }
 
     @Test(expected = BadRequestException.class)
     public void acceptBetThrowsBadRequestExceptionWhenBetNotInCreatedState(){
-        doThrow(new BadRequestException("Bet cannot be accepted. Invalid bet state")).when(betService).acceptBet(fromString(id));
+        doThrow(new BadRequestException("Bet cannot be accepted. Invalid bet state")).when(betService).acceptBet(uuid1, fromString(betId));
         try{
-            betController.acceptBet(id);
+            betController.acceptBet(betId, principal);
         } catch (Exception e){
             assertThat(e.getMessage()).isEqualTo("Bet cannot be accepted. Invalid bet state");
             throw e;
@@ -345,9 +345,9 @@ public class BetControllerTest {
 
     @Test(expected = NotFoundException.class)
     public void acceptBetThrowsNotFoundExceptionWhenBetNotFound(){
-        doThrow(new NotFoundException("Bet not found")).when(betService).acceptBet(fromString(id));
+        doThrow(new NotFoundException("Bet not found")).when(betService).acceptBet(uuid1, fromString(betId));
         try{
-            betController.acceptBet(id);
+            betController.acceptBet(betId, principal);
         } catch (Exception e){
             assertThat(e.getMessage()).isEqualTo("Bet not found");
             throw e;
@@ -356,17 +356,17 @@ public class BetControllerTest {
 
     @Test(expected = UnauthorizedException.class)
     public void acceptBetThrowsUnauthorizedExceptionWhenIdIsNotEqualToCreatedForUser(){
-        doThrow(new UnauthorizedException()).when(betService).acceptBet(fromString(id));
-        betController.acceptBet(id);
+        doThrow(new UnauthorizedException()).when(betService).acceptBet(uuid1, fromString(betId));
+        betController.acceptBet(betId, principal);
     }
 
     @Test(expected = BadRequestException.class)
     public void acceptBetThrowsBadRequestExceptionWhenIdIsNull(){
         try{
-            betController.acceptBet(null);
+            betController.acceptBet(null, principal);
         } catch (Exception e){
             assertThat(e.getMessage()).isEqualTo("Invalid parameter value");
-            verifyZeroInteractions(betService);
+            verifyZeroInteractions(betService, weBetUserService);
             throw e;
         }
     }
@@ -374,10 +374,34 @@ public class BetControllerTest {
     @Test(expected = BadRequestException.class)
     public void acceptBetThrowsBadRequestExceptionWhenIdIsEmpty(){
         try{
-            betController.acceptBet("");
+            betController.acceptBet("", principal);
         } catch (Exception e){
             assertThat(e.getMessage()).isEqualTo("Invalid parameter value");
-            verifyZeroInteractions(betService);
+            verifyZeroInteractions(betService, weBetUserService);
+            throw e;
+        }
+    }
+
+    @Test(expected = BadRequestException.class)
+    public void acceptBetThrowsBadRequestExceptionWhenPrincipalNameIsNull(){
+        when(principal.getName()).thenReturn(null);
+        try{
+            betController.acceptBet(betId, principal);
+        } catch (Exception e){
+            assertThat(e.getMessage()).isEqualTo("Invalid parameter value");
+            verifyZeroInteractions(betService, weBetUserService);
+            throw e;
+        }
+    }
+
+    @Test(expected = BadRequestException.class)
+    public void acceptBetThrowsBadRequestExceptionWhenPrincipalNameIsEmpty(){
+        when(principal.getName()).thenReturn("");
+        try{
+            betController.acceptBet(betId, principal);
+        } catch (Exception e){
+            assertThat(e.getMessage()).isEqualTo("Invalid parameter value");
+            verifyZeroInteractions(betService, weBetUserService);
             throw e;
         }
     }

@@ -305,22 +305,24 @@ public class BetServiceTest {
     }
 
     @Test
-    public void acceptBetUpdatesBetToAcceptedWhenExistsAndIsInCreatedState(){
+    public void acceptBetUpdatesBetToAcceptedWhenExistsAndIsInCreatedStateAndCreatedForIsEqualToUserId(){
         when(betRepository.findOne(id)).thenReturn(bet);
         when(bet.getStatus()).thenReturn(CREATED);
         when(bet.getCreatedForUserId()).thenReturn(id);
-        betService.acceptBet(id);
+        when(bet.getCreatedForUserId()).thenReturn(uuid1);
+
+        betService.acceptBet(uuid1, id);
         verify(betRepository).save(bet);
         verify(bet).setStatus(ACCEPTED);
     }
 
     @Test(expected = UnauthorizedException.class)
-    public void acceptBetThrowsUnauthorizedExceptionWhenCreatedForIsNotEqual(){
+    public void acceptBetThrowsUnauthorizedExceptionWhenCreatedForIsNotEqualToUserId(){
         when(betRepository.findOne(id)).thenReturn(bet);
         when(bet.getStatus()).thenReturn(CREATED);
-        when(bet.getCreatedForUserId()).thenReturn(UUID.randomUUID());
+        when(bet.getCreatedForUserId()).thenReturn(uuid2);
         try{
-            betService.acceptBet(id);
+            betService.acceptBet(uuid1, id);
         } catch (Exception e){
             verify(betRepository, never()).save(any(Bet.class));
             throw e;
@@ -331,7 +333,7 @@ public class BetServiceTest {
     public void acceptBetThrowsBadRequestExceptionWhenBetDoesNotExist(){
         when(betRepository.findOne(id)).thenReturn(null);
         try{
-            betService.acceptBet(id);
+            betService.acceptBet(uuid1, id);
         } catch (Exception e){
             assertThat(e.getMessage()).isEqualTo("Bet not found");
             verify(betRepository, never()).save(any(Bet.class));
@@ -345,7 +347,7 @@ public class BetServiceTest {
         when(bet.getStatus()).thenReturn(ACCEPTED);
 
         try{
-            betService.acceptBet(id);
+            betService.acceptBet(uuid1, id);
         } catch (Exception e){
             assertThat(e.getMessage()).isEqualTo("Bet cannot be accepted. Invalid bet state");
             verify(betRepository, never()).save(any(Bet.class));
@@ -356,7 +358,17 @@ public class BetServiceTest {
     @Test(expected = BadRequestException.class)
     public void acceptBetThrowsBadRequestExceptionWhenIdIsNull(){
         try{
-            betService.acceptBet(null);
+            betService.acceptBet(uuid1, null);
+        } catch (Exception e){
+            assertThat(e.getMessage()).isEqualTo("Invalid parameter value");
+            throw e;
+        }
+    }
+
+    @Test(expected = BadRequestException.class)
+    public void acceptBetThrowsBadRequestExceptionWhenUserIdIsNull(){
+        try{
+            betService.acceptBet(null, id);
         } catch (Exception e){
             assertThat(e.getMessage()).isEqualTo("Invalid parameter value");
             throw e;

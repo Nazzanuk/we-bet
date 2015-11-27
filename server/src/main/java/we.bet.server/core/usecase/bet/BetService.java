@@ -91,12 +91,12 @@ public class BetService {
         return bet;
     }
 
-    public void acceptBet(UUID id) {
-        if(id == null){
+    public void acceptBet(UUID userId, UUID betId) {
+        if(userId == null || betId == null){
             throw new BadRequestException("Invalid parameter value");
         }
 
-        Bet bet = betRepository.findOne(id);
+        Bet bet = betRepository.findOne(betId);
         if(bet == null){
             throw new NotFoundException("Bet not found");
         }
@@ -105,7 +105,7 @@ public class BetService {
             throw new BadRequestException("Bet cannot be accepted. Invalid bet state");
         }
 
-        if(!bet.getCreatedForUserId().equals(id)){
+        if(bet.getCreatedForUserId() != userId){
             throw new UnauthorizedException();
         }
 
