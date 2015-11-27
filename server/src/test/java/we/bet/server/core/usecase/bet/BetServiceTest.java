@@ -223,10 +223,11 @@ public class BetServiceTest {
     }
 
     @Test
-    public void deleteBetDeletesBetWhenExistsAndIsInCreatedState(){
+    public void deleteBetDeletesBetWhenExistsAndIsInCreatedStateAndWasCreatedByUser(){
         when(betRepository.findOne(id)).thenReturn(bet);
         when(bet.getStatus()).thenReturn(CREATED);
-        betService.deleteBet(id);
+        when(bet.getCreatedByUserId()).thenReturn(uuid1);
+        betService.deleteBet(uuid1, id);
 
         verify(betRepository).delete(id);
     }
@@ -235,7 +236,7 @@ public class BetServiceTest {
     public void deleteBetThrowsBadRequestExceptionWhenBetDoesNotExist(){
         when(betRepository.findOne(id)).thenReturn(null);
         try{
-            betService.deleteBet(id);
+            betService.deleteBet(uuid1, id);
         } catch (Exception e){
             assertThat(e.getMessage()).isEqualTo("Bet not found");
             verify(betRepository, never()).delete(id);
@@ -247,9 +248,8 @@ public class BetServiceTest {
     public void deleteBetThrowsBadRequestExceptionWhenBetIsNotInCreatedState(){
         when(betRepository.findOne(id)).thenReturn(bet);
         when(bet.getStatus()).thenReturn(ACCEPTED);
-
         try{
-            betService.deleteBet(id);
+            betService.deleteBet(uuid1, id);
         } catch (Exception e){
             assertThat(e.getMessage()).isEqualTo("Bet cannot be deleted. Invalid bet state");
             verify(betRepository, never()).delete(id);
@@ -260,11 +260,19 @@ public class BetServiceTest {
     @Test(expected = BadRequestException.class)
     public void deleteBetThrowsBadRequestExceptionWhenIdIsNull(){
         try{
-            betService.deleteBet(null);
+            betService.deleteBet(uuid1, null);
         } catch (Exception e){
             assertThat(e.getMessage()).isEqualTo("Invalid parameter value");
             throw e;
         }
+    }
+
+    @Test(expected = UnauthorizedException.class)
+    public void deleteBetThrowsUnauthorizedExceptionWhenUserDidNotCreateBet(){
+        when(betRepository.findOne(id)).thenReturn(bet);
+        when(bet.getStatus()).thenReturn(CREATED);
+        when(bet.getCreatedByUserId()).thenReturn(uuid2);
+        betService.deleteBet(uuid1, id);
     }
 
     @Test

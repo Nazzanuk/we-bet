@@ -10,8 +10,6 @@ import we.bet.server.core.usecase.login.WeBetUserService;
 import we.bet.server.entrypoints.exceptions.BadRequestException;
 
 import java.security.Principal;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.UUID;
 
 import static java.util.Arrays.asList;
@@ -63,12 +61,14 @@ public class BetController {
         betService.acceptBet(fromString(id));
     }
 
-    @RequestMapping(value = "/delete/{id}", method = DELETE)
-    public void deleteBet(@PathVariable String id) {
-        if(id == null || isEmpty(id)){
+    @RequestMapping(value = "/delete/{betId}", method = DELETE)
+    public void deleteBet(@PathVariable String betId, Principal principal) {
+        String username = principal.getName();
+        if(isEmpty(betId) || isEmpty(username)){
             throw new BadRequestException("Invalid parameter value");
         }
-        betService.deleteBet(fromString(id));
+        UUID userId = weBetUserService.getIdForUser(username);
+        betService.deleteBet(userId, fromString(betId));
     }
 
     @RequestMapping(value = "/create", method = POST)

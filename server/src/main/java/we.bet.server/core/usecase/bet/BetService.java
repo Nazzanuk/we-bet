@@ -59,20 +59,23 @@ public class BetService {
         return betRepository.save(new Bet(createdByUser.getUserId(), createdForUser.getUserId(), title, description));
     }
 
-    public void deleteBet(UUID id) {
-        if(id == null){
+    public void deleteBet(UUID userId, UUID betId) {
+        if(betId == null){
             throw new BadRequestException("Invalid parameter value");
         }
 
-        Bet bet = betRepository.findOne(id);
+        Bet bet = betRepository.findOne(betId);
         if(bet == null){
             throw new NotFoundException("Bet not found");
         }
         if(bet.getStatus() != CREATED){
             throw new BadRequestException("Bet cannot be deleted. Invalid bet state");
         }
+        if(bet.getCreatedByUserId() != userId){
+            throw new UnauthorizedException();
+        }
 
-        betRepository.delete(id);
+        betRepository.delete(betId);
     }
 
     public Bet getBet(UUID id) {
