@@ -35,45 +35,26 @@ public class BetController {
     public PaginatedApiResponse<Bet> getAllBets(
             @RequestParam(required = false, defaultValue = "0") int page,
             @RequestParam(required = false, defaultValue = "1000") int pageSize, Principal principal) {
-        String username = principal.getName();
-        if(username == null || isEmpty(username)){
-            throw new BadRequestException("Invalid parameter value");
-        }
-
-        UUID userId = weBetUserService.getIdForUser(username);
+        UUID userId = weBetUserService.getIdForUser(principal.getName());
         return betService.getAllBets(userId, page, pageSize);
     }
 
     @RequestMapping(value = "/{betId}", method = GET)
     public ApiResponse getBet(@PathVariable String betId, Principal principal) {
-        String username = principal.getName();
-        if(isEmpty(username) || isEmpty(betId)){
-            throw new BadRequestException("Invalid parameter value");
-        }
-
-        UUID userId = weBetUserService.getIdForUser(username);
+        UUID userId = weBetUserService.getIdForUser(principal.getName());
         Bet bet = betService.getBet(userId, fromString(betId));
         return new ApiResponse(asList(bet));
     }
 
     @RequestMapping(value = "/accept/{betId}", method = POST)
     public void acceptBet(@PathVariable String betId, Principal principal) {
-        String username = principal.getName();
-        if(isEmpty(betId) || isEmpty(username)){
-            throw new BadRequestException("Invalid parameter value");
-        }
-
-        UUID userId = weBetUserService.getIdForUser(username);
+        UUID userId = weBetUserService.getIdForUser(principal.getName());
         betService.acceptBet(userId, fromString(betId));
     }
 
     @RequestMapping(value = "/delete/{betId}", method = DELETE)
     public void deleteBet(@PathVariable String betId, Principal principal) {
-        String username = principal.getName();
-        if(isEmpty(betId) || isEmpty(username)){
-            throw new BadRequestException("Invalid parameter value");
-        }
-        UUID userId = weBetUserService.getIdForUser(username);
+        UUID userId = weBetUserService.getIdForUser(principal.getName());
         betService.deleteBet(userId, fromString(betId));
     }
 
@@ -83,12 +64,7 @@ public class BetController {
             @RequestParam String title,
             @RequestParam String description,
             Principal principal) {
-        String username = principal.getName();
-        if(username == null || createdFor == null || isEmpty(username) || isEmpty(createdFor)){
-            throw new BadRequestException("Invalid parameter value");
-        }
-
-        UUID userId = weBetUserService.getIdForUser(username);
+        UUID userId = weBetUserService.getIdForUser(principal.getName());
         return new ApiResponse(asList(betService.create(userId, fromString(createdFor), title, description)));
     }
     

@@ -29,9 +29,6 @@ public class RegisterController {
                                 @RequestParam String password,
                                 @RequestParam String firstname,
                                 @RequestParam String lastname) {
-        if(isEmpty(username) || isEmpty(password) || isEmpty(firstname) || isEmpty(lastname)){
-            throw new BadRequestException("Invalid parameter value");
-        }
         UUID id = weBetUserService.register(username, password, firstname, lastname);
         Map map = new HashMap<>();
         map.put("userId", id);

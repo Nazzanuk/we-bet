@@ -30,11 +30,7 @@ public class FriendController {
     public void friendRequest(
             @RequestParam String requestFor,
             Principal principal) {
-        String requestBy = principal.getName();
-        if(isEmpty(requestBy) || isEmpty(requestFor)){
-            throw new BadRequestException("Invalid parameter value");
-        }
-        UUID requestByUserId = weBetUserService.getIdForUser(requestBy);
+        UUID requestByUserId = weBetUserService.getIdForUser(principal.getName());
         friendService.request(requestByUserId, fromString(requestFor));
     }
 

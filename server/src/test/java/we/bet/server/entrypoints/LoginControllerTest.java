@@ -15,6 +15,7 @@ import java.util.UUID;
 import static java.util.Arrays.asList;
 import static org.fest.assertions.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 public class LoginControllerTest {
@@ -36,35 +37,7 @@ public class LoginControllerTest {
         when(weBetUserService.getIdForUser("USER")).thenReturn(uuid);
         ApiResponse got = loginController.login(principal);
         assertThat(got.getContent()).isEqualTo(asList(map));
+        verify(weBetUserService).getIdForUser("USER");
     }
-
-    @Test(expected = UnauthorizedException.class)
-    public void loginThrowsUnauthorizedExceptionWhenUserDoesNotExist(){
-        when(weBetUserService.getIdForUser("USER")).thenThrow(UnauthorizedException.class);
-        loginController.login(principal);
-    }
-
-    @Test(expected = BadRequestException.class)
-    public void loginThrowsBadRequestExceptionWhenPrincipleNameIsNull(){
-        when(principal.getName()).thenReturn(null);
-        when(weBetUserService.getIdForUser(null)).thenThrow(new BadRequestException("Invalid parameter value"));
-        try{
-            loginController.login(principal);
-        } catch(Exception e){
-            assertThat(e.getMessage()).isEqualTo("Invalid parameter value");
-            throw e;
-        }
-    }
-
-    @Test(expected = BadRequestException.class)
-    public void loginThrowsBadRequestExceptionWhenPrincipleNameIsEmpty(){
-        when(principal.getName()).thenReturn("");
-        when(weBetUserService.getIdForUser("")).thenThrow(new BadRequestException("Invalid parameter value"));
-        try{
-            loginController.login(principal);
-        } catch(Exception e){
-            assertThat(e.getMessage()).isEqualTo("Invalid parameter value");
-            throw e;
-        }    }
 
 }
