@@ -49,7 +49,7 @@ public class FriendRequest {
     }
 
     public enum Status{
-        REQUESTED, ACCEPTED
+        REQUESTED, ACCEPTED, DECLINED
     }
 
     @Override

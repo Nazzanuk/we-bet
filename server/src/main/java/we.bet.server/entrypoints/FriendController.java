@@ -43,6 +43,14 @@ public class FriendController {
         friendService.accept(requestByUserId, fromString(friendRequestId));
     }
 
+    @RequestMapping(value = "/accept/{friendRequestId}", method = POST)
+    public void declineRequest(
+            @PathVariable String friendRequestId,
+            Principal principal) {
+        UUID requestByUserId = weBetUserService.getIdForUser(principal.getName());
+        friendService.decline(requestByUserId, fromString(friendRequestId));
+    }
+
 
 
 }

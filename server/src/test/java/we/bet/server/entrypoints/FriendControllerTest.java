@@ -44,4 +44,11 @@ public class FriendControllerTest {
         verify(friendService).accept(requestBy, friendRequestId);
     }
 
+    @Test
+    public void declineFriendRequest(){
+        friendController.declineRequest(friendRequestId.toString(), principal);
+        verify(weBetUserService).getIdForUser("USER");
+        verify(friendService).decline(requestBy, friendRequestId);
+    }
+
 }

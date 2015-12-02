@@ -13,6 +13,7 @@ import java.util.Set;
 import java.util.UUID;
 
 import static we.bet.server.core.domain.friend.FriendRequest.Status.ACCEPTED;
+import static we.bet.server.core.domain.friend.FriendRequest.Status.DECLINED;
 import static we.bet.server.core.domain.friend.FriendRequest.Status.REQUESTED;
 
 public class FriendService {
@@ -68,21 +69,7 @@ public class FriendService {
     }
 
     public void accept(UUID requestForUserId, UUID friendRequestId) {
-        if(requestForUserId == null || friendRequestId == null){
-            throw new BadRequestException("Invalid value parameter");
-        }
-
-        FriendRequest friendRequest = friendRequestRepository.findOne(friendRequestId);
-        if(friendRequest == null){
-            throw new BadRequestException("Friend request not found");
-        }
-        if(friendRequest.getStatus() != REQUESTED){
-            throw new BadRequestException("Invalid friend request state");
-        }
-        if(friendRequest.getRequestedForUserId() != requestForUserId){
-            throw new BadRequestException("Friend request is not intended for user");
-        }
-
+        FriendRequest friendRequest = validateFriendRequest(requestForUserId, friendRequestId);
         friendRequest.setStatus(ACCEPTED);
 
         UUID requestedByUserId = friendRequest.getRequestedByUserId();
@@ -99,5 +86,29 @@ public class FriendService {
         friendRepository.save(requestedByFriend);
         friendRepository.save(requestedForFriend);
         friendRequestRepository.save(friendRequest);
+    }
+
+    public void decline(UUID requestForUserId, UUID friendRequestId) {
+        FriendRequest friendRequest = validateFriendRequest(requestForUserId, friendRequestId);
+        friendRequest.setStatus(DECLINED);
+        friendRequestRepository.save(friendRequest);
+    }
+
+    private FriendRequest validateFriendRequest(UUID requestForUserId, UUID friendRequestId) {
+        if(requestForUserId == null || friendRequestId == null){
+            throw new BadRequestException("Invalid value parameter");
+        }
+
+        FriendRequest friendRequest = friendRequestRepository.findOne(friendRequestId);
+        if(friendRequest == null){
+            throw new BadRequestException("Friend request not found");
+        }
+        if(friendRequest.getStatus() != REQUESTED){
+            throw new BadRequestException("Invalid friend request state");
+        }
+        if(friendRequest.getRequestedForUserId() != requestForUserId){
+            throw new BadRequestException("Friend request is not intended for user");
+        }
+        return friendRequest;
     }
 }

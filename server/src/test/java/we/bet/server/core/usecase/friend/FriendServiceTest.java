@@ -17,6 +17,7 @@ import java.util.UUID;
 import static org.fest.assertions.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 import static we.bet.server.core.domain.friend.FriendRequest.Status.ACCEPTED;
+import static we.bet.server.core.domain.friend.FriendRequest.Status.DECLINED;
 import static we.bet.server.core.domain.friend.FriendRequest.Status.REQUESTED;
 
 public class FriendServiceTest {
@@ -233,6 +234,79 @@ public class FriendServiceTest {
         when(friendRequest.getRequestedForUserId()).thenReturn(requestBy);
         try{
             friendService.accept(requestFor, friendRequestId);
+        } catch(Exception e){
+            assertThat(e.getMessage()).isEqualTo("Friend request is not intended for user");
+            verifyZeroInteractions(friendRepository);
+            throw e;
+        }
+    }
+
+    @Test
+    public void declineSetsFriendRequestStatusToDeclined(){
+        when(friendRequestRepository.findOne(friendRequestId)).thenReturn(friendRequest);
+        when(friendRequest.getStatus()).thenReturn(REQUESTED);
+        when(friendRequest.getRequestedForUserId()).thenReturn(requestFor);
+        when(friendRequest.getRequestedByUserId()).thenReturn(requestBy);
+
+        friendService.decline(requestFor, friendRequestId);
+        verify(friendRequest).setStatus(DECLINED);
+        verify(friendRequestRepository).save(friendRequest);
+    }
+
+    @Test(expected = BadRequestException.class)
+    public void declineThrowsBadRequestExceptionWhenRequestByUserIdIsNull(){
+        try{
+            friendService.decline(null, friendRequestId);
+        } catch(Exception e){
+            assertThat(e.getMessage()).isEqualTo("Invalid value parameter");
+            verifyZeroInteractions(friendRepository, friendRequestRepository);
+            throw e;
+        }
+    }
+
+    @Test(expected = BadRequestException.class)
+    public void declineThrowsBadRequestExceptionWhenFriendRequestIdIsNull(){
+        try{
+            friendService.decline(requestFor, null);
+        } catch(Exception e){
+            assertThat(e.getMessage()).isEqualTo("Invalid value parameter");
+            verifyZeroInteractions(friendRepository, friendRequestRepository);
+            throw e;
+        }
+    }
+
+    @Test(expected = BadRequestException.class)
+    public void declineThrowsBadRequestExceptionWhenFriendRequestNotFound(){
+        when(friendRequestRepository.findOne(friendRequestId)).thenReturn(null);
+        try{
+            friendService.decline(requestFor, friendRequestId);
+        } catch(Exception e){
+            assertThat(e.getMessage()).isEqualTo("Friend request not found");
+            verifyZeroInteractions(friendRepository);
+            throw e;
+        }
+    }
+
+    @Test(expected = BadRequestException.class)
+    public void declineThrowsBadRequestExceptionWhenFriendRequestNotInRequestedState(){
+        when(friendRequestRepository.findOne(friendRequestId)).thenReturn(friendRequest);
+        when(friendRequest.getStatus()).thenReturn(ACCEPTED);
+        try{
+            friendService.decline(requestFor, friendRequestId);
+        } catch(Exception e){
+            assertThat(e.getMessage()).isEqualTo("Invalid friend request state");
+            verifyZeroInteractions(friendRepository);
+            throw e;
+        }
+    }
+
+    @Test(expected = BadRequestException.class)
+    public void declineThrowsBadRequestExceptionWhenFriendRequestIsNotIntendedForUser(){
+        when(friendRequestRepository.findOne(friendRequestId)).thenReturn(friendRequest);
+        when(friendRequest.getStatus()).thenReturn(REQUESTED);
+        when(friendRequest.getRequestedForUserId()).thenReturn(requestBy);
+        try{
+            friendService.decline(requestFor, friendRequestId);
         } catch(Exception e){
             assertThat(e.getMessage()).isEqualTo("Friend request is not intended for user");
             verifyZeroInteractions(friendRepository);
