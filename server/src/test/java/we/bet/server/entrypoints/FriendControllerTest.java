@@ -21,6 +21,7 @@ public class FriendControllerTest {
     private final FriendController friendController = new FriendController(friendService, weBetUserService);
     private final UUID requestBy = UUID.randomUUID();
     private final UUID requestFor = UUID.randomUUID();
+    private final UUID friendRequestId = UUID.randomUUID();
     private final Principal principal = mock(Principal.class);
 
     @Before
@@ -34,6 +35,13 @@ public class FriendControllerTest {
         friendController.friendRequest(requestFor.toString(), principal);
         verify(weBetUserService).getIdForUser("USER");
         verify(friendService).request(requestBy, requestFor);
+    }
+
+    @Test
+    public void acceptFriendRequest(){
+        friendController.acceptRequest(friendRequestId.toString(), principal);
+        verify(weBetUserService).getIdForUser("USER");
+        verify(friendService).accept(requestBy, friendRequestId);
     }
 
 }

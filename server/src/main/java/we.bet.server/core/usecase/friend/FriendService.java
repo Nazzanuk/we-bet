@@ -9,7 +9,11 @@ import we.bet.server.dataproviders.login.UserRepository;
 import we.bet.server.entrypoints.exceptions.BadRequestException;
 import we.bet.server.entrypoints.exceptions.ConflictException;
 
+import java.util.Set;
 import java.util.UUID;
+
+import static we.bet.server.core.domain.friend.FriendRequest.Status.ACCEPTED;
+import static we.bet.server.core.domain.friend.FriendRequest.Status.REQUESTED;
 
 public class FriendService {
     private FriendRequestRepository friendRequestRepository;
@@ -60,6 +64,40 @@ public class FriendService {
         }
 
         FriendRequest friendRequest = new FriendRequest(requestedBy, requestedFor);
+        friendRequestRepository.save(friendRequest);
+    }
+
+    public void accept(UUID requestForUserId, UUID friendRequestId) {
+        if(requestForUserId == null || friendRequestId == null){
+            throw new BadRequestException("Invalid value parameter");
+        }
+
+        FriendRequest friendRequest = friendRequestRepository.findOne(friendRequestId);
+        if(friendRequest == null){
+            throw new BadRequestException("Friend request not found");
+        }
+        if(friendRequest.getStatus() != REQUESTED){
+            throw new BadRequestException("Invalid friend request state");
+        }
+        if(friendRequest.getRequestedForUserId() != requestForUserId){
+            throw new BadRequestException("Friend request is not intended for user");
+        }
+
+        friendRequest.setStatus(ACCEPTED);
+
+        UUID requestedByUserId = friendRequest.getRequestedByUserId();
+        Friend requestedByFriend = friendRepository.findOne(requestedByUserId);
+        Set<UUID> requestedByFriendFriendsList = requestedByFriend.getFriendsList();
+        requestedByFriendFriendsList.add(requestForUserId);
+        requestedByFriend.setFriendsList(requestedByFriendFriendsList);
+
+        Friend requestedForFriend = friendRepository.findOne(requestForUserId);
+        Set<UUID> requestedForFriendFriendsList = requestedForFriend.getFriendsList();
+        requestedForFriendFriendsList.add(requestedByUserId);
+        requestedForFriend.setFriendsList(requestedForFriendFriendsList);
+
+        friendRepository.save(requestedByFriend);
+        friendRepository.save(requestedForFriend);
         friendRequestRepository.save(friendRequest);
     }
 }

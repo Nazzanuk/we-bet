@@ -1,5 +1,6 @@
 package we.bet.server.entrypoints;
 
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -33,5 +34,15 @@ public class FriendController {
         UUID requestByUserId = weBetUserService.getIdForUser(principal.getName());
         friendService.request(requestByUserId, fromString(requestFor));
     }
+
+    @RequestMapping(value = "/accept/{friendRequestId}", method = POST)
+    public void acceptRequest(
+            @PathVariable String friendRequestId,
+            Principal principal) {
+        UUID requestByUserId = weBetUserService.getIdForUser(principal.getName());
+        friendService.accept(requestByUserId, fromString(friendRequestId));
+    }
+
+
 
 }

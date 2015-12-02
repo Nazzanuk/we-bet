@@ -44,8 +44,12 @@ public class FriendRequest {
         return createdDate;
     }
 
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
     public enum Status{
-        REQUESTED
+        REQUESTED, ACCEPTED
     }
 
     @Override
