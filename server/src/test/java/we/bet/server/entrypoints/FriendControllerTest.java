@@ -2,14 +2,15 @@ package we.bet.server.entrypoints;
 
 import org.junit.Before;
 import org.junit.Test;
+import we.bet.server.core.domain.profile.WeBetUserProfile;
 import we.bet.server.core.usecase.friend.FriendService;
 import we.bet.server.core.usecase.login.WeBetUserService;
-import we.bet.server.entrypoints.exceptions.BadRequestException;
-import we.bet.server.entrypoints.exceptions.ConflictException;
+import we.bet.server.entrypoints.representation.BasicWeBetUserProfileRepresentation;
 
 import java.security.Principal;
 import java.util.UUID;
 
+import static java.util.Arrays.asList;
 import static org.fest.assertions.Assertions.assertThat;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
@@ -23,6 +24,7 @@ public class FriendControllerTest {
     private final UUID requestFor = UUID.randomUUID();
     private final UUID friendRequestId = UUID.randomUUID();
     private final Principal principal = mock(Principal.class);
+    private final WeBetUserProfile weBetUserProfile = mock(WeBetUserProfile.class);
 
     @Before
     public void beforeStep(){
@@ -49,6 +51,25 @@ public class FriendControllerTest {
         friendController.declineRequest(friendRequestId.toString(), principal);
         verify(weBetUserService).getIdForUser("USER");
         verify(friendService).decline(requestBy, friendRequestId);
+    }
+
+    @Test
+    public void getFriendListRequestReturnsListOfBasicFriendRepresentation(){
+        WeBetUserProfile weBetUserProfile2 = new WeBetUserProfile(requestFor, "uncle", "bob");
+        BasicWeBetUserProfileRepresentation basicWeBetUserProfileRepresentation = new BasicWeBetUserProfileRepresentation(weBetUserProfile2);
+        when(friendService.getFriendsList(requestBy)).thenReturn(asList(weBetUserProfile));
+        when(weBetUserProfile.getUserId()).thenReturn(requestFor);
+        when(weBetUserProfile.getFirstname()).thenReturn("Uncle");
+        when(weBetUserProfile.getLastname()).thenReturn("Bob");
+        ApiResponse response = friendController.getFriendsList(principal);
+        assertThat(response.getContent()).isEqualTo(asList(basicWeBetUserProfileRepresentation));
+    }
+
+    @Test
+    public void getFriendListRequestReturnsEmptyListOfBasicFriendRepresentationWhenUserHasNoFriends(){
+        when(friendService.getFriendsList(requestBy)).thenReturn(asList());
+        ApiResponse response = friendController.getFriendsList(principal);
+        assertThat(response.getContent()).isEqualTo(asList());
     }
 
 }

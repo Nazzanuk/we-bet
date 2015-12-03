@@ -32,8 +32,9 @@ public class RootContext {
     @Bean
     public FriendService friendService(FriendRequestRepository friendRequestRepository,
                                        FriendRepository friendRepository,
-                                       UserRepository userRepository){
-        return new FriendService(friendRequestRepository, friendRepository, userRepository);
+                                       UserRepository userRepository,
+                                       ProfileRepository profileRepository){
+        return new FriendService(friendRequestRepository, friendRepository, userRepository, profileRepository);
     }
 
     @Bean

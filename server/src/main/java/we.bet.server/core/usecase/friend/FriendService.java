@@ -3,14 +3,18 @@ package we.bet.server.core.usecase.friend;
 import we.bet.server.core.domain.friend.Friend;
 import we.bet.server.core.domain.friend.FriendRequest;
 import we.bet.server.core.domain.login.WeBetUser;
+import we.bet.server.core.domain.profile.WeBetUserProfile;
 import we.bet.server.dataproviders.friend.FriendRepository;
 import we.bet.server.dataproviders.friend.FriendRequestRepository;
 import we.bet.server.dataproviders.login.UserRepository;
+import we.bet.server.dataproviders.profile.ProfileRepository;
 import we.bet.server.entrypoints.exceptions.BadRequestException;
 import we.bet.server.entrypoints.exceptions.ConflictException;
 
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import static we.bet.server.core.domain.friend.FriendRequest.Status.ACCEPTED;
 import static we.bet.server.core.domain.friend.FriendRequest.Status.DECLINED;
@@ -20,13 +24,16 @@ public class FriendService {
     private FriendRequestRepository friendRequestRepository;
     private final FriendRepository friendRepository;
     private final UserRepository userRepository;
+    private ProfileRepository profileRepository;
 
     public FriendService(FriendRequestRepository friendRequestRepository,
                          FriendRepository friendRepository,
-                         UserRepository userRepository) {
+                         UserRepository userRepository,
+                         ProfileRepository profileRepository) {
         this.friendRequestRepository = friendRequestRepository;
         this.friendRepository = friendRepository;
         this.userRepository = userRepository;
+        this.profileRepository = profileRepository;
     }
 
     public void request(UUID requestedBy, UUID requestedFor) {
@@ -110,5 +117,17 @@ public class FriendService {
             throw new BadRequestException("Friend request is not intended for user");
         }
         return friendRequest;
+    }
+
+    public List<WeBetUserProfile> getFriendsList(UUID userId) {
+        if(userId == null){
+            throw new BadRequestException("Invalid value parameter");
+        }
+        Friend friend = friendRepository.findOne(userId);
+        Set<UUID> friendsList = friend.getFriendsList();
+        return friendsList.stream()
+                .map(friendId -> profileRepository.findOne(friendId))
+                .filter(profile -> profile != null)
+                .collect(Collectors.toList());
     }
 }

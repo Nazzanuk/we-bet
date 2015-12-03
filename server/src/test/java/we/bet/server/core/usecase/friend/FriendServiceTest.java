@@ -1,19 +1,24 @@
 package we.bet.server.core.usecase.friend;
 
 import org.junit.Test;
+import sun.java2d.cmm.Profile;
 import we.bet.server.core.domain.friend.Friend;
 import we.bet.server.core.domain.friend.FriendRequest;
 import we.bet.server.core.domain.login.WeBetUser;
+import we.bet.server.core.domain.profile.WeBetUserProfile;
 import we.bet.server.dataproviders.friend.FriendRepository;
 import we.bet.server.dataproviders.friend.FriendRequestRepository;
 import we.bet.server.dataproviders.login.UserRepository;
+import we.bet.server.dataproviders.profile.ProfileRepository;
 import we.bet.server.entrypoints.exceptions.BadRequestException;
 import we.bet.server.entrypoints.exceptions.ConflictException;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
+import static java.util.Arrays.asList;
 import static org.fest.assertions.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 import static we.bet.server.core.domain.friend.FriendRequest.Status.ACCEPTED;
@@ -25,7 +30,8 @@ public class FriendServiceTest {
     private final FriendRequestRepository friendRequestRepository = mock(FriendRequestRepository.class);
     private final FriendRepository friendRepository = mock(FriendRepository.class);
     private final UserRepository userRepository = mock(UserRepository.class);
-    private final FriendService friendService = new FriendService(friendRequestRepository, friendRepository, userRepository);
+    private final ProfileRepository profileRepository = mock(ProfileRepository.class);
+    private final FriendService friendService = new FriendService(friendRequestRepository, friendRepository, userRepository, profileRepository);
     private final UUID requestBy = UUID.randomUUID();
     private final UUID requestFor = UUID.randomUUID();
     private final UUID friendRequestId = UUID.randomUUID();
@@ -34,6 +40,7 @@ public class FriendServiceTest {
     private final FriendRequest friendRequest = mock(FriendRequest.class);
     private final Friend friend = mock(Friend.class);
     private final Friend friend2 = mock(Friend.class);
+    private final WeBetUserProfile weBetUserProfile = mock(WeBetUserProfile.class);
 
     @Test
     public void requestCreatesFriendRequest(){
@@ -312,6 +319,61 @@ public class FriendServiceTest {
             verifyZeroInteractions(friendRepository);
             throw e;
         }
+    }
+
+    @Test(expected = BadRequestException.class)
+    public void getFriendsListThrowsBadRequestExceptionWhenUserIdIsNull(){
+        try{
+            friendService.getFriendsList(null);
+        } catch(Exception e){
+            assertThat(e.getMessage()).isEqualTo("Invalid value parameter");
+            verifyZeroInteractions(friendRepository);
+            throw e;
+        }
+    }
+
+    @Test
+    public void getFriendsListReturnsListOfFriendProfiles(){
+        Set<UUID> friendSet = new HashSet<>();
+        friendSet.add(requestFor);
+        when(friendRepository.findOne(requestBy)).thenReturn(friend);
+        when(friend.getFriendsList()).thenReturn(friendSet);
+        when(profileRepository.findOne(requestFor)).thenReturn(weBetUserProfile);
+        List<WeBetUserProfile> friendsList = friendService.getFriendsList(requestBy);
+        assertThat(friendsList).isEqualTo(asList(weBetUserProfile));
+    }
+
+    @Test
+    public void getFriendsListReturnsListOfFriendProfilesThatOnlyExist(){
+        Set<UUID> friendSet = new HashSet<>();
+        friendSet.add(requestFor);
+        friendSet.add(requestBy);
+        when(friendRepository.findOne(requestBy)).thenReturn(friend);
+        when(friend.getFriendsList()).thenReturn(friendSet);
+        when(profileRepository.findOne(requestFor)).thenReturn(weBetUserProfile);
+        when(profileRepository.findOne(requestBy)).thenReturn(null);
+        List<WeBetUserProfile> friendsList = friendService.getFriendsList(requestBy);
+        assertThat(friendsList).isEqualTo(asList(weBetUserProfile));
+    }
+
+    @Test
+    public void getFriendsListReturnsEmptyListOfFriendProfilesWhenFriendNotFound(){
+        Set<UUID> friendSet = new HashSet<>();
+        friendSet.add(requestFor);
+        when(friendRepository.findOne(requestBy)).thenReturn(friend);
+        when(friend.getFriendsList()).thenReturn(friendSet);
+        when(profileRepository.findOne(requestFor)).thenReturn(null);
+        List<WeBetUserProfile> friendsList = friendService.getFriendsList(requestBy);
+        assertThat(friendsList).isEqualTo(asList());
+    }
+
+    @Test
+    public void getFriendsListReturnsEmptyListOfFriendProfilesWhenHasNoFriends(){
+        Set<UUID> friendSet = new HashSet<>();
+        when(friendRepository.findOne(requestBy)).thenReturn(friend);
+        when(friend.getFriendsList()).thenReturn(friendSet);
+        List<WeBetUserProfile> friendsList = friendService.getFriendsList(requestBy);
+        assertThat(friendsList).isEqualTo(asList());
     }
 
 }
