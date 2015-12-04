@@ -376,4 +376,65 @@ public class FriendServiceTest {
         assertThat(friendsList).isEqualTo(asList());
     }
 
+    @Test(expected = BadRequestException.class)
+    public void getFriendThrowsBadRequestExceptionWhenUserIdIsNull(){
+        try{
+            friendService.getFriend(null, requestFor);
+        } catch(Exception e){
+            assertThat(e.getMessage()).isEqualTo("Invalid value parameter");
+            verifyZeroInteractions(friendRepository, profileRepository);
+            throw e;
+        }
+    }
+
+    @Test(expected = BadRequestException.class)
+    public void getFriendThrowsBadRequestExceptionWhenFriendUserIdIsNull(){
+        try{
+            friendService.getFriend(requestBy, null);
+        } catch(Exception e){
+            assertThat(e.getMessage()).isEqualTo("Invalid value parameter");
+            verifyZeroInteractions(friendRepository, profileRepository);
+            throw e;
+        }
+    }
+
+    @Test(expected = BadRequestException.class)
+    public void getFriendThrowsBadRequestExceptionWhenUsersAreNotFriends(){
+        when(friendRepository.findOne(requestBy)).thenReturn(friend);
+        when(friend.getFriendsList()).thenReturn(new HashSet<>());
+        try{
+            friendService.getFriend(requestBy, requestFor);
+        } catch(Exception e){
+            assertThat(e.getMessage()).isEqualTo("Users are not friends");
+            verifyZeroInteractions(profileRepository);
+            throw e;
+        }
+    }
+
+    @Test(expected = BadRequestException.class)
+    public void getFriendThrowsBadRequestExceptionWhenFriendProfileNotFound(){
+        HashSet<UUID> friendsListSet = new HashSet<>();
+        friendsListSet.add(requestFor);
+        when(friendRepository.findOne(requestBy)).thenReturn(friend);
+        when(friend.getFriendsList()).thenReturn(friendsListSet);
+        when(profileRepository.findOne(requestFor)).thenReturn(null);
+        try{
+            friendService.getFriend(requestBy, requestFor);
+        } catch(Exception e){
+            assertThat(e.getMessage()).isEqualTo("Friend profile not found");
+            throw e;
+        }
+    }
+
+    @Test
+    public void getFriendReturnsFriendWhenUsersAreFriends(){
+        HashSet<UUID> friendsListSet = new HashSet<>();
+        friendsListSet.add(requestFor);
+        when(friendRepository.findOne(requestBy)).thenReturn(friend);
+        when(friend.getFriendsList()).thenReturn(friendsListSet);
+        when(profileRepository.findOne(requestFor)).thenReturn(weBetUserProfile);
+        WeBetUserProfile friendProfile = friendService.getFriend(requestBy, requestFor);
+        assertThat(friendProfile).isEqualTo(weBetUserProfile);
+    }
+
 }

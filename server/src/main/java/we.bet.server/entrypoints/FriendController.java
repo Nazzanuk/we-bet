@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 import we.bet.server.core.domain.profile.WeBetUserProfile;
 import we.bet.server.core.usecase.friend.FriendService;
 import we.bet.server.core.usecase.login.WeBetUserService;
-import we.bet.server.entrypoints.exceptions.BadRequestException;
+import we.bet.server.entrypoints.representation.ApiResponse;
 import we.bet.server.entrypoints.representation.BasicWeBetUserProfileRepresentation;
 
 import java.security.Principal;
@@ -17,7 +17,6 @@ import java.util.stream.Collectors;
 
 import static java.util.Arrays.asList;
 import static java.util.UUID.fromString;
-import static org.apache.commons.lang3.StringUtils.isEmpty;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
@@ -49,7 +48,7 @@ public class FriendController {
         friendService.accept(requestByUserId, fromString(friendRequestId));
     }
 
-    @RequestMapping(value = "/accept/{friendRequestId}", method = POST)
+    @RequestMapping(value = "/decline/{friendRequestId}", method = POST)
     public void declineRequest(
             @PathVariable String friendRequestId,
             Principal principal) {
@@ -66,6 +65,15 @@ public class FriendController {
                 .map(weBetUserProfile -> new BasicWeBetUserProfileRepresentation(weBetUserProfile))
                 .collect(Collectors.toList());
         return new ApiResponse(basicFriendsList);
+    }
+
+    @RequestMapping(value = "/get/{friendUserId}", method = GET)
+    public ApiResponse getFriend(
+            @PathVariable String friendUserId,
+            Principal principal) {
+        UUID requestByUserId = weBetUserService.getIdForUser(principal.getName());
+        WeBetUserProfile friend = friendService.getFriend(requestByUserId, fromString(friendUserId));
+        return new ApiResponse(asList(friend));
     }
 
 }

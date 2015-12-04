@@ -1,6 +1,5 @@
 package we.bet.server.core.usecase.bet;
 
-import org.omg.CORBA.UnknownUserException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -8,7 +7,7 @@ import we.bet.server.core.domain.bet.Bet;
 import we.bet.server.core.domain.login.WeBetUser;
 import we.bet.server.dataproviders.bet.BetRepository;
 import we.bet.server.dataproviders.login.UserRepository;
-import we.bet.server.entrypoints.PaginatedApiResponse;
+import we.bet.server.entrypoints.representation.PaginatedApiResponse;
 import we.bet.server.entrypoints.exceptions.BadRequestException;
 import we.bet.server.entrypoints.exceptions.NotFoundException;
 import we.bet.server.entrypoints.exceptions.UnauthorizedException;

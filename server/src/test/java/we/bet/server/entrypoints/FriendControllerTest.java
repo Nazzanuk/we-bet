@@ -5,6 +5,7 @@ import org.junit.Test;
 import we.bet.server.core.domain.profile.WeBetUserProfile;
 import we.bet.server.core.usecase.friend.FriendService;
 import we.bet.server.core.usecase.login.WeBetUserService;
+import we.bet.server.entrypoints.representation.ApiResponse;
 import we.bet.server.entrypoints.representation.BasicWeBetUserProfileRepresentation;
 
 import java.security.Principal;
@@ -70,6 +71,13 @@ public class FriendControllerTest {
         when(friendService.getFriendsList(requestBy)).thenReturn(asList());
         ApiResponse response = friendController.getFriendsList(principal);
         assertThat(response.getContent()).isEqualTo(asList());
+    }
+
+    @Test
+    public void getFriendRequestReturnsFriend(){
+        when(friendService.getFriend(requestBy, requestFor)).thenReturn(weBetUserProfile);
+        ApiResponse friend = friendController.getFriend(requestFor.toString(), principal);
+        assertThat(friend.getContent()).isEqualTo(asList(weBetUserProfile));
     }
 
 }

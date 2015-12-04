@@ -1,4 +1,4 @@
-package we.bet.server.entrypoints;
+package we.bet.server.entrypoints.representation;
 
 import java.util.List;
 

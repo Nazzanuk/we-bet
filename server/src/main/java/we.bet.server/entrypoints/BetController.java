@@ -7,14 +7,14 @@ import org.springframework.web.bind.annotation.RestController;
 import we.bet.server.core.domain.bet.Bet;
 import we.bet.server.core.usecase.bet.BetService;
 import we.bet.server.core.usecase.login.WeBetUserService;
-import we.bet.server.entrypoints.exceptions.BadRequestException;
+import we.bet.server.entrypoints.representation.ApiResponse;
+import we.bet.server.entrypoints.representation.PaginatedApiResponse;
 
 import java.security.Principal;
 import java.util.UUID;
 
 import static java.util.Arrays.asList;
 import static java.util.UUID.fromString;
-import static org.apache.commons.lang3.StringUtils.isEmpty;
 import static org.springframework.web.bind.annotation.RequestMethod.DELETE;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;

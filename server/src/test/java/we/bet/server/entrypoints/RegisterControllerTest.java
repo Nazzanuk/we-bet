@@ -2,8 +2,7 @@ package we.bet.server.entrypoints;
 
 import org.junit.Test;
 import we.bet.server.core.usecase.login.WeBetUserService;
-import we.bet.server.entrypoints.exceptions.BadRequestException;
-import we.bet.server.entrypoints.exceptions.ConflictException;
+import we.bet.server.entrypoints.representation.ApiResponse;
 
 import java.util.HashMap;
 import java.util.Map;

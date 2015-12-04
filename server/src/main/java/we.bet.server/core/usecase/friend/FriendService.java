@@ -130,4 +130,23 @@ public class FriendService {
                 .filter(profile -> profile != null)
                 .collect(Collectors.toList());
     }
+
+    public WeBetUserProfile getFriend(UUID requestByUserId, UUID friendUserId) {
+        if(requestByUserId == null || friendUserId == null){
+            throw new BadRequestException("Invalid value parameter");
+        }
+
+        Friend friend = friendRepository.findOne(requestByUserId);
+        Set<UUID> friendsList = friend.getFriendsList();
+        if(!friendsList.contains(friendUserId)){
+            throw new BadRequestException("Users are not friends");
+        }
+
+        WeBetUserProfile friendProfile = profileRepository.findOne(friendUserId);
+        if(friendProfile == null){
+            throw new BadRequestException("Friend profile not found");
+        }
+
+        return friendProfile;
+    }
 }

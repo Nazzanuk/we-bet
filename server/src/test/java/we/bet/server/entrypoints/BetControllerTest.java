@@ -5,9 +5,8 @@ import org.junit.Test;
 import we.bet.server.core.domain.bet.Bet;
 import we.bet.server.core.usecase.bet.BetService;
 import we.bet.server.core.usecase.login.WeBetUserService;
-import we.bet.server.entrypoints.exceptions.BadRequestException;
-import we.bet.server.entrypoints.exceptions.NotFoundException;
-import we.bet.server.entrypoints.exceptions.UnauthorizedException;
+import we.bet.server.entrypoints.representation.ApiResponse;
+import we.bet.server.entrypoints.representation.PaginatedApiResponse;
 
 import java.security.Principal;
 import java.util.UUID;
