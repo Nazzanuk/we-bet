@@ -12,6 +12,7 @@ import we.bet.server.dataproviders.login.UserRepository;
 import we.bet.server.dataproviders.profile.ProfileRepository;
 import we.bet.server.entrypoints.exceptions.BadRequestException;
 import we.bet.server.entrypoints.exceptions.ConflictException;
+import we.bet.server.entrypoints.exceptions.NotFoundException;
 
 import java.util.HashSet;
 import java.util.List;
@@ -27,6 +28,7 @@ import static we.bet.server.core.domain.friend.FriendRequest.Status.REQUESTED;
 
 public class FriendServiceTest {
 
+    public static final String USERNAME = "someUsername";
     private final FriendRequestRepository friendRequestRepository = mock(FriendRequestRepository.class);
     private final FriendRepository friendRepository = mock(FriendRepository.class);
     private final UserRepository userRepository = mock(UserRepository.class);
@@ -435,6 +437,50 @@ public class FriendServiceTest {
         when(profileRepository.findOne(requestFor)).thenReturn(weBetUserProfile);
         WeBetUserProfile friendProfile = friendService.getFriend(requestBy, requestFor);
         assertThat(friendProfile).isEqualTo(weBetUserProfile);
+    }
+
+    @Test(expected = BadRequestException.class)
+    public void findFriendThrowsBadRequestExceptionWhenUsernameIsNull(){
+        try{
+            friendService.findFriend(null);
+        } catch(Exception e){
+            assertThat(e.getMessage()).isEqualTo("Invalid value parameter");
+            verifyZeroInteractions(userRepository, profileRepository);
+            throw e;
+        }
+    }
+
+    @Test(expected = BadRequestException.class)
+    public void findFriendThrowsBadRequestExceptionWhenUsernameIsEmpty(){
+        try{
+            friendService.findFriend("");
+        } catch(Exception e){
+            assertThat(e.getMessage()).isEqualTo("Invalid value parameter");
+            verifyZeroInteractions(userRepository, profileRepository);
+            throw e;
+        }
+    }
+
+    @Test(expected = NotFoundException.class)
+    public void findFriendThrowsNotFoundExceptionWhenUsernameNotFound(){
+        when(userRepository.findOneByUsername(USERNAME)).thenReturn(null);
+        try{
+            friendService.findFriend(USERNAME);
+        } catch(Exception e){
+            assertThat(e.getMessage()).isEqualTo("No user found");
+            verifyZeroInteractions(profileRepository);
+            throw e;
+        }
+    }
+
+    @Test
+    public void findFriendReturnsUserProfileWhenFound(){
+        when(userRepository.findOneByUsername(USERNAME)).thenReturn(requestedForUser);
+        UUID uuid = UUID.randomUUID();
+        when(requestedForUser.getUserId()).thenReturn(uuid);
+        when(profileRepository.findOne(uuid)).thenReturn(weBetUserProfile);
+        WeBetUserProfile userProfile = friendService.findFriend(USERNAME);
+        assertThat(userProfile).isEqualTo(weBetUserProfile);
     }
 
 }

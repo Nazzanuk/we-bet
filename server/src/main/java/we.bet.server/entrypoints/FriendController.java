@@ -76,4 +76,11 @@ public class FriendController {
         return new ApiResponse(asList(friend));
     }
 
+    @RequestMapping(value = "/find/{username}", method = GET)
+    public ApiResponse findFriend(
+            @PathVariable String username) {
+        WeBetUserProfile userProfile = friendService.findFriend(username);
+        return new ApiResponse(asList(new BasicWeBetUserProfileRepresentation(userProfile)));
+    }
+
 }

@@ -10,12 +10,14 @@ import we.bet.server.dataproviders.login.UserRepository;
 import we.bet.server.dataproviders.profile.ProfileRepository;
 import we.bet.server.entrypoints.exceptions.BadRequestException;
 import we.bet.server.entrypoints.exceptions.ConflictException;
+import we.bet.server.entrypoints.exceptions.NotFoundException;
 
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import static org.springframework.util.StringUtils.isEmpty;
 import static we.bet.server.core.domain.friend.FriendRequest.Status.ACCEPTED;
 import static we.bet.server.core.domain.friend.FriendRequest.Status.DECLINED;
 import static we.bet.server.core.domain.friend.FriendRequest.Status.REQUESTED;
@@ -148,5 +150,18 @@ public class FriendService {
         }
 
         return friendProfile;
+    }
+
+    public WeBetUserProfile findFriend(String username) {
+        if(isEmpty(username)){
+            throw new BadRequestException("Invalid value parameter");
+        }
+
+        WeBetUser user = userRepository.findOneByUsername(username);
+        if(user == null){
+            throw new NotFoundException("No user found");
+        }
+
+        return profileRepository.findOne(user.getUserId());
     }
 }

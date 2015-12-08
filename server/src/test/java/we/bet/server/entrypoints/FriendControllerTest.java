@@ -80,4 +80,16 @@ public class FriendControllerTest {
         assertThat(friend.getContent()).isEqualTo(asList(weBetUserProfile));
     }
 
+    @Test
+    public void findFriendReturnsBasicFriendRepresentation(){
+        WeBetUserProfile weBetUserProfile2 = new WeBetUserProfile(requestFor, "uncle", "bob");
+        BasicWeBetUserProfileRepresentation basicWeBetUserProfileRepresentation = new BasicWeBetUserProfileRepresentation(weBetUserProfile2);
+        when(friendService.findFriend("bob@bob.com")).thenReturn(weBetUserProfile);
+        when(weBetUserProfile.getUserId()).thenReturn(requestFor);
+        when(weBetUserProfile.getFirstname()).thenReturn("Uncle");
+        when(weBetUserProfile.getLastname()).thenReturn("Bob");
+        ApiResponse response = friendController.findFriend("bob@bob.com");
+        assertThat(response.getContent()).isEqualTo(asList(basicWeBetUserProfileRepresentation));
+    }
+
 }
